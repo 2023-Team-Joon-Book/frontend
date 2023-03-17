@@ -15,14 +15,18 @@
 }
 
 .textInput{
+    margin-top: 4%;
     width: 70%;
     background-color: #E8E8E8;
     border:none;
 }
 
 .searchIcon{
-    margin-left: 10%;
+    margin-top: 1.5%;
+    margin-left: 5%;
+    margin-right: 5%;
     width: 6%;
+    float: right;
 }
 
 .listBox{
@@ -46,6 +50,9 @@
     margin-right: 5%;
     width: 20%;
     height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: white;
     border-radius: 1vh;
     float: left;
@@ -78,10 +85,11 @@
 }
 
 .selectButton{
+    margin-top: 5%;
     margin-left:60%;
     margin-right: 5%;
     width: 40%;
-    height: 40%;
+    height: 30%;
     color: white;
     background-color: #BFC66A;
     border-radius: 3vh;
@@ -90,4 +98,11 @@
     border-right: none;
     border-bottom-color: white;
     float: left;
+}
+
+.verticleLine{
+    margin-left:10%;
+    width: 80%;
+    height: 1vh;
+    color: #BFC66A;
 }

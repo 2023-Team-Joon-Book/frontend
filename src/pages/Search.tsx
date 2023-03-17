@@ -35,6 +35,7 @@ function Search() {
                     // onClick={}
                 />
             </div>
+
             {bookList?.map((e) =>
                 <div className="listBox">
                     <div className="image">
@@ -61,6 +62,7 @@ function Search() {
                     </div>
                 </div>
             )}
+            <div className="verticleLine" />
         </div>
     );
 }
