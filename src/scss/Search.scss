@@ -1,108 +1,115 @@
-.backgroundStyle{
-    width: 100%;
-    height: 100%;
+.backgroundStyle {
+  width: 390px;
+  height: 844px;
+  display: flex;
+  flex-direction: column;
 }
 
-.searchBar{
-    margin-top: 5%;
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 75%;
-    height: 6vh;
-    padding: 1vh;
-    border-radius: 8vh;
-    background-color: #E8E8E8;
+.searchBar {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 75%;
+  height: 6vh;
+  padding: 1vh;
+  border-radius: 8vh;
+  background-color: #e8e8e8;
 }
 
-.textInput{
-    margin-top: 4%;
-    width: 70%;
-    background-color: #E8E8E8;
-    border:none;
+.textInput {
+  margin-top: 4%;
+  width: 70%;
+  background-color: #e8e8e8;
+  border: none;
 }
 
-.searchIcon{
-    margin-top: 1.5%;
-    margin-left: 5%;
-    margin-right: 5%;
-    width: 6%;
-    float: right;
+.searchIcon {
+  margin-top: 1.5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 6%;
+  float: right;
 }
 
-.listBox{
-    margin-top: 5%;
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 75%;
-    height: 13vh;
-    padding: 1vh;
-    border-color: black;
-    background-color: #E8E8E8;
-    border-radius: 3vh;
-    border: 1;
-    border-width: 20;
-   
+.listBox {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 75%;
+  height: 13vh;
+  padding: 1vh;
+  border-color: black;
+  background-color: #e8e8e8;
+  border-radius: 3vh;
+  border: 1;
+  border-width: 20;
 }
 
-.image{
-    margin-top: 1%;
-    margin-left: 1%;
-    margin-right: 5%;
-    width: 20%;
-    height: 12vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 1vh;
-    float: left;
+.image {
+  margin-top: 1%;
+  margin-left: 1%;
+  margin-right: 5%;
+  width: 20%;
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 1vh;
+  float: left;
 }
 
-.info{
-    margin-top: 1%;
-    margin-left: 1%;
-    width: 70%;
-    height: 12vh;
-    float: left;
+.info {
+  margin-top: 1%;
+  margin-left: 1%;
+  width: 70%;
+  height: 12vh;
+  float: left;
 }
 
-.title{
-    text-align: left;
-    font-size: large;
-    float: left;
+.title {
+  text-align: left;
+  font-size: large;
+  float: left;
 }
 
-.author{
-    margin-top: 1%;
-    text-align: left;
-    font-size: small;
-    color: gray;
+.author {
+  margin-top: 1%;
+  text-align: left;
+  font-size: small;
+  color: gray;
 }
 
-.heartIcon{
-    margin-left: 70%;
-    width: 10%
+.heartIcon {
+  margin-left: 70%;
+  width: 10%;
 }
 
-.selectButton{
-    margin-top: 5%;
-    margin-left:60%;
-    margin-right: 5%;
-    width: 40%;
-    height: 30%;
-    color: white;
-    background-color: #BFC66A;
-    border-radius: 3vh;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom-color: white;
-    float: left;
+.selectButton {
+  margin-top: 5%;
+  margin-left: 60%;
+  margin-right: 5%;
+  width: 40%;
+  height: 30%;
+  color: white;
+  background-color: #bfc66a;
+  border-radius: 3vh;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-color: white;
+  float: left;
 }
 
-.verticleLine{
-    margin-left:10%;
-    width: 80%;
-    height: 1vh;
-    color: #BFC66A;
+.verticleLine {
+  margin-left: 10%;
+  width: 80%;
+  height: 1vh;
+  color: #bfc66a;
+}
+
+.navigationBar {
+  width: 390px;
+  position: fixed;
+  bottom: 20px;
 }
