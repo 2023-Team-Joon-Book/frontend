@@ -1,20 +1,24 @@
-import React from 'react';
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Search from './pages/Search';
+import Search from "./pages/Search";
+import Shelf from "./pages/MyShelf";
+import WishShelf from "./pages/Wish";
+import ReadingShelf from "./pages/ReadingShelf";
+import EndShelf from "./pages/EndShelf";
 
 function App() {
   return (
     <Router>
       <div className="App">
-          <Routes>
+        <Routes>
           <Route path="/" element={<Search />} />
-          </Routes>
+          <Route path="/my" element={<Shelf />} />
+          <Route path="/my/wish" element={<WishShelf />} />
+          <Route path="/my/ing" element={<ReadingShelf />} />
+          <Route path="/my/fin" element={<EndShelf />} />
+        </Routes>
       </div>
     </Router>
   );
