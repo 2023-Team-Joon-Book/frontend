@@ -75,7 +75,7 @@ function Search() {
 
       {bookList?.map((e) => (
         <div className="listBox">
-          <div className="image">{e.coverImageUrl}</div>
+          <img className="image" src={e.coverImageUrl} alt="이미지"></img>
           <div className="info">
             <div className="title">{e.title}</div>
             <FontAwesomeIcon
