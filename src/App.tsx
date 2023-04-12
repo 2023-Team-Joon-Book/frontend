@@ -7,6 +7,7 @@ import Shelf from "./pages/MyShelf";
 import WishShelf from "./pages/Wish";
 import ReadingShelf from "./pages/ReadingShelf";
 import EndShelf from "./pages/EndShelf";
+import ReadingDetail from "./pages/ReadingDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/my/wish" element={<WishShelf />} />
           <Route path="/my/ing" element={<ReadingShelf />} />
           <Route path="/my/fin" element={<EndShelf />} />
+          <Route path="/detail/:id" element={<ReadingDetail />} />
         </Routes>
       </div>
     </Router>

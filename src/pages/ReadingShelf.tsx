@@ -39,7 +39,7 @@ function ReadingShelf() {
     getAllList();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // [] 안에 있는 값이 바뀔 때마다 useEffect 호출 
-
+  
   return (
     <div className="std">
       <div>
@@ -48,7 +48,7 @@ function ReadingShelf() {
       <div className="container">
         {data?.map((e) => (
           <Link to={`/detail/${e.id}`}>
-            <img className="book" src={e.coverImageUrl} alt="이미지"/> 
+            <img className="book" src={e.coverImageUrl} />
           </Link>
         ))}
       </div>
@@ -57,22 +57,5 @@ function ReadingShelf() {
       </div>
     </div>
   );
-  // const Book = ({ data }: { data: Data }) => {
-  //   return (
-  //     <div className="std">
-  //     <div> 
-  //        <Header />
-  //     </div>
-  //     <div className="container">
-  //         <Link to={`/detail/${data.id}`}>
-  //           <img className="book" src={data.coverImageUrl} alt="이미지"/> 
-  //         </Link>
-  //     </div>
-  //     <div className="navbar">
-  //       <NavigationBar />
-  //     </div>
-  //   </div>
-  //   );
-  // }
 }
 export default ReadingShelf;
