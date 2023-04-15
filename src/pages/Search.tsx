@@ -3,24 +3,28 @@ import "../scss/Search.scss";
 import { faHeart, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavigationBar from "../components/NavigationBar";
+import StatusButton from "../components/StatusButton";
 
 function Search() {
   const bookList = [
     {
+      id: 1,
       image: "image",
       title: "Guy",
       author: "Jowwita Bydlowska",
     },
 
     {
+      id: 2,
       image: "image",
-      title: "Guy",
+      title: "1984",
       author: "Jowwita Bydlowska",
     },
 
     {
+      id: 3,
       image: "image",
-      title: "Guy",
+      title: "Linear Mathematics",
       author: "Jowwita Bydlowska",
     },
   ];
@@ -41,23 +45,32 @@ function Search() {
         />
       </div>
 
-      {bookList?.map((e) => (
-        <div className="listBox">
-          <div className="image">{e.image}</div>
-          <div className="info">
+      {bookList.map(function (e, i) {
+        return (
+          <div className="listBox">
+            <div className="image">{e.image}</div>
             <div className="title">{e.title}</div>
             <FontAwesomeIcon
               className="heartIcon"
               icon={faHeart}
-              color="#BFC66A"
+              color="#bfc66a"
               size="2x"
-              // onClick={}
+              width="fit-content"
             />
             <div className="author">{e.author}</div>
-            <button className="selectButton">읽어 보기</button>
+            <div className="buttonLayout">
+              <StatusButton
+                id={bookList[i].id}
+                title={bookList[i].title}
+                author={bookList[i].author}
+                image={bookList[i].image}
+                //progress
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
+
       <div className="verticleLine" />
       <div className="navigationBar">
         <NavigationBar />

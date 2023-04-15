@@ -27,7 +27,7 @@ export default function NavigationBar() {
           onClick={() => {
             navigate("/my");
           }}
-          style={{ color: 'grey'}}
+          style={{ color: "grey", fontSize: "35px" }}
         />
       </div>
       <div>
@@ -35,16 +35,15 @@ export default function NavigationBar() {
           onClick={() => {
             navigate("/");
           }}
-
-          style={{ color: 'grey'}}
+          style={{ color: "grey", fontSize: "35px" }}
         />
       </div>
       <div>
         <InsightsIcon
           onClick={() => {
-            navigate("/");
+            navigate("/my/activity");
           }}
-          style={{ color: 'grey'}}
+          style={{ color: "grey", fontSize: "35px" }}
         />
       </div>
     </div>
