@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
 import NavigationBar from "../components/NavigationBar";
 import Header from "../components/Header";
 import "../scss/MyShelf.scss";
@@ -18,7 +19,7 @@ interface Data {
 function WishShelf() {
   const [data, setData] = useState<Data[]>();
 
-  localStorage.setItem('id', '4');
+  localStorage.setItem('id', '5');
   const user = localStorage.getItem('id');
 
   // 읽는 책 조회 
@@ -43,11 +44,21 @@ function WishShelf() {
       <div>
         <Header />
       </div>
-      <div className="container">
-        {data?.map((e) => (
-          <div className="book"><img src={e.coverImageUrl} alt="이미지" /></div>
-        ))}
-      </div>
+      {data?.length === 0 ? 
+        <div className="empty">
+          <div>
+            책이 없습니다. 
+          </div> 
+        </div>
+        :
+        <div className="container">
+          {data?.map((e) => (
+            <Link key={e.id} to={`/detail/${e.id}`}>
+              <img className="book" src={e.coverImageUrl} />
+            </Link>
+          ))} 
+        </div>
+      }
       <div className="navbar">
         <NavigationBar />
       </div>

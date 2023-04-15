@@ -10,6 +10,14 @@
   margin-top: 60px;
 }
 
+.empty {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items : center;
+  background-color : rgb(221, 221, 221);
+}
+
 .book {
   background-color: rgb(221, 221, 221);
   height: 90px;
@@ -31,5 +39,5 @@
 .navbar {
   width: 390px;
   position: fixed;
-  bottom: 20px;
+  bottom: 1rem;
 }
