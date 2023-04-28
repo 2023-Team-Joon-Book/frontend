@@ -16,7 +16,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Search />} />
-          <Route path="/my" element={<Shelf />} />
+          {/* <Route path="/my" element={<Shelf />} /> */}
           <Route path="/my/wish" element={<WishShelf />} />
           <Route path="/my/ing" element={<ReadingShelf />} />
           <Route path="/my/fin" element={<EndShelf />} />

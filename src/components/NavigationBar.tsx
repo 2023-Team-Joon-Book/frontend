@@ -25,7 +25,7 @@ export default function NavigationBar() {
       <div>
         <BookRoundedIcon
           onClick={() => {
-            navigate("/my");
+            navigate("/my/ing");
           }}
           style={{ color: "grey", fontSize: "35px" }}
         />
