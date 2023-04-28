@@ -46,6 +46,8 @@ function Search() {
   //     title: String,
   //     width: Number
   //   }
+  localStorage.setItem('id', '4');
+  const user = localStorage.getItem('id');
   
   const onChange = (e: any) => {
     setKeyWord(e.target.value)
@@ -55,6 +57,9 @@ function Search() {
     setBookList(response.data)
     console.log(response.data)
   }
+
+
+
 
   return (
     <div className="backgroundStyle">
@@ -83,10 +88,27 @@ function Search() {
               icon={faHeart}
               color="#BFC66A"
               size="2x"
-              // onClick={}
+              onClick={async() => {
+                const response = await axios.post(`http://localhost:8080/api/v1/readings/${user}`, {
+                  bookId: 1, // 책 정보 받을때 책 id도 받아야함
+                  lastPage: 0,
+                  status: "UNREAD"
+                })
+                console.log(response.data)
+              }
+            }
             />
             <div className="author">{e.author}</div>
-            <button className="selectButton">읽어 보기</button>
+            <button className="selectButton"
+            onClick={async() => {
+              const response = await axios.post(`http://localhost:8080/api/v1/readings/${user}`, {
+                bookId: 1,
+                lastPage: 0,
+                status: "READING"
+              })
+              console.log(response.data)}
+            }
+            >읽어 보기</button>
           </div>
         </div>
       ))}
