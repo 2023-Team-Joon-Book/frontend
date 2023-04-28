@@ -3,6 +3,7 @@ import "../scss/Search.scss";
 import { faHeart, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavigationBar from "../components/NavigationBar";
+import StatusButton from "../components/StatusButton";
 import axios from "axios";
 
 function Search() {
@@ -17,36 +18,7 @@ function Search() {
     width: 0
     }
   ])
-
-  // const bookList = [
-  //   {
-  //     image: "image",
-  //     title: "Guy",
-  //     author: "Jowwita Bydlowska",
-  //   },
-
-  //   {
-  //     image: "image",
-  //     title: "Guy",
-  //     author: "Jowwita Bydlowska",
-  //   },
-
-  //   {
-  //     image: "image",
-  //     title: "Guy",
-  //     author: "Jowwita Bydlowska",
-  //   },
-  // ];
-  //  {
-  //     author: String,
-  //     coverImageUrl: String,
-  //     height: Number,
-  //     publisher: String,
-  //     thickness: Number, 
-  //     title: String,
-  //     width: Number
-  //   }
-  
+ 
   const onChange = (e: any) => {
     setKeyWord(e.target.value)
   }
@@ -55,7 +27,7 @@ function Search() {
     setBookList(response.data)
     console.log(response.data)
   }
-
+  
   return (
     <div className="backgroundStyle">
       <div className="searchBar">
@@ -73,23 +45,32 @@ function Search() {
         />
       </div>
 
-      {bookList?.map((e) => (
-        <div className="listBox">
-          <img className="image" src={e.coverImageUrl} alt="이미지"></img>
-          <div className="info">
+      {bookList.map(function (e, i) {
+        return (
+          <div className="listBox">
+            <div className="image">{e.image}</div>
             <div className="title">{e.title}</div>
             <FontAwesomeIcon
               className="heartIcon"
               icon={faHeart}
-              color="#BFC66A"
+              color="#bfc66a"
               size="2x"
-              // onClick={}
+              width="fit-content"
             />
             <div className="author">{e.author}</div>
-            <button className="selectButton">읽어 보기</button>
+            <div className="buttonLayout">
+              <StatusButton
+                id={bookList[i].id}
+                title={bookList[i].title}
+                author={bookList[i].author}
+                image={bookList[i].image}
+                //progress
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
+
       <div className="verticleLine" />
       <div className="navigationBar">
         <NavigationBar />

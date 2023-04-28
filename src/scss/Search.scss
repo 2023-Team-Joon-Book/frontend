@@ -1,15 +1,16 @@
 .backgroundStyle {
-  width: 390px;
-  height: 844px;
+  position: fixed;
+  left: 30.54px;
+  width: 100%;
+  height: 100%;
   display: flex;
+  text-align: center;
   flex-direction: column;
 }
 
 .searchBar {
   margin-top: 5%;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 75%;
+  width: 80%;
   height: 6vh;
   padding: 1vh;
   border-radius: 8vh;
@@ -33,9 +34,7 @@
 
 .listBox {
   margin-top: 5%;
-  margin-left: 10%;
-  margin-right: 10%;
-  width: 75%;
+  width: 80%;
   height: 13vh;
   padding: 1vh;
   border-color: black;
@@ -71,34 +70,31 @@
   text-align: left;
   font-size: large;
   float: left;
+  margin-top: 3%;
 }
 
 .author {
-  margin-top: 1%;
+  position: relative;
+  bottom: 90%;
+  left: 26%;
   text-align: left;
   font-size: small;
   color: gray;
 }
 
 .heartIcon {
-  margin-left: 70%;
+  position: relative;
+  bottom: 90%;
+  margin-left: 81%;
   width: 10%;
 }
 
 .selectButton {
-  margin-top: 5%;
-  margin-left: 60%;
-  margin-right: 5%;
-  width: 40%;
-  height: 30%;
+  width: fit-content;
+  height: fit-content;
   color: white;
   background-color: #bfc66a;
-  border-radius: 3vh;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom-color: white;
-  float: left;
+  border-radius: 20px;
 }
 
 .verticleLine {
@@ -109,7 +105,16 @@
 }
 
 .navigationBar {
-  width: 390px;
+  width: 370px;
   position: fixed;
+  left: 1.5%;
   bottom: 20px;
+}
+
+.buttonLayout {
+  height: fit-content;
+  width: fit-content;
+  position: relative;
+  bottom: 68%;
+  left: 60%;
 }
