@@ -20,7 +20,7 @@ interface Data {
 function ReadingShelf() {
   const [data, setData] = useState<Data[]>();
 
-  localStorage.setItem('id', '4');
+  localStorage.setItem('id', '1');
   const user = localStorage.getItem('id');
 
   // 읽는 책 조회 
