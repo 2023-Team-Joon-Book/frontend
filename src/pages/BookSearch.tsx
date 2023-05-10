@@ -5,6 +5,7 @@ import NavigationBar from "../components/NavigationBar";
 import StatusButton from "../components/StatusButton";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteBtn from "../components/FavoriteBtn";
 
 function BookSearch() {
   const [keyWord, setKeyWord] = useState("");
@@ -66,14 +67,7 @@ function BookSearch() {
               <div className="author">{e.author}</div>
             </div>
             <div className="btns_layout">
-              <div className="heartIcon">
-                <FavoriteBorderRoundedIcon
-                  onClick={() => {
-                    setColor("#bfc66a");
-                  }}
-                  style={{ borderColor: `${color}`, float: "right" }}
-                />
-              </div>
+              <FavoriteBtn />
               <div className="buttonLayout">
                 <StatusButton
                   id={bookList[i].id}
