@@ -9,6 +9,7 @@ import axios from "axios";
 function Search() {
   const [keyWord, setKeyWord] = useState("");
   const [bookList, setBookList] = useState([{
+    id:0,
     author: "",
     coverImageUrl: "",
     height: 0,
@@ -48,7 +49,7 @@ function Search() {
       {bookList.map(function (e, i) {
         return (
           <div className="listBox">
-            <div className="image">{e.image}</div>
+            <div className="coverImageUrl">{e.coverImageUrl}</div>
             <div className="title">{e.title}</div>
             <FontAwesomeIcon
               className="heartIcon"
@@ -63,8 +64,7 @@ function Search() {
                 id={bookList[i].id}
                 title={bookList[i].title}
                 author={bookList[i].author}
-                image={bookList[i].image}
-                //progress
+                coverImageUrl={bookList[i].coverImageUrl}
               />
             </div>
           </div>
