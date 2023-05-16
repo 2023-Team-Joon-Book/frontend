@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WishShelf from "./pages/Wish";
 import ReadingShelf from "./pages/ReadingShelf";
 import EndShelf from "./pages/EndShelf";
-//import Statistics from "./pages/Statistics";
+import Statistics from "./pages/Statistics";
 import BookDetail from "./pages/BookDetail";
 import BookSearch from "./pages/BookSearch";
 
@@ -19,7 +19,7 @@ function App() {
           <Route path="/my/fin" element={<EndShelf />} />
           <Route path="/book/:title" element={<BookDetail />} />
           <Route path="/" element={<BookSearch/>}/>
-          {/* <Route path="/my/activity" element={<Statistics />} /> */}
+          <Route path="/my/activity" element={<Statistics/>} />
         </Routes>
     </Router>
   );
