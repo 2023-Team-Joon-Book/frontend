@@ -25,7 +25,7 @@ const BookStack = () => {
         id: books.length + 1,
         width: 200, // 고정된 가로 크기 (변경 가능)
         left: Math.floor(window.innerWidth * 0.5 - 50 + Math.random() * 100), // 화면 가로 중앙에 배치
-        top: Math.floor(window.innerHeight * 0.23 + (window.innerHeight * 0.03 * books.length) - 20), // 화면 위에서 23% 위로 쌓이도록 배치
+        top: Math.floor(window.innerHeight * 0.15 + (window.innerHeight * 0.03 * books.length) - 20), // 화면 위에서 23% 위로 쌓이도록 배치
         color: books.length % 2 === 0 ? 'DCF1EB' : '75C8B0',// 홀수/짝수 번째에 따라 색상 설정
         text: `파워레인저${books.length + 1}`, // 책 안에 들어가는 텍스트 설정
         textColor: books.length % 2 === 0 ? '#000000' : '#FFFFFF', // 홀수/짝수 번째에 따라 글씨 색상 설정
