@@ -2,7 +2,7 @@ import React from 'react';
 import NavigationBar from '../components/NavigationBar';
 import BookStack from '../components/BookStack';
 import '../scss/MyShelf.scss';
-import BookStackHeader from '../components/BookStackHeader';
+import BookStackHeader from '../components/StatisticsHeader';
 
 export default function Statistics() {
   return (
