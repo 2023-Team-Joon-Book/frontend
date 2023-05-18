@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 
-  
-const StatisticsToolbar = () => {
+interface StatisticsToolbarProps {
+  onTabToggle: (tab: string) => void;
+}
+
+const StatisticsToolbar: React.FC<StatisticsToolbarProps> = ({ onTabToggle }) => {
   const [activeTab, setActiveTab] = useState('stack');
 
-  const handleTabToggle = (tab: React.SetStateAction<string>) => {
+  const handleTabToggle = (tab: string) => {
     setActiveTab(tab);
+    onTabToggle(tab);
   };
 
   return (
