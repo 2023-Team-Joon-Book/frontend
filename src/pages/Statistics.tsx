@@ -4,6 +4,7 @@ import BookStack from '../components/BookStack';
 import '../scss/MyShelf.scss';
 import BookStackHeader from '../components/StatisticsHeader';
 import StatisticsToolbar from '../components/StatisticsToolbar';
+import Chart from '../components/Chart';
 
 export default function Statistics() {
   const [activeTab, setActiveTab] = useState('stack');
@@ -23,9 +24,13 @@ export default function Statistics() {
       <div className="navbar">
         <NavigationBar />
       </div>
-      {activeTab === 'stack' && (
+      {activeTab === 'stack' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
         <div className="bookstack-container">
           <BookStack />
+        </div>
+      ) : (
+        <div className="booktrend-container">
+          <Chart />
         </div>
       )}
     </div>
