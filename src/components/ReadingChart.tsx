@@ -1,8 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, ChartConfiguration } from 'chart.js';
+import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Title, Legend, ChartConfiguration } from 'chart.js';
 
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement);
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Title, Legend);
 
 const ReadingChart: React.FC = () => {
   const data = {
@@ -28,17 +28,17 @@ const ReadingChart: React.FC = () => {
     options: {
       responsive: true,
       plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: '일주일 독서 통계',
-        },
         tooltip: {
           enabled: true,
           mode: 'nearest',
+          intersect: false,
+          callbacks: {
+            label: (context) => `${context.parsed.y} 회`,
+          },
+        },
+        legend: {
+          display: true,
+          position: 'top',
         },
       },
       scales: {
