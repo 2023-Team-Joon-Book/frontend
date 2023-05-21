@@ -4,7 +4,7 @@ import BookStack from '../components/BookStack';
 import '../scss/MyShelf.scss';
 import BookStackHeader from '../components/StatisticsHeader';
 import StatisticsToolbar from '../components/StatisticsToolbar';
-import Chart from '../components/Chart';
+import ReadingChart from '../components/ReadingChart';
 
 export default function Statistics() {
   const [activeTab, setActiveTab] = useState('stack');
@@ -30,7 +30,7 @@ export default function Statistics() {
         </div>
       ) : (
         <div className="booktrend-container">
-          <Chart />
+          <ReadingChart />
         </div>
       )}
     </div>
