@@ -14,7 +14,7 @@ export default function Statistics() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <div>
         <BookStackHeader />
       </div>
@@ -24,15 +24,17 @@ export default function Statistics() {
       <div className="navbar">
         <NavigationBar />
       </div>
-      {activeTab === 'stack' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
-        <div className="bookstack-container">
-          <BookStack />
-        </div>
-      ) : (
-        <div className="booktrend-container">
-          <ReadingChart />
-        </div>
-      )}
+      <div className="flex-grow relative">
+        {activeTab === 'stack' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
+          <div className="bookstack-container h-full">
+            <BookStack />
+          </div>
+        ) : (
+          <div className="booktrend-container h-full">
+            <ReadingChart />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
