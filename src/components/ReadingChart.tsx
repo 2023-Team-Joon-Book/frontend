@@ -12,10 +12,11 @@ const ReadingChart: React.FC = () => {
         label: '독서 통계',
         data: [12, 19, 3, 5, 2, 3, 10], // 임의의 데이터
         fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgba(75, 192, 192, 0.2)',
-        pointHoverBackgroundColor: 'rgba(75, 192, 192, 0.5)',
-        pointHoverBorderColor: 'rgba(75, 192, 192, 0.8)',
+        backgroundColor: 'rgba(191, 198, 106, 1)',
+        borderColor: 'rgba(191, 198, 106, 1)',
+        pointHoverBackgroundColor: 'rgba(191, 198, 106, 1)',
+        pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
+        pointBackgroundColor: 'rgba(191, 198, 106, 1)',
         borderWidth: 5,
         pointRadius: 8,
       },
@@ -66,8 +67,10 @@ const ReadingChart: React.FC = () => {
   };
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <Line {...options} />
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20">
+      <div className="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12">
+        <Line {...options} />
+      </div>
     </div>
   );
 };
