@@ -134,15 +134,15 @@ const ReadingChart: React.FC = () => {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20">
       <div className="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 border border-green-700 rounded-full p-2 absolute top-5 left-1/2 transform -translate-x-1/2">
           <button
             className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-200"
             onClick={handlePrevWeek}
           >
             <IoMdArrowBack className="w-5 h-5" />
           </button>
-          <span className="text-lg font-semibold">
-            {format(startDate, 'MM.dd')} - {format(endDate, 'MM.dd')}
+          <span className="text-lg font-semibold whitespace-nowrap">
+            {format(startDate, 'yyyy.MM.dd')} ~ {format(endDate, 'yyyy.MM.dd')}
           </span>
           <button
             className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-200"
