@@ -13,7 +13,7 @@ const ReadingChart: React.FC = () => {
     datasets: [
       {
         label: '독서 통계',
-        data: [12, 19, 3, 5, 2, 3, 10], // 임의의 데이터
+        data: [12, 15, 3, 5, 2, 3, 10], // 임의의 데이터
         fill: false,
         backgroundColor: 'rgba(191, 198, 106, 1)',
         borderColor: 'rgba(191, 198, 106, 1)',
@@ -93,6 +93,7 @@ const ReadingChart: React.FC = () => {
     data: data,
     options: {
       responsive: true,
+      maintainAspectRatio: false, // Add this line
       plugins: {
         tooltip: {
           enabled: true,
@@ -121,10 +122,13 @@ const ReadingChart: React.FC = () => {
           },
         },
         y: {
-          display: false, // Y축 표시 안 함
+          display: true,
           grid: {
             display: true,
-            lineWidth: 10, // 가로 선의 두께 설정
+            
+          },
+          ticks: {
+            stepSize: 5, // Set the interval of y-axis data values to 1
           },
         },
       },
@@ -132,9 +136,9 @@ const ReadingChart: React.FC = () => {
   };
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20">
-      <div className="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12">
-        <div className="flex items-center justify-between mb-4 border border-green-700 rounded-full p-2 absolute top-5 left-1/2 transform -translate-x-1/2">
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20 h-3/4">
+      <div className="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-3/4">
+        <div className="flex items-center justify-between mb-4 border border-green-700 rounded-full p-2 absolute top-1 left-1/2 transform -translate-x-1/2">
           <button
             className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-200"
             onClick={handlePrevWeek}
