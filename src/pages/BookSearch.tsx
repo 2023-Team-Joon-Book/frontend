@@ -4,12 +4,10 @@ import "../scss/Search.scss";
 import NavigationBar from "../components/NavigationBar";
 import StatusButton from "../components/StatusButton";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
-import FavoriteBtn from "../components/FavoriteBtn";
+// import FavoriteBtn from "../components/FavoriteBtn";
 
 function BookSearch() {
   const [keyWord, setKeyWord] = useState("");
-  const [color, setColor] = useState("white");
   const [bookList, setBookList] = useState([
     {
       id: 0,
@@ -49,7 +47,7 @@ function BookSearch() {
 
       {bookList.map(function (e, i) {
         return (
-          <div className="listBox">
+          <div className="listBox" key={e.id}>
             <img
               style={{
                 maxWidth: "80px",
@@ -67,7 +65,6 @@ function BookSearch() {
               <div className="author">{e.author}</div>
             </div>
             <div className="btns_layout">
-              <FavoriteBtn />
               <div className="buttonLayout">
                 <StatusButton
                   id={bookList[i].id}
