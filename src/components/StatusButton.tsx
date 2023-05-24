@@ -27,13 +27,13 @@ function StatusButton({
   author: string;
   coverImageUrl: string;
 }) {
-  localStorage.setItem("id", "2");
+  localStorage.setItem("id", "1");
   const user = localStorage.getItem("id");
 
   const handlePostData = async () => {
     const data: MyBook = {
       bookId: id,
-      lastPage: 100,
+      lastPage: 0,
       status: "READING",
     };
 
