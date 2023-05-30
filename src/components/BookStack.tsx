@@ -26,6 +26,7 @@ const BookStack = () => {
           textColor: index % 2 === 0 ? '#000000' : '#FFFFFF',
         }));
         setBooksData(booksData);
+        console.log('Books Data:', booksData);
       })
       .catch(error => {
         console.error('Error fetching books', error);
