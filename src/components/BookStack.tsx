@@ -12,6 +12,39 @@ interface Book {
 
 const BookStack = () => {
   const [books, setBooks] = useState<Book[]>([]);
+  const [booksData, setBooksData] = useState<Book[]>([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/v1/readings/1?status=READ')
+      .then(response => {
+        const booksData = response.data.map((bookData: any, index: number) => ({
+          id: bookData.id,
+          title: bookData.title,
+          left: Math.floor(window.innerWidth * 0.5 - 75 + Math.random() * 100),
+          top: Math.floor(window.innerHeight * 0.67 - (window.innerHeight * 0.033 * index) - 20),
+          color: index % 2 === 0 ? 'DCF1EB' : '75C8B0',
+          textColor: index % 2 === 0 ? '#000000' : '#FFFFFF',
+        }));
+        setBooksData(booksData);
+      })
+      .catch(error => {
+        console.error('Error fetching books', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (booksData.length > 0) {
+      const interval = setInterval(() => {
+        if (booksData.length > 0) {
+          setBooks(prevBooks => [booksData[0], ...prevBooks]);
+          setBooksData(prevBooksData => prevBooksData.slice(1));
+        } else {
+          clearInterval(interval);
+        }
+      }, 300);
+      return () => clearInterval(interval);
+    }
+  }, [booksData]);
 
   const handleResize = () => {
     setBooks(prevBooks => {
@@ -22,25 +55,6 @@ const BookStack = () => {
       }));
     });
   };
-
-  useEffect(() => {
-    axios.get('http://localhost:8080/api/v1/readings/1?status=READ')
-      .then(response => {
-        const booksData = response.data.map((bookData: any, index: number) => ({
-          id: bookData.id,
-          title: bookData.title,
-          left: Math.floor(window.innerWidth * 0.5 - 75 + Math.random() * 100),
-          top: Math.floor(window.innerHeight * 0.03 + (window.innerHeight * 0.033 * index) - 20),
-          color: index % 2 === 0 ? 'DCF1EB' : '75C8B0',
-          textColor: index % 2 === 0 ? '#000000' : '#FFFFFF',
-        }));
-
-        setBooks(booksData);
-      })
-      .catch(error => {
-        console.error('Error fetching books', error);
-      });
-  }, []);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -63,9 +77,9 @@ const BookStack = () => {
             width: 150,
             height: 23,
             left: book.left - 150 / 2,
-            top: book.top + index * 2,
+            top: book.top + index * 1.2,
             transition: 'all 0.5s',
-            zIndex: 20 - index,
+            zIndex: books.length - index,
             overflow: 'hidden',
             backgroundColor: `#${book.color}`,
             color: book.textColor,
@@ -79,4 +93,3 @@ const BookStack = () => {
 };
 
 export default BookStack;
-
