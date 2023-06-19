@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import Header from "../components/Header";
 import "../scss/MyShelf.scss";
@@ -18,8 +18,9 @@ interface Data {
 
 function ReadingShelf() {
   const [data, setData] = useState<Data[]>();
+  const navigate = useNavigate();
 
-  localStorage.setItem("id", "2");
+  localStorage.setItem("id", "1");
   const user = localStorage.getItem("id");
 
   // 읽는 책 조회
@@ -27,6 +28,7 @@ function ReadingShelf() {
     const response = await axios.get(
       `http://localhost:8080/api/v1/readings/${user}?status=READING`
     );
+    console.log(response.data); // Here
     setData(response.data);
     return response.data;
   };
@@ -41,6 +43,11 @@ function ReadingShelf() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // [] 안에 있는 값이 바뀔 때마다 useEffect 호출
 
+  const handleBookClick = (bookId: number) => {
+    console.log(bookId); // Here
+    navigate(`/book/${bookId}`);
+  };
+
   return (
     <div className="std">
       <div>
@@ -48,9 +55,13 @@ function ReadingShelf() {
       </div>
       <div className="container">
         {data?.map((e) => (
-          <Link to={`/book/${e.title}`} key={e.id}>
+          <div
+            onClick={() => handleBookClick(e.id)}
+            key={e.id}
+            className="book-link"
+          >
             <img className="book" src={e.coverImageUrl} alt="이미지" />
-          </Link>
+          </div>
         ))}
       </div>
       <div className="navbar">
@@ -58,22 +69,7 @@ function ReadingShelf() {
       </div>
     </div>
   );
-  // const Book = ({ data }: { data: Data }) => {
-  //   return (
-  //     <div className="std">
-  //     <div>
-  //        <Header />
-  //     </div>
-  //     <div className="container">
-  //         <Link to={`/detail/${data.id}`}>
-  //           <img className="book" src={data.coverImageUrl} alt="이미지"/>
-  //         </Link>
-  //     </div>
-  //     <div className="navbar">
-  //       <NavigationBar />
-  //     </div>
-  //   </div>
-  //   );
-  // }
 }
+
 export default ReadingShelf;
+

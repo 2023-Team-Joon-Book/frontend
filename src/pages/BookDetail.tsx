@@ -1,19 +1,46 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../scss/BookDetail.scss";
 import Divider from "../components/Divider";
 import NavigationBar from "../components/NavigationBar";
 
+interface Book {
+  id: number;
+  author: string;
+  coverImageUrl: string;
+  height: number;
+  pages: number;
+  publisher: string;
+  title: string;
+  width: number;
+}
 function BookDetail() {
-  const location = useLocation();
+  const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
-  function goback() {
-    navigate("/");
+  const [book, setBook] = useState<Book | null>(null);
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/v1/books/${bookId}`);
+        setBook(response.data);
+      } catch (error) {
+        console.error("Error fetching book:", error);
+      }
+    };
+
+    fetchBook();
+  }, [bookId]);
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  if (!book) {
+    return <div>Loading...</div>;
   }
-  const coverImageUrl = location.state.coverImageUrl;
-  const title = location.state.title;
-  const author = location.state.author;
 
   return (
     <div
@@ -27,7 +54,7 @@ function BookDetail() {
       }}
     >
       <ArrowBackIosRoundedIcon
-        onClick={goback}
+        onClick={goBack}
         style={{
           color: "grey",
           position: "fixed",
@@ -39,13 +66,13 @@ function BookDetail() {
       />
       <div className="context_layout">
         <img
-          src={`${coverImageUrl}`}
+          src={book.coverImageUrl}
           alt="책 이미지"
           className="bookimage"
         ></img>
-        <div className="booktitle">{title}</div>
-        <div className="bookauthor">{author}</div>
-        <label className="booktext">출판사</label>
+        <div className="booktitle">{book.title}</div>
+        <div className="bookauthor">{book.author}</div>
+        <label className="booktext">{book.publisher}</label>
 
         <div className="divider_layout1">
           <Divider />
