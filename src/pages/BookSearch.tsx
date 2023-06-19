@@ -6,20 +6,21 @@ import StatusButton from "../components/StatusButton";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 // import FavoriteBtn from "../components/FavoriteBtn";
 
+interface BookList {
+  id: number;
+  author: string;
+  coverImageUrl: string;
+  height: number;
+  publisher: string;
+  thickness: number;
+  title: string;
+  width: number;
+}
+
 function BookSearch() {
   const [keyWord, setKeyWord] = useState("");
-  const [bookList, setBookList] = useState([
-    {
-      id: 0,
-      author: "",
-      coverImageUrl: "",
-      height: 0,
-      publisher: "",
-      thickness: 0,
-      title: "",
-      width: 0,
-    },
-  ]);
+  const [bookList, setBookList] = useState<BookList[]>();
+ 
 
   const onChange = (e: any) => {
     setKeyWord(e.target.value);
@@ -45,7 +46,7 @@ function BookSearch() {
         </div>
       </div>
 
-      {bookList.map(function (e, i) {
+      {bookList?.map(function (e, i) {
         return (
           <div className="listBox" key={e.id}>
             <img
