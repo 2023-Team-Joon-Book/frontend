@@ -1,69 +1,52 @@
-import React from "react";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import { useNavigate, useLocation } from "react-router-dom";
-import "../scss/BookDetail.scss";
-import Divider from "../components/Divider";
-import NavigationBar from "../components/NavigationBar";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+interface Book {
+  id: number;
+  author: string;
+  coverImageUrl: string;
+  height: number;
+  pages: number;
+  publisher: string;
+  title: string;
+  width: number;
+}
 
 function BookDetail() {
-  const location = useLocation();
+  const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
-  function goback() {
-    navigate("/");
+  const [book, setBook] = useState<Book | null>(null);
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/v1/books/${bookId}`);
+        setBook(response.data);
+      } catch (error) {
+        console.error("Error fetching book:", error);
+      }
+    };
+
+    fetchBook();
+  }, [bookId]);
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  if (!book) {
+    return <div>Loading...</div>;
   }
-  const coverImageUrl = location.state.coverImageUrl;
-  const title = location.state.title;
-  const author = location.state.author;
 
   return (
-    <div
-      style={{
-        width: "390px",
-        height: "844px",
-        display: "flex",
-        flexDirection: "column",
-        textAlign: "center",
-        justifyContent: "center",
-      }}
-    >
-      <ArrowBackIosRoundedIcon
-        onClick={goback}
-        style={{
-          color: "grey",
-          position: "fixed",
-          width: "30px",
-          height: "fit-content",
-          left: "3%",
-          top: "2%",
-        }}
-      />
-      <div className="context_layout">
-        <img
-          src={`${coverImageUrl}`}
-          alt="책 이미지"
-          className="bookimage"
-        ></img>
-        <div className="booktitle">{title}</div>
-        <div className="bookauthor">{author}</div>
-        <label className="booktext">출판사</label>
-
-        <div className="divider_layout1">
-          <Divider />
-        </div>
-        <div className="book_page">
-          <label className="book_page_text">현재까지 읽은 페이지 수</label>
-          <label className="book_page_num">p.47</label>
-        </div>
-        <div className="divider_layout2">
-          <Divider />
-        </div>
-        <div className="navbar_layout">
-          <NavigationBar />
-        </div>
-        {/* <text className="progress">
-          {"<"}진행도{">"}
-        </text> */}
-      </div>
+    <div>
+      <button onClick={goBack}>Go Back</button>
+      <h2>{book.title}</h2>
+      <p>Author: {book.author}</p>
+      <p>Publisher: {book.publisher}</p>
+      <p>Pages: {book.pages}</p>
+      <img src={book.coverImageUrl} alt="Book Cover" />
     </div>
   );
 }
