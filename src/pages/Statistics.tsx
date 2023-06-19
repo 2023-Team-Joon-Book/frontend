@@ -21,9 +21,6 @@ export default function Statistics() {
       <div>
         <StatisticsToolbar onTabToggle={handleTabToggle} />
       </div>
-      <div className="navbar">
-        <NavigationBar />
-      </div>
       <div className="flex-grow relative">
         {activeTab === 'stack' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
           <div className="bookstack-container h-full">
@@ -34,6 +31,9 @@ export default function Statistics() {
             <ReadingChart />
           </div>
         )}
+      </div>
+      <div className="navbar">
+        <NavigationBar />
       </div>
     </div>
   );

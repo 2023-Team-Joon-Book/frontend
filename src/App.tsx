@@ -17,7 +17,7 @@ function App() {
           <Route path="/my/wish" element={<WishShelf />} />
           <Route path="/my/ing" element={<ReadingShelf />} />
           <Route path="/my/fin" element={<EndShelf />} />
-          <Route path="/book/:title" element={<BookDetail />} />
+          <Route path="/book/:bookId" element={<BookDetail />} />
           <Route path="/" element={<BookSearch/>}/>
           <Route path="/my/activity" element={<Statistics/>} />
         </Routes>
