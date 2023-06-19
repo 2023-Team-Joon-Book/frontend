@@ -64,16 +64,15 @@ function BookDetail() {
           top: "2%",
         }}
       />
-      <div className="context_layout">
+      <div className="context_layout ">
         <img
           src={book.coverImageUrl}
           alt="책 이미지"
-          className="bookimage"
+          className="bookimage, mx-auto mt-16"
         ></img>
         <div className="booktitle">{book.title}</div>
-        <div className="bookauthor">{book.author}</div>
-        <label className="booktext">{book.publisher}</label>
-
+        <div className="bookauthor">작가: {book.author}</div>
+        <label className="booktext">출판사: {book.publisher}</label>
         <div className="divider_layout1">
           <Divider />
         </div>
