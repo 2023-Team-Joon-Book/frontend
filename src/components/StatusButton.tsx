@@ -86,7 +86,7 @@ function StatusButton({
             <ListItemText
               onClick={() => {
                 if (`${text}` === "읽어보기" && open === false) {
-                  navigate(`/book/${title}`, {
+                  navigate(`/book/${id}`, {
                     state: {
                       coverImageUrl: `${coverImageUrl}`,
                       title: `${title}`,

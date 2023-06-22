@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import Header from "../components/Header";
 import "../scss/MyShelf.scss";
@@ -72,3 +72,4 @@ function ReadingShelf() {
 }
 
 export default ReadingShelf;
+
