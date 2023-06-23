@@ -5,6 +5,7 @@ import axios from "axios";
 import "../scss/BookDetail.scss";
 import Divider from "../components/Divider";
 import NavigationBar from "../components/NavigationBar";
+import DetailPercent from "../components/DetailPercent";
 
 interface Book {
   id: number;
@@ -16,6 +17,8 @@ interface Book {
   title: string;
   width: number;
 }
+
+
 function BookDetail() {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
@@ -73,19 +76,19 @@ function BookDetail() {
         <div className="booktitle">{book.title}</div>
         <div className="bookauthor">작가: {book.author}</div>
         <label className="booktext">출판사: {book.publisher}</label>
+        <div className="bookauthor">총 페이지 수: {book.pages}</div>
         <div className="divider_layout1">
           <Divider />
         </div>
         <div className="book_page">
-          <label className="book_page_text">현재까지 읽은 페이지 수</label>
-          <label className="book_page_num">p.47</label>
+          <DetailPercent totalPages={book.pages}/>
         </div>
         <div className="divider_layout2">
           <Divider />
         </div>
-        <div className="navbar_layout">
+        {/* <div className="navbar_layout">
           <NavigationBar />
-        </div>
+        </div> */}
         {/* <text className="progress">
           {"<"}진행도{">"}
         </text> */}
