@@ -39,15 +39,20 @@ function DetailPercent({ totalPages }: DetailPercentProps) {
           style={{ width: `${percent}%`, height: '6px' }}
         ></div>
       </div>
-      <div className="mt-2 text-gray-500 text-lg text-center">{Math.round(percent)}%</div>
+        <div className="mt-2 flex justify-between">
+            <div className="text-gray-500 text-lg">{Math.round(percent)}%</div>
+            <div className="text-gray-500 text-lg">{`${currentPage}/${totalPages}`}</div>
+        </div>
       <button 
         onClick={handleOpenModal}
-        className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        style={{ backgroundColor: '#BFC66A' }}
+        className="mt-4 w-full  text-white font-bold py-2 px-4 rounded"
       >
         페이지 입력하기
       </button>
       <PagesModal isOpen={isModalOpen} onSubmit={handleModalSubmit} onCancel={() => setIsModalOpen(false)}>
-        <h3 className="background-#BFC66A ,text-lg leading-6 font-medium text-gray-900" id="modal-title">
+        <h3 
+        className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
           페이지 수 입력
         </h3>
         <div className="mt-2">
