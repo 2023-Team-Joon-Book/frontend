@@ -41,7 +41,7 @@ function BookDetail() {
     navigate(-1);
   };
 
-  if (!book) {
+  if (!book || !bookId) {
     return <div>Loading...</div>;
   }
 
@@ -81,7 +81,7 @@ function BookDetail() {
           <Divider />
         </div>
         <div className="book_page">
-          <DetailPercent totalPages={book.pages}/>
+          <DetailPercent totalPages={book.pages} bookId={bookId}/>
         </div>
         <div className="divider_layout2">
           <Divider />

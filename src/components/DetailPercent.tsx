@@ -1,15 +1,36 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import PagesModal from './PagesModal';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 interface DetailPercentProps {
   totalPages: number;
+  bookId: string; 
 }
 
-function DetailPercent({ totalPages }: DetailPercentProps) {
+function DetailPercent({ totalPages,  bookId }: DetailPercentProps) {
+  
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<number | null>(null);
   const percent: number = (currentPage / totalPages) * 100;
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        if (bookId === undefined) {
+          throw new Error('bookId is undefined');
+        }
+        const response = await axios.get(`http://localhost:8080/api/v1/readings/percentages/1?bid=${bookId}`);
+        setCurrentPage(response.data.data);
+      } catch (error) {
+        console.error("Error fetching book data:", error);
+      }
+    };
+  
+    fetchBook();
+  }, [bookId]);
+
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value: number = parseInt(e.target.value);
@@ -19,6 +40,13 @@ function DetailPercent({ totalPages }: DetailPercentProps) {
   const handleModalSubmit = () => {
     if (inputValue !== null && inputValue >= 1 && inputValue <= totalPages) {
       setCurrentPage(inputValue);
+      if (bookId === undefined) {
+        throw new Error('bookId is undefined');
+      }
+      axios.put(`http://localhost:8080/api/v1/readings/1`, { bookId: parseInt(bookId), lastPage: inputValue })
+        .catch(error => {
+          console.error("Error updating pages:", error);
+        });
     }
     setIsModalOpen(false);
   };
