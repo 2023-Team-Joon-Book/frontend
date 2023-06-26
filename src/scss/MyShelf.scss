@@ -1,35 +1,41 @@
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  text-align: center;
-  justify-content: space-evenly;
-  width: fit-content;
-  height: fit-content;
-  margin-left: 14.5px;
-  margin-top: 60px;
+  grid-gap: 15px;
+  margin-top: 25px;
 }
 
 .book {
-  background-color: rgb(221, 221, 221);
-  height: 90px;
-  width: 75px;
-  border-radius: 8px;
-  padding: 16px;
-  // margin-top: 30px;
-  // margin-bottom: 30px;
+  height: 120px;
+  width: 90px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .std {
-  width: 390px;
-  height: 844px;
-  display: flex;
-  flex-direction: column;
-  //   justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  // display: flex;
+  // flex-direction: column;
+  // font-family: Jeju Gothic;
 }
 
 .navbar {
   width: 390px;
   position: fixed;
   bottom: 20px;
+}
+
+.book_link {
+  align-self: center;
+  justify-self: center;
+}
+
+.book_image{
+  align-self: center;
+  justify-self: center;
+  height: 120px;
+  width: 90px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

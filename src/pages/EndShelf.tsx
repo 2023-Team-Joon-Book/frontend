@@ -18,7 +18,7 @@ interface Data {
 function EndShelf() {
   const [data, setData] = useState<Data[]>();
 
-  localStorage.setItem('id', '1');
+  localStorage.setItem('id', '2');
   const user = localStorage.getItem('id');
 
   // 읽는 책 조회 
@@ -45,7 +45,7 @@ function EndShelf() {
       </div>
       <div className="container">
         {data?.map((e) => (
-          <img className="book" src={e.coverImageUrl} alt="이미지" />
+          <img className="book_image" src={e.coverImageUrl} alt="이미지" />
         ))} 
       </div>
       <div className="navbar">
