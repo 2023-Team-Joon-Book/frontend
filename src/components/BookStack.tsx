@@ -20,8 +20,8 @@ const BookStack = () => {
 
   const calculateHeight = (pages: number) => {
     const minPages = 0,
-      maxPages = 500;
-    const minHeight = 5,
+      maxPages = 1000;
+    const minHeight = 10,
       maxHeight = 50;
     return (
       ((maxHeight - minHeight) * (pages - minPages)) / (maxPages - minPages) +
@@ -131,7 +131,7 @@ const BookStack = () => {
             }}
             onClick={() => handleBookClick(book)}
           >
-            <span className="text-sm text-center">{book.title}</span>
+            <span className="text-sm text-center flex-wrap overflow-hidden">{book.title}</span>
           </div>
         </div>
       ))}
