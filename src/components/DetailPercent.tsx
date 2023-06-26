@@ -29,7 +29,7 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
     };
 
     fetchBook();
-  }, [bookId] );
+  }, [bookId , currentPage] );
 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
