@@ -18,7 +18,7 @@ interface Data {
 function EndShelf() {
   const [data, setData] = useState<Data[]>();
 
-  localStorage.setItem('id', '2');
+  localStorage.setItem('id', '1');
   const user = localStorage.getItem('id');
 
   // 읽는 책 조회 
