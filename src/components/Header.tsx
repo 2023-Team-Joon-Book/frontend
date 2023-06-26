@@ -1,33 +1,16 @@
 import * as React from "react";
-// import BookRoundedIcon from "@mui/icons-material/BookRounded";
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import InsightsIcon from "@mui/icons-material/Insights";
-// import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useNavigate } from "react-router-dom";
+import Divider from "./Divider";
+import "../scss/Header.scss";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h2
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          marginLeft: "50px",
-        }}
-      >
-        내 서재
-      </h2>
-      <div style={{ height: "2px", background: "#BFC66A" }}></div>
-      <div
-        style={{
-          display: "flex",
-          textAlign: "center",
-          justifyContent: "space-evenly",
-          marginTop: "10px",
-          marginBottom: "10px"
-        }}
+    <div className="head_frame">
+      <div className="head_title">내 서재</div>
+      <Divider />
+      <div className="head_context"
       >
         <div
           onClick={() => {
@@ -43,15 +26,8 @@ export default function NavigationBar() {
         >
           읽은 책
         </div>
-        <div
-          onClick={() => {
-            navigate("/my/wish");
-          }}
-        >
-          찜 목록
-        </div>
       </div>
-      <div style={{ height: "2px", background: "#BFC66A" }}></div>
+      <Divider />
     </div>
   );
 }

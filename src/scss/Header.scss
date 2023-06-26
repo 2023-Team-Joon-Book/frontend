@@ -1,0 +1,23 @@
+.head_title {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5%;
+  font-size: x-large;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.head_context {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: larger;
+}
+
+.head_frame {
+  width: fit-content;
+  height: fit-content;
+  font-family: Jeju Gothic;
+}

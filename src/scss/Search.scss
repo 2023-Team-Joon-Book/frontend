@@ -38,10 +38,10 @@
 .listBox {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  // justify-content: space-between;
   margin-top: 5%;
   width: 85%;
-  height: 13vh;
+  height: 15vh;
   padding: 1vh;
   border-color: black;
   background-color: #e8e8e8;
@@ -78,7 +78,7 @@
   min-width: 100%;
   height: fit-content;
   float: right;
-  margin-top: 3%;
+  // margin-top: 3%;
 }
 
 .author {
@@ -87,7 +87,7 @@
   float: right;
   min-width: 100%;
   height: fit-content;
-  margin-top: 10%;
+  margin-top: 5px;
   font-size: small;
   color: gray;
 }

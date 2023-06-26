@@ -7,6 +7,7 @@ import EndShelf from "./pages/EndShelf";
 import Statistics from "./pages/Statistics";
 import BookDetail from "./pages/BookDetail";
 import BookSearch from "./pages/BookSearch";
+import SearchDetail from "./pages/SearchDetail";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/book/:bookId" element={<BookDetail />} />
           <Route path="/" element={<BookSearch/>}/>
           <Route path="/my/activity" element={<Statistics/>} />
+          <Route path="/info/:id" element={<SearchDetail />} />
         </Routes>
     </Router>
   );

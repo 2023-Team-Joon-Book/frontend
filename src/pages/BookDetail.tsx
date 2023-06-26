@@ -24,7 +24,9 @@ function BookDetail() {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/books/${bookId}`);
+        const response = await axios.get(
+          `http://localhost:8080/api/v1/books/${bookId}`
+        );
         setBook(response.data);
       } catch (error) {
         console.error("Error fetching book:", error);
@@ -44,27 +46,10 @@ function BookDetail() {
 
   return (
     <div
-      style={{
-        width: "390px",
-        height: "844px",
-        display: "flex",
-        flexDirection: "column",
-        textAlign: "center",
-        justifyContent: "center",
-      }}
+      className="frame"
     >
-      <ArrowBackIosRoundedIcon
-        onClick={goBack}
-        style={{
-          color: "grey",
-          position: "fixed",
-          width: "30px",
-          height: "fit-content",
-          left: "3%",
-          top: "2%",
-        }}
-      />
-      <div className="context_layout ">
+      <ArrowBackIosRoundedIcon onClick={goBack} className="back_arrow" />
+      <div className="context_layout">
         <img
           src={book.coverImageUrl}
           alt="책 이미지"
