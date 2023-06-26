@@ -4,10 +4,10 @@ function Divider() {
   return (
     <div
       style={{
-        width: "360px",
+        width: "390px",
         height: "2px",
         background: "#BFC66A",
-        marginLeft: "15px"
+        // marginLeft: "15px"
       }}
     ></div>
   );
