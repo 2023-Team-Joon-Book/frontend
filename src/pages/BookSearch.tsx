@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../scss/Search.scss";
 import NavigationBar from "../components/NavigationBar";
-import StatusButton from "../components/StatusButton";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-// import FavoriteBtn from "../components/FavoriteBtn";
+
 
 interface BookList {
   id: number;
@@ -20,7 +20,8 @@ interface BookList {
 function BookSearch() {
   const [keyWord, setKeyWord] = useState("");
   const [bookList, setBookList] = useState<BookList[]>();
- 
+
+  const navigate = useNavigate();
 
   const onChange = (e: any) => {
     setKeyWord(e.target.value);
@@ -46,9 +47,19 @@ function BookSearch() {
         </div>
       </div>
 
-      {bookList?.map(function (e, i) {
+      {bookList?.map(function (e) {
         return (
-          <div className="listBox" key={e.id}>
+          <div className="listBox" key={e.id} onClick={() => {
+            navigate(`/info/${e.id}`, {
+              state: {
+                coverImageUrl: `${e.coverImageUrl}`,
+                title: `${e.title}`,
+                publisher: `${e.publisher}`,
+                author:`${e.author}`,
+                id: `${e.id}`,
+              }
+            })
+          }}>
             <img
               style={{
                 maxWidth: "80px",
@@ -66,14 +77,14 @@ function BookSearch() {
               <div className="author">{e.author}</div>
             </div>
             <div className="btns_layout">
-              <div className="buttonLayout">
+              {/* <div className="buttonLayout">
                 <StatusButton
                   id={bookList[i].id}
                   title={bookList[i].title}
                   author={bookList[i].author}
                   coverImageUrl={bookList[i].coverImageUrl}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         );
