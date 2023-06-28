@@ -7,7 +7,7 @@ import axios from "axios";
 interface Data {
   id: number;
   author: string;
-  coverImageUrl: string;
+  cover_image_url: string;
   height: number;
   publisher: string;
   thickness: number;
@@ -45,7 +45,7 @@ function EndShelf() {
       </div>
       <div className="container">
         {data?.map((e) => (
-          <img className="book_image" src={e.coverImageUrl} alt="이미지" />
+          <img className="book_image" src={e.cover_image_url} alt="이미지" />
         ))} 
       </div>
       <div className="navbar">

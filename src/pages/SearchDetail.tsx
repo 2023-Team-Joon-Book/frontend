@@ -13,7 +13,7 @@ export default function SearchDetail() {
     navigate(-1);
   };
 
-  const coverImageUrl = location.state.coverImageUrl;
+  const cover_image_url = location.state.coverImageUrl;
   const title = location.state.title;
   const author = location.state.author;
   const publisher = location.state.publisher;
@@ -23,7 +23,7 @@ export default function SearchDetail() {
     <div className="frame">
       <ArrowBackIosRoundedIcon onClick={goBack} className="back_arrow" />
       <div className="context_layout">
-        <img src={coverImageUrl} alt="책 표지" className="bookimage" />
+        <img src={cover_image_url} alt="책 표 지"className="bookimage" />
         <div className="booktitle">{title}</div>
         <div className="bookauthor">작가: {author}</div>
         <div className="bookauthor">출판사: {publisher}</div>
