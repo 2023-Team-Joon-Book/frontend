@@ -20,7 +20,7 @@ function ReadingShelf() {
   const [data, setData] = useState<Data[]>();
   const navigate = useNavigate();
 
-  localStorage.setItem("id", "1");
+  localStorage.setItem("id", "3");
   const user = localStorage.getItem("id");
 
   // 읽는 책 조회

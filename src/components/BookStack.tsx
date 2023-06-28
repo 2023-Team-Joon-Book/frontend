@@ -31,7 +31,7 @@ const BookStack = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/v1/readings/1?status=READING')
+      .get('http://localhost:8080/api/v1/readings/3?status=READING')
       .then((response) => {
         const booksData = response.data.map((bookData: any, index: number) => {
           const height = calculateHeight(bookData.pages);
