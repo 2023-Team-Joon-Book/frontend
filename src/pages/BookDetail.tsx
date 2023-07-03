@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../scss/BookDetail.scss";
 import Divider from "../components/Divider";
-import NavigationBar from "../components/NavigationBar";
 import DetailPercent from "../components/DetailPercent";
 
 interface Book {
