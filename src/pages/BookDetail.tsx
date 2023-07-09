@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../scss/BookDetail.scss";
 import Divider from "../components/Divider";
-import NavigationBar from "../components/NavigationBar";
+// import NavigationBar from "../components/NavigationBar";
 import DetailPercent from "../components/DetailPercent";
 
 interface Book {
@@ -66,14 +66,14 @@ function BookDetail() {
           <Divider />
         </div>
         <div className="book_page">
-          <DetailPercent totalPages={book.pages} bookId={bookId}/>
+          <DetailPercent totalPages={book.pages} bookId={bookId} />
         </div>
         <div className="divider_layout2">
           <Divider />
         </div>
-        <div className="navbar_layout">
+        {/* <div className="navbar_layout">
           <NavigationBar />
-        </div>
+        </div> */}
         {/* <text className="progress">
           {"<"}진행도{">"}
         </text> */}

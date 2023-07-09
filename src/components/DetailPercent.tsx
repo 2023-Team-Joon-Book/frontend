@@ -21,17 +21,17 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
           throw new Error('bookId is undefined');
         }
         const response = await axios.get(`http://localhost:8080/api/v1/readings/percentages/3?bid=${bookId}`);
-        console.log(response.data); 
+        console.log(response.data);
         setCurrentPersent(response.data.data.percentage);
         setLastPage(response.data.data.lastPage);
-        
+
       } catch (error) {
         console.error('Error fetching book data:', error);
       }
     };
 
     fetchBook();
-  }, [bookId , lastPage] );
+  }, [bookId, lastPage]);
 
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +46,15 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
       }
       axios
         .put(`http://localhost:8080/api/v1/readings/3`, { bookId: parseInt(bookId), lastPage: inputValue })
+        .then((response) => {
+          // Assuming the response contains the updated page data
+          const updatedLastPage = response.data.data.lastPage;
+          const updatedCurrentPercent = response.data.data.percentage;
+
+          // Set the state with the updated values
+          setLastPage(updatedLastPage);
+          setCurrentPersent(updatedCurrentPercent);
+        })
         .catch((error) => {
           console.error('Error updating pages:', error);
         });
