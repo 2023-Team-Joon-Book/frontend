@@ -13,7 +13,7 @@ export default function SearchDetail() {
     navigate(-1);
   };
 
-  const cover_image_url = location.state.cover_imag_url;
+  const cover_image_url = location.state.cover_image_url;
   const title = location.state.title;
   const author = location.state.author;
   const publisher = location.state.publisher;

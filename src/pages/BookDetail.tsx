@@ -56,7 +56,7 @@ function BookDetail() {
         <img
           src={book.cover_image_url}
           alt="책 이미지"
-          className="bookimage, mx-auto mt-16"
+          className="bookimage mx-auto mt-16"
         ></img>
         <div className="booktitle">{book.title}</div>
         <div className="bookauthor">작가: {book.author}</div>
