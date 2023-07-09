@@ -44,7 +44,7 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
         throw new Error('bookId is undefined');
       }
       axios
-        .put(`http://localhost:8080/api/v1/readings/3`, { bookId: parseInt(bookId), lastPage: inputValue })
+        .put(`http://localhost:8080/api/v1/readings/3`, { bookId: bookId, lastPage: inputValue })
         .then((response) => {
           // Assuming the response contains the updated page data
           const updatedLastPage = response.data.data.lastPage;
@@ -60,6 +60,26 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
     }
     setIsModalOpen(false);
   };
+
+
+  const handleFinishReading = () => {
+    if (bookId === undefined) {
+      throw new Error('bookId is undefined');
+    }
+    axios
+      .put(`http://localhost:8080/api/v1/readings/status/3?status=READING`, { bookId: bookId, lastPage: totalPages, status: "READ" })
+      .then((response) => {
+        // Assuming the response contains the updated data
+        const updatedLastPage = response.data.data.lastPage;
+        // Set the state with the updated values
+        setLastPage(updatedLastPage);
+        // Update your status state here as per your requirement
+      })
+      .catch((error) => {
+        console.error('Error updating status:', error);
+      });
+  };
+
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -87,7 +107,7 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
           페이지 입력
         </button>
         <button
-          // onClick={/* Add the relevant handler function here */}
+          onClick={handleFinishReading}
           style={{ backgroundColor: '#BFC66A' }}
           className="w-full text-white font-bold py-2 px-4 rounded"
         >
