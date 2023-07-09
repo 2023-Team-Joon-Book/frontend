@@ -79,13 +79,22 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
         <div className="text-gray-500 text-lg">{Math.round(currentPersent)}%</div>
         <div className="text-gray-500 text-lg">{`${lastPage}/${totalPages}`}</div>
       </div>
-      <button
-        onClick={handleOpenModal}
-        style={{ backgroundColor: '#BFC66A' }}
-        className="mt-4 w-full  text-white font-bold py-2 px-4 rounded"
-      >
-        페이지 입력하기
-      </button>
+      <div className="mt-4 flex justify-between space-x-4">
+        <button
+          onClick={handleOpenModal}
+          style={{ backgroundColor: '#BFC66A' }}
+          className="w-full  text-white font-bold py-2 px-4 rounded"
+        >
+          페이지 입력
+        </button>
+        <button
+          // onClick={/* Add the relevant handler function here */}
+          style={{ backgroundColor: '#BFC66A' }}
+          className="w-full text-white font-bold py-2 px-4 rounded"
+        >
+          다 읽었어요
+        </button>
+      </div>
       <PagesModal isOpen={isModalOpen} onSubmit={handleModalSubmit} onCancel={() => setIsModalOpen(false)}>
         <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
           페이지 수 입력
@@ -100,6 +109,7 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
           />
         </div>
       </PagesModal>
+
     </div>
   );
 }
