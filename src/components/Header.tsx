@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Divider from "./Divider";
 import "../scss/Header.scss";

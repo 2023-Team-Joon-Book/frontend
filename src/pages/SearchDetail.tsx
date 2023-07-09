@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";

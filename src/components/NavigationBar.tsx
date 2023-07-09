@@ -1,4 +1,3 @@
-import * as React from "react";
 import BookRoundedIcon from "@mui/icons-material/BookRounded";
 import InsightsIcon from "@mui/icons-material/Insights";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";

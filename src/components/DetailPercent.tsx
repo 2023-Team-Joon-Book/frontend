@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import PagesModal from './PagesModal';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 interface DetailPercentProps {

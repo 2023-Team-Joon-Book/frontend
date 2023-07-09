@@ -1,4 +1,3 @@
-import * as React from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
