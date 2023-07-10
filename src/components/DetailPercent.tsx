@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import PagesModal from './PagesModal';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface DetailPercentProps {
   totalPages: number;
@@ -85,8 +87,28 @@ function DetailPercent({ totalPages, bookId }: DetailPercentProps) {
     setIsModalOpen(true);
   };
 
+  useEffect(() => {
+    if (currentPersent === 100) {
+      toast(<>
+        책을 다 읽으셨군요!
+        <br />
+        다 읽었어요 버튼을 클릭하세요!
+      </>,
+        {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    }
+  }, [currentPersent]);
+
   return (
     <div className="mx-auto">
+      <ToastContainer />
       <div className="relative">
         <div className="absolute bottom-0 left-0 right-0 bg-gray-300 rounded-full" style={{ height: '6px' }}></div>
         <div

@@ -71,9 +71,9 @@ function BookDetail() {
         <div className="divider_layout2">
           <Divider />
         </div>
-        <div className="navbar_layout">
+        {/* <div className="navbar_layout">
           <NavigationBar />
-        </div>
+        </div> */}
         {/* <text className="progress">
           {"<"}진행도{">"}
         </text> */}
