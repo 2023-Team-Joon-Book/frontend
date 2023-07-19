@@ -8,7 +8,7 @@ import axios from "axios";
 interface Data {
   id: number;
   author: string;
-  coverImageUrl: string;
+  cover_image_url: string;
   height: number;
   publisher: string;
   thickness: number;
@@ -20,7 +20,7 @@ function ReadingShelf() {
   const [data, setData] = useState<Data[]>();
   const navigate = useNavigate();
 
-  localStorage.setItem("id", "1");
+  localStorage.setItem("id", "3");
   const user = localStorage.getItem("id");
 
   // 읽는 책 조회
@@ -60,7 +60,7 @@ function ReadingShelf() {
             key={e.id}
             className="book_link"
           >
-            <img className="book" src={e.coverImageUrl} alt="이미지" />
+            <img className="book" src={e.cover_image_url} alt="이미지" />
           </div>
         ))}
       </div>

@@ -9,7 +9,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 interface BookList {
   id: number;
   author: string;
-  coverImageUrl: string;
+  cover_image_url: string;
   height: number;
   publisher: string;
   thickness: number;
@@ -52,7 +52,7 @@ function BookSearch() {
           <div className="listBox" key={e.id} onClick={() => {
             navigate(`/info/${e.id}`, {
               state: {
-                coverImageUrl: `${e.coverImageUrl}`,
+                cover_image_url: `${e.cover_image_url}`,
                 title: `${e.title}`,
                 publisher: `${e.publisher}`,
                 author:`${e.author}`,
@@ -69,7 +69,7 @@ function BookSearch() {
                 marginTop: "5px",
                 marginLeft: "5px",
               }}
-              src={`${e.coverImageUrl}`}
+              src={`${e.cover_image_url}`}
               alt="책 이미지"
             ></img>
             <div className="bookInfo">

@@ -1,4 +1,3 @@
-import * as React from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -10,7 +9,7 @@ interface MyBook {
 }
 
 function StatBtn({ id }: { id: number }) {
-  localStorage.setItem("id", "2");
+  localStorage.setItem("id", "3");
   const user = localStorage.getItem("id");
 
   const handlePostData = async () => {

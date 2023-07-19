@@ -9,7 +9,7 @@ import DetailPercent from "../components/DetailPercent";
 interface Book {
   id: number;
   author: string;
-  coverImageUrl: string;
+  cover_image_url: string;
   height: number;
   pages: number;
   publisher: string;
@@ -53,9 +53,9 @@ function BookDetail() {
       <ArrowBackIosRoundedIcon onClick={goBack} className="back_arrow" />
       <div className="context_layout">
         <img
-          src={book.coverImageUrl}
+          src={book.cover_image_url}
           alt="책 이미지"
-          className="bookimage, mx-auto mt-16"
+          className="bookimage mx-auto mt-16"
         ></img>
         <div className="booktitle">{book.title}</div>
         <div className="bookauthor">작가: {book.author}</div>
@@ -65,7 +65,7 @@ function BookDetail() {
           <Divider />
         </div>
         <div className="book_page">
-          <DetailPercent totalPages={book.pages} bookId={bookId}/>
+          <DetailPercent totalPages={book.pages} bookId={bookId} />
         </div>
         <div className="divider_layout2">
           <Divider />
