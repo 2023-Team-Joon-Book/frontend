@@ -3,6 +3,7 @@ import NavigationBar from "../components/NavigationBar";
 import Header from "../components/Header";
 import "../scss/MyShelf.scss";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface Data {
   id: number;
@@ -16,6 +17,7 @@ interface Data {
 }
 
 function EndShelf() {
+  const navigate = useNavigate();
   const [data, setData] = useState<Data[]>();
 
   localStorage.setItem('id', '3');
@@ -38,14 +40,24 @@ function EndShelf() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // [] 안에 있는 값이 바뀔 때마다 useEffect 호출 
 
+  const handleBookClick = (bookId: number) => {
+    console.log(bookId); // Here
+    navigate(`/book/${bookId}`);
+  };
+
   return (
     <div className="std">
       <div>
         <Header />
       </div>
       <div className="container max-h-[calc(100vh-200px)] overflow-y-auto">
-        {data?.map((e) => (
-          <img className="book_image" src={e.cover_image_url} alt="이미지" />
+        {data?.map((e) => (<div
+          onClick={() => handleBookClick(e.id)}
+          key={e.id}
+          className="book_link"
+        >
+          <img className="book" src={e.cover_image_url} alt="이미지" />
+        </div>
         ))}
       </div>
       <div className="navbar">
