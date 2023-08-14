@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "../components/NavigationBar";
 import Header from "../components/Header";
 import "../scss/MyShelf.scss";
@@ -21,21 +21,21 @@ function EndShelf() {
   localStorage.setItem('id', '3');
   const user = localStorage.getItem('id');
 
-  // 읽는 책 조회 
-  const allList = async () =>{
+  // 읽은 책 조회 
+  const allList = async () => {
     const response = await axios.get(`http://localhost:8080/api/v1/readings/${user}?status=READ`)
     setData(response.data)
     return response.data;
   }
 
   // 컴포넌트가 실행될 때 바로 보이게 
-  useEffect(()=>{
-    const getAllList = async () =>{
+  useEffect(() => {
+    const getAllList = async () => {
       const allBookList = await allList();
-      if(allBookList) setData(allBookList);
+      if (allBookList) setData(allBookList);
     };
     getAllList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // [] 안에 있는 값이 바뀔 때마다 useEffect 호출 
 
   return (
@@ -43,10 +43,10 @@ function EndShelf() {
       <div>
         <Header />
       </div>
-      <div className="container">
+      <div className="container max-h-[calc(100vh-200px)] overflow-y-auto">
         {data?.map((e) => (
           <img className="book_image" src={e.cover_image_url} alt="이미지" />
-        ))} 
+        ))}
       </div>
       <div className="navbar">
         <NavigationBar />

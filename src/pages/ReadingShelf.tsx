@@ -53,7 +53,7 @@ function ReadingShelf() {
       <div>
         <Header />
       </div>
-      <div className="container">
+      <div className="container max-h-[calc(100vh-200px)] overflow-y-auto">
         {data?.map((e) => (
           <div
             onClick={() => handleBookClick(e.id)}
