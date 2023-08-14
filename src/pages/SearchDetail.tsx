@@ -9,7 +9,7 @@ export default function SearchDetail() {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1);
+    navigate('/my/ing');
   };
 
   const cover_image_url = location.state.cover_image_url;

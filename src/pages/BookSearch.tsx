@@ -13,6 +13,9 @@ interface BookList {
   publisher: string;
   thickness: number;
   title: string;
+
+
+
   width: number;
 }
 
