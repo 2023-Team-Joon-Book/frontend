@@ -42,7 +42,7 @@ export default function NavigationBar() {
           onClick={() => {
             navigate("/my/activity");
           }}
-          style={{ color: "grey", fontSize: "30px" }}
+          style={{ color: "#bfc66a", fontSize: "30px" }}
         />
       </div>
     </div>
