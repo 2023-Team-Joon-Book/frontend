@@ -5,7 +5,6 @@ import "../scss/Search.scss";
 import NavigationBar from "../components/NavigationBar";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
-
 interface BookList {
   id: number;
   author: string;
@@ -23,10 +22,17 @@ function BookSearch() {
 
   const navigate = useNavigate();
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyWord(e.target.value);
   };
-  const onClick = async () => {
+
+  const onKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      await searchBooks();
+    }
+  };
+
+  const searchBooks = async () => {
     const response = await axios.get(
       `http://localhost:8080/api/v1/books/search?title=${keyWord}`
     );
@@ -40,26 +46,33 @@ function BookSearch() {
         <input
           className="textInput"
           onChange={onChange}
+          onKeyPress={onKeyPress}
           placeholder="원하는 책의 이름을 검색해보세요"
         />
         <div>
-          <SearchRoundedIcon style={{ marginTop: "50%" }} onClick={onClick} />
+          <SearchRoundedIcon
+            style={{ marginTop: "50%" }}
+            onClick={searchBooks}
+          />
         </div>
       </div>
-
       {bookList?.map(function (e) {
         return (
-          <div className="listBox" key={e.id} onClick={() => {
-            navigate(`/info/${e.id}`, {
-              state: {
-                cover_image_url: `${e.cover_image_url}`,
-                title: `${e.title}`,
-                publisher: `${e.publisher}`,
-                author:`${e.author}`,
-                id: `${e.id}`,
-              }
-            })
-          }}>
+          <div
+            className="listBox"
+            key={e.id}
+            onClick={() => {
+              navigate(`/info/${e.id}`, {
+                state: {
+                  cover_image_url: `${e.cover_image_url}`,
+                  title: `${e.title}`,
+                  publisher: `${e.publisher}`,
+                  author: `${e.author}`,
+                  id: `${e.id}`,
+                },
+              });
+            }}
+          >
             <img
               style={{
                 maxWidth: "80px",
@@ -71,7 +84,7 @@ function BookSearch() {
               }}
               src={`${e.cover_image_url}`}
               alt="책 이미지"
-            ></img>
+            />
             <div className="bookInfo">
               <div className="title"> {e.title} </div>
               <div className="author">{e.author}</div>
