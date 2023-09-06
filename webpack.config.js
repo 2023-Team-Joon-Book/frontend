@@ -1,17 +1,18 @@
-// webpack.config.js
-module: {
+const path = require('path');
+
+module.exports = {
+  module: {
     rules: [
       {
-        test: /.jsx?$/,
+        test: /\.(jsx?)$/,  // 정규 표현식 수정
         include: [path.resolve(__dirname, "src")],
         exclude: [path.resolve(__dirname, "node_modules")],
         loader: "babel-loader",
       },
       {
-        test: /.css?$/,
-        exclude: [],
-        //로더는 오른쪽부터 읽어들이므로 postcss-loader를 맨 오른쪽에 넣어준다.
+        test: /\.css$/,  // 정규 표현식 수정
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
     ],
-  },
+  }
+};
