@@ -44,8 +44,8 @@ const BookStack = () => {
             left: Math.floor(window.innerWidth * 0.5 - 75 + Math.random() * 100),
             top: Math.floor(
               window.innerHeight * 0.67 -
-                window.innerHeight * 0.033 * index -
-                height / 2
+              window.innerHeight * 0.033 * index -
+              height / 2
             ),
             color: index % 2 === 0 ? 'DCF1EB' : '75C8B0',
             textColor: index % 2 === 0 ? '#000000' : '#FFFFFF',

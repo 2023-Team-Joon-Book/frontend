@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import NavigationBar from '../components/NavigationBar';
-import BookStack from '../components/BookStack';
+import BookStack from '../components/statistics/BookStack';
 import '../scss/MyShelf.scss';
-import BookStackHeader from '../components/StatisticsHeader';
-import StatisticsToolbar from '../components/StatisticsToolbar';
-import ReadingChart from '../components/ReadingChart';
+import BookStackHeader from '../components/statistics/StatisticsHeader';
+import StatisticsToolbar from '../components/statistics/StatisticsToolbar';
+import ReadingChart from '../components/statistics/ReadingChart';
 
 export default function Statistics() {
   const [activeTab, setActiveTab] = useState('stack');

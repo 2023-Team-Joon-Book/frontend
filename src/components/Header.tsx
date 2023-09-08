@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Divider from "./Divider";
+import Divider from "./shelf/Divider";
 import "../scss/Header.scss";
 
 export default function NavigationBar() {

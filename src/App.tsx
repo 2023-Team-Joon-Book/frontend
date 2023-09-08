@@ -1,28 +1,32 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-//import Search from "./pages/Search";
-//import Shelf from "./pages/MyShelf";
-import WishShelf from "./pages/Wish";
+import WishShelf from "./pages/WishShelf";
 import ReadingShelf from "./pages/ReadingShelf";
 import EndShelf from "./pages/EndShelf";
 import Statistics from "./pages/Statistics";
-import BookDetail from "./pages/BookDetail";
 import BookSearch from "./pages/BookSearch";
-import SearchDetail from "./pages/SearchDetail";
+import MainPage from "./pages/MainPage"
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+
 
 function App() {
   return (
     <Router>
-        <Routes>
-          {/* <Route path="/" element={<Search />} /> */}
-          {/* <Route path="/my" element={<Shelf />} /> */}
-          <Route path="/my/wish" element={<WishShelf />} />
-          <Route path="/my/ing" element={<ReadingShelf />} />
-          <Route path="/my/fin" element={<EndShelf />} />
-          <Route path="/book/:bookId" element={<BookDetail />} />
-          <Route path="/" element={<BookSearch/>}/>
-          <Route path="/my/activity" element={<Statistics/>} />
-          <Route path="/info/:id" element={<SearchDetail />} />
-        </Routes>
+      <Routes>
+        {/* 원준 */}
+        <Route path="/" element={<MainPage />} />
+        {/* 추후 담당자 */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        {/* 우희 */}
+        <Route path="/booksearch" element={<BookSearch />} />
+        {/* 선재 */}
+        <Route path="/wish" element={<WishShelf />} />
+        <Route path="/reading" element={<ReadingShelf />} />
+        <Route path="/finish" element={<EndShelf />} />
+        {/* 추후 담당자 */}
+        <Route path="/activity" element={<Statistics />} />
+      </Routes>
     </Router>
   );
 }

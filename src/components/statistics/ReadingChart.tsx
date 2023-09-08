@@ -125,7 +125,7 @@ const ReadingChart: React.FC = () => {
           display: true,
           grid: {
             display: true,
-            
+
           },
           ticks: {
             stepSize: 5, // Set the interval of y-axis data values to 1

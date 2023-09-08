@@ -1,8 +1,8 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import NavigationBar from "../components/NavigationBar";
+import NavigationBar from "../NavigationBar";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import "../scss/BookDetail.scss";
-import StatBtn from "../components/StatBtn";
+import StatBtn from "./StatBtn";
 
 export default function SearchDetail() {
   const location = useLocation();

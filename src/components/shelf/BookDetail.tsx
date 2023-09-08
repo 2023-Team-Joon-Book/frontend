@@ -3,8 +3,8 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../scss/BookDetail.scss";
-import Divider from "../components/Divider";
-import DetailPercent from "../components/DetailPercent";
+import Divider from "./Divider";
+import DetailPercent from "./DetailPercent";
 
 interface Book {
   id: number;
