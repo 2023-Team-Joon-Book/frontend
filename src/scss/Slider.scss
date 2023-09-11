@@ -7,6 +7,7 @@ ul, li {
 }
 
 .wrapper {
+    
     .slide_container {
         overflow: hidden;
 
@@ -19,13 +20,13 @@ ul, li {
             align-items: center;
             flex-wrap: nowrap;
             position: relative;
-            padding: 40px 0;
+            padding: 20px 0;
 
             &.original {
-                animation: 20s linear infinite normal none running infiniteAnimation1; // 애니메이션 속도를 8초로 조정
+                animation: 8s linear infinite normal none running infiniteAnimation1; // 애니메이션 속도를 8초로 조정
             }
             &.clone {
-                animation: 20s linear infinite infiniteAnimation2;
+                animation: 8s linear infinite infiniteAnimation2;
             }
             &.stop {
                 animation-play-state: paused;
@@ -37,8 +38,8 @@ ul, li {
                 z-index: 2;
                 transition: 0.3s;
                 transform: scale(1);
-                width: 280px;
-                height: 280px;
+                width: 220px;
+                height: 300px;
                 display: flex;
                 justify-content: center;
                 align-items: center; // 텍스트를 중앙에 위치시키기 위함
@@ -72,14 +73,8 @@ ul, li {
     0% {
         transform: translateX(0%);
     }
-    50% {
-        transform: translateX(-100%);
-    }
-    50.1% {
-        transform: translateX(100%);
-    }
     100% {
-        transform: translateX(0%);
+        transform: translateX(-100%);
     }
 }
 @keyframes infiniteAnimation2 {
@@ -87,6 +82,6 @@ ul, li {
         transform: translateX(0%);
     }
     100% {
-        transform: translateX(-200%);
+        transform: translateX(-100%);
     }
 }

@@ -1,17 +1,17 @@
 import { useState } from "react";
 import "../../scss/Slider.scss";
 
-const slides1 = [
+const slides2 = [
     { color: "gray", target: "#", text: "책1" },
     { color: "gray", target: "#", text: "책2" },
     { color: "gray", target: "#", text: "책3" },
     { color: "gray", target: "#", text: "책4" },
     { color: "gray", target: "#", text: "책5" },
     { color: "gray", target: "#", text: "책6" },
+    // ... (나머지 슬라이드 항목들)
 ];
 
-
-export default function MainSlider() {
+export default function ReverseSlider() {
     const [animate, setAnimate] = useState(true);
     const onStop = () => setAnimate(false);
     const onRun = () => setAnimate(true);
@@ -21,8 +21,8 @@ export default function MainSlider() {
             {/* 첫 번째 슬라이드 그룹 */}
             <div className="slide_container" onMouseEnter={onStop} onMouseLeave={onRun}>
                 <ul className="slide_wrapper">
-                    <div className={"slide original".concat(animate ? "" : " stop")}>
-                        {slides1.map((s, i) => (
+                    <div className={"slide original reverse".concat(animate ? "" : " stop")}>
+                        {slides2.map((s, i) => (
                             <li key={i} className="big">
                                 <div className="item" style={{ background: s.color }}>
                                     {s.text}
@@ -30,8 +30,8 @@ export default function MainSlider() {
                             </li>
                         ))}
                     </div>
-                    <div className={"slide clone".concat(animate ? "" : " stop")}>
-                        {slides1.map((s, i) => (
+                    <div className={"slide clone reverse".concat(animate ? "" : " stop")}>
+                        {slides2.map((s, i) => (
                             <li key={i} className="big">
                                 <div className="item" style={{ background: s.color }}>
                                     {s.text}
