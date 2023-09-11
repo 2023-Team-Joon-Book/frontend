@@ -23,10 +23,10 @@ ul, li {
             padding: 20px 0;
 
             &.original {
-                animation: 8s linear infinite normal none running infiniteAnimation1; // 애니메이션 속도를 8초로 조정
+                animation: 10s linear infinite normal none running infiniteAnimation1; // 애니메이션 속도를 8초로 조정
             }
             &.clone {
-                animation: 8s linear infinite infiniteAnimation2;
+                animation: 10s linear infinite infiniteAnimation2;
             }
             &.stop {
                 animation-play-state: paused;
@@ -38,8 +38,8 @@ ul, li {
                 z-index: 2;
                 transition: 0.3s;
                 transform: scale(1);
-                width: 220px;
-                height: 300px;
+                width: 180px;
+                height: 260px;
                 display: flex;
                 justify-content: center;
                 align-items: center; // 텍스트를 중앙에 위치시키기 위함
