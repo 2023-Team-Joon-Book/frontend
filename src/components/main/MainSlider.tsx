@@ -1,17 +1,17 @@
 import { useState } from "react";
 import "../../scss/Slider.scss";
-import book1 from '../../../public/book1.png';
-import book2 from '../../../public/book2.png';
-import book3 from '../../../public/book3.png';
-import book4 from '../../../public/book4.png';
-import book5 from '../../../public/book5.png';
-import book6 from '../../../public/book6.png';
-import book7 from '../../../public/book7.png';
-import book8 from '../../../public/book8.png';
-import book9 from '../../../public/book9.png';
-import book10 from '../../../public/book10.png';
-import book11 from '../../../public/book11.png';
-import book12 from '../../../public/book12.png';
+import book1 from '../../../public/img/book1.png';
+import book2 from '../../../public/img/book2.png';
+import book3 from '../../../public/img/book3.png';
+import book4 from '../../../public/img/book4.png';
+import book5 from '../../../public/img/book5.png';
+import book6 from '../../../public/img/book6.png';
+import book7 from '../../../public/img/book7.png';
+import book8 from '../../../public/img/book8.png';
+import book9 from '../../../public/img/book9.png';
+import book10 from '../../../public/img/book10.png';
+import book11 from '../../../public/img/book11.png';
+import book12 from '../../../public/img/book12.png';
 
 const slides1 = [
     { imgSrc: book1, target: "#", },

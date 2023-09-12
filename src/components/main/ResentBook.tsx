@@ -1,4 +1,31 @@
 import React from 'react';
+import book1 from '../../../public/img/book1.png';
+import book2 from '../../../public/img/book2.png';
+import book3 from '../../../public/img/book3.png';
+import book4 from '../../../public/img/book4.png';
+import book5 from '../../../public/img/book5.png';
+import book6 from '../../../public/img/book6.png';
+import book7 from '../../../public/img/book7.png';
+import book8 from '../../../public/img/book8.png';
+import book9 from '../../../public/img/book9.png';
+import book10 from '../../../public/img/book10.png';
+import book11 from '../../../public/img/book11.png';
+import book12 from '../../../public/img/book12.png';
+
+const img = [
+    { imgSrc: book1, },
+    { imgSrc: book2, },
+    { imgSrc: book3, },
+    { imgSrc: book4, },
+    { imgSrc: book5, },
+    { imgSrc: book6, },
+    { imgSrc: book7, },
+    { imgSrc: book8, },
+    { imgSrc: book9, },
+    { imgSrc: book10, },
+    { imgSrc: book11, },
+    { imgSrc: book12, },
+];
 
 interface BookProps {
     title: string;
@@ -7,9 +34,9 @@ interface BookProps {
 
 const Book: React.FC<BookProps> = ({ title, content }) => (
     <div className="w-44">
-        <div className="h-64 bg-gray-200 rounded-lg flex flex-col justify-center items-center text-xl font-semibold">
-            책
-        </div>
+        <img className="h-64 bg-gray-200 rounded-lg flex flex-col 
+        justify-center " alt="iPhone_01" src="img/book5.png">
+        </img>
         <div className="mt-2 text-left">
             <div className="text-2xl mb-1 truncate">{title}</div>
             <div className="text-base text-gray-600 truncate">{content}</div>
