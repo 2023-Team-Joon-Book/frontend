@@ -7,7 +7,7 @@ import BookSearch from "./pages/BookSearch";
 import MainPage from "./pages/MainPage"
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-
+import BookShelf from "./pages/BookShelf";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
         <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} />
+        <Route path="/shelf" element={<BookShelf />} />
         {/* 추후 담당자 */}
         <Route path="/activity" element={<Statistics />} />
       </Routes>

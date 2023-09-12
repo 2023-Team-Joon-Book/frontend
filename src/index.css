@@ -18,3 +18,9 @@ code {
 .jejugothic * {
   font-family: ‘Jeju Gothic’, sans-serif;
  }
+
+ @layer utilities {
+  .shadow-bottom {
+    box-shadow: 0 6px 2px -1px rgba(0, 0, 0, 0.1), 0 2px 0px -1px rgba(0, 0, 0, 0.1);
+  }
+}
