@@ -1,20 +1,31 @@
 import { useState } from "react";
 import "../../scss/Slider.scss";
+import book1 from '../../../public/book1.png';
+import book2 from '../../../public/book2.png';
+import book3 from '../../../public/book3.png';
+import book4 from '../../../public/book4.png';
+import book5 from '../../../public/book5.png';
+import book6 from '../../../public/book6.png';
+import book7 from '../../../public/book7.png';
+import book8 from '../../../public/book8.png';
+import book9 from '../../../public/book9.png';
+import book10 from '../../../public/book10.png';
+import book11 from '../../../public/book11.png';
+import book12 from '../../../public/book12.png';
 
 const slides2 = [
-    { color: "gray", target: "#", text: "책1" },
-    { color: "gray", target: "#", text: "책2" },
-    { color: "gray", target: "#", text: "책3" },
-    { color: "gray", target: "#", text: "책4" },
-    { color: "gray", target: "#", text: "책5" },
-    { color: "gray", target: "#", text: "책6" },
-    { color: "gray", target: "#", text: "책7" },
-    { color: "gray", target: "#", text: "책8" },
-    { color: "gray", target: "#", text: "책9" },
-    { color: "gray", target: "#", text: "책10" },
-    { color: "gray", target: "#", text: "책11" },
-    { color: "gray", target: "#", text: "책12" },
-    // ... (나머지 슬라이드 항목들)
+    { imgSrc: book1, target: "#", },
+    { imgSrc: book2, target: "#", },
+    { imgSrc: book3, target: "#", },
+    { imgSrc: book4, target: "#", },
+    { imgSrc: book5, target: "#", },
+    { imgSrc: book6, target: "#", },
+    { imgSrc: book7, target: "#", },
+    { imgSrc: book8, target: "#", },
+    { imgSrc: book9, target: "#", },
+    { imgSrc: book10, target: "#", },
+    { imgSrc: book11, target: "#", },
+    { imgSrc: book12, target: "#", },
 ];
 
 export default function ReverseSlider() {
@@ -30,8 +41,8 @@ export default function ReverseSlider() {
                     <div className={"slide original reverse".concat(animate ? "" : " stop")}>
                         {slides2.map((s, i) => (
                             <li key={i} className="big">
-                                <div className="item" style={{ background: s.color }}>
-                                    {s.text}
+                                <div className="item" style={{ backgroundImage: `url(${s.imgSrc})` }}>
+                                    {/* {s.text} */}
                                 </div>
                             </li>
                         ))}
@@ -39,8 +50,8 @@ export default function ReverseSlider() {
                     <div className={"slide clone reverse".concat(animate ? "" : " stop")}>
                         {slides2.map((s, i) => (
                             <li key={i} className="big">
-                                <div className="item" style={{ background: s.color }}>
-                                    {s.text}
+                                <div className="item" style={{ backgroundImage: `url(${s.imgSrc})` }}>
+                                    {/* {s.text} */}
                                 </div>
                             </li>
                         ))}
