@@ -1,25 +1,56 @@
 import React, { FC } from 'react';
 import logo from '../../../public/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const Header: FC = () => {
+    const navigate = useNavigate();
+
+    const goToLogin = () => {
+        navigate('/login');
+    };
+
+    const goToSignUp = () => {
+        navigate('/signup');
+    };
     const headerStyle = {
-        width: '100%', // 요소의 너비를 100%로 설정
-        backgroundColor: 'white', // 배경색을 하얀색으로 설정
+        width: '100%',
+        backgroundColor: 'white',
     };
 
     const imageStyle = {
-        width: 'auto', // 이미지의 너비를 100%로 설정하여 가로 비율을 가득 채움
-        height: '144px', // 이미지의 높이를 자동으로 조정하여 비율 유지
+        width: 'auto',
+        height: '144px',
     };
+
     return (
-        <div className="fixed top-0 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center" style={headerStyle}>
+        <div className="fixed top-0 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-between w-full px-4" style={headerStyle}>
+
+            <div className="opacity-0 invisible">
+                <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md">
+                    로그인
+                </button>
+                <button className="text-black font-bold px-4 text-2xl py-2 mb-8 rounded-md">
+                    회원가입
+                </button>
+            </div>
+
             <img
                 src={logo}
                 alt="Header Image"
-                className="w-full" // 이미지의 가로 비율을 가득 채우기 위해 w-full로 설정
-                style={imageStyle} // 이미지에도 스타일 적용
+                className="w-full mx-auto"
+                style={imageStyle}
             />
 
+            <div className="flex items-center space-x-4">
+                <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md"
+                    onClick={goToLogin}>
+                    로그인
+                </button>
+                <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md"
+                    onClick={goToSignUp}>
+                    회원가입
+                </button>
+            </div>
         </div>
     );
 }
