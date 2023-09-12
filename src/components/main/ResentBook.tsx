@@ -57,7 +57,7 @@ export default function RecentBook() {
 
     return (
         <div className="py-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">최근 출시작</h2>
+            <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: "bmfont" }}>최근 출시작</h2>
             <div className="flex justify-center space-x-8 w-full overflow-x-auto">
 
                 {books.map((book, index) => (

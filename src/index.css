@@ -5,6 +5,15 @@
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 
+@font-face {
+  font-family: "bmfont";
+  src: url("./fonts/bmfont.ttf") format("truetype");
+}
+
+body {
+  font-family: "GowunDodum-Regular";
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, ‘Segoe UI’, ‘Roboto’, ‘Oxygen’,

@@ -42,12 +42,12 @@ const Header: FC = () => {
                 style={imageStyle}
             />
 
-            <div className="flex items-center space-x-4">
-                <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md"
+            <div className="flex items-center space-x-4" style={{ fontFamily: "bmfont" }}>
+                <button className="text-black  text-2xl px-4 py-2 mb-8 rounded-md"
                     onClick={goToLogin}>
                     로그인
                 </button>
-                <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md"
+                <button className="text-black text-2xl px-4 py-2 mb-8 rounded-md"
                     onClick={goToSignUp}>
                     회원가입
                 </button>
