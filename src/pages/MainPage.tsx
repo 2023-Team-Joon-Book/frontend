@@ -5,10 +5,12 @@ import Header from '../components/main/Header';
 
 const MainPage: React.FC = () => {
     return (
-        <div className="flex flex-col h-screen justify-center">
-            <Header />
+        <div className="flex flex-col min-h-screen justify-between pb-96">
+            <div className="relative z-60">
+                <Header />
+            </div>
 
-            <div className="flex flex-col mt-96">
+            <div className="flex flex-col mt-auto" style={{ marginTop: '42vh' }}>
                 <MainSlider />
             </div>
 
@@ -18,3 +20,4 @@ const MainPage: React.FC = () => {
 }
 
 export default MainPage;
+
