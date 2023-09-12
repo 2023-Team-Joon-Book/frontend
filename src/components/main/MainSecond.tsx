@@ -1,6 +1,4 @@
 import React, { FC } from 'react';
-import MainSlider from './MainSlider';
-import ReverseSlider from './ReverseSlider';
 import ResentBook from './ResentBook';
 
 

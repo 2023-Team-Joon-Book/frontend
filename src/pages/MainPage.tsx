@@ -1,9 +1,9 @@
 import React from 'react';
-
 import Header from '../components/main/Header';
 import MainFirst from '../components/main/MainFirst';
 import MainSecond from '../components/main/MainSecond';
 import MainThird from '../components/main/MainThird';
+import StartNavigator from '../components/main/StartNavigator';
 
 const MainPage: React.FC = () => {
     return (
@@ -14,6 +14,7 @@ const MainPage: React.FC = () => {
             <MainFirst />
             <MainSecond />
             <MainThird />
+            <StartNavigator />
         </div>
     );
 }

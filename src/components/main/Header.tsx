@@ -12,6 +12,7 @@ const Header: FC = () => {
     const goToSignUp = () => {
         navigate('/signup');
     };
+
     const headerStyle = {
         width: '100%',
         backgroundColor: 'white',
