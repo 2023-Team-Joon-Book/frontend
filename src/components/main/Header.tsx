@@ -19,10 +19,7 @@ const Header: FC = () => {
                 className="w-full" // 이미지의 가로 비율을 가득 채우기 위해 w-full로 설정
                 style={imageStyle} // 이미지에도 스타일 적용
             />
-            <div className="text-4xl indent-1 mt-32 text-center">
-                <p>당신이 기억할</p>
-                <p>1만권의 도서</p>
-            </div>
+
         </div>
     );
 }
