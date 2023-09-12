@@ -11,14 +11,20 @@ const MainFirst: FC = () => {
     };
 
     return (
-        <div className="text-5xl indent-1 mt-60 text-center" style={headerStyle}>
+        <div className=" indent-1 mt-60 text-center" style={headerStyle}>
             <div >
-                <p className="font-bold">당신이 기억할</p>
-                <p className="font-bold">1만권의 도서</p>
-                <div className="flex flex-col mt-auto" style={{ marginTop: '20vh' }}>
+                <p className="font-semibold text-5xl ">당신을 기다리는</p>
+                <p className="font-semibold text-5xl ">15만 권의 도서</p>
+                <div className='mt-8'>
+                    <p className="text-2xl ">첫 달 무료 구독을 통해</p>
+                    <p className="text-2xl">어떤 도서가 있는지 확인해보세요</p>
+                </div>
+                <div className="flex flex-col mt-auto" style={{ marginTop: '10vh' }}>
                     <MainSlider />
                 </div>
-                <ReverseSlider />
+                <div style={{ marginTop: "20px" }}>
+                    <ReverseSlider />
+                </div>
             </div>
         </div>
     );

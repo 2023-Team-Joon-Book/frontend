@@ -8,6 +8,12 @@ const slides1 = [
     { color: "gray", target: "#", text: "책4" },
     { color: "gray", target: "#", text: "책5" },
     { color: "gray", target: "#", text: "책6" },
+    { color: "gray", target: "#", text: "책7" },
+    { color: "gray", target: "#", text: "책8" },
+    { color: "gray", target: "#", text: "책9" },
+    { color: "gray", target: "#", text: "책10" },
+    { color: "gray", target: "#", text: "책11" },
+    { color: "gray", target: "#", text: "책12" },
 ];
 
 
