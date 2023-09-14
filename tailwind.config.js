@@ -14,6 +14,15 @@ module.exports = {
       colors: {
         bfc66a: '#BFC66A',
       },
+      keyframes: {
+        slideUpFade: {
+          '0%': { transform: 'translateY(6rem)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        }
+      },
+      animation: {
+        slideUpFade: 'slideUpFade 2s forwards',
+      }
     },
   },
   variants: {
