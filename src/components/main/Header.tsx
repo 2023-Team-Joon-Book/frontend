@@ -15,7 +15,7 @@ const Header: FC = () => {
 
     const headerStyle = {
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(255, 255, 255, 0.92)',
     };
 
     const imageStyle = {

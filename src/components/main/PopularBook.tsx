@@ -13,30 +13,33 @@ import book11 from '../../../public/img/book11.png';
 import book12 from '../../../public/img/book12.png';
 
 const img = [
-    { imgSrc: book1, },
-    { imgSrc: book2, },
-    { imgSrc: book3, },
-    { imgSrc: book4, },
-    { imgSrc: book5, },
-    { imgSrc: book6, },
-    { imgSrc: book7, },
-    { imgSrc: book8, },
-    { imgSrc: book9, },
-    { imgSrc: book10, },
-    { imgSrc: book11, },
-    { imgSrc: book12, },
+    { imgSrc: book1 },
+    { imgSrc: book2 },
+    { imgSrc: book3 },
+    { imgSrc: book4 },
+    { imgSrc: book5 },
+    { imgSrc: book6 },
+    { imgSrc: book7 },
+    { imgSrc: book8 },
+    { imgSrc: book9 },
+    { imgSrc: book10 },
+    { imgSrc: book11 },
+    { imgSrc: book12 },
 ];
 
 interface BookProps {
     title: string;
     content: string;
+    imgSrc: string;
 }
 
-const Book: React.FC<BookProps> = ({ title, content }) => (
+const Book: React.FC<BookProps> = ({ title, content, imgSrc }) => (
     <div className="w-44">
-        <img className="h-64 bg-gray-200 rounded-lg flex flex-col 
-        justify-center " alt="iPhone_01" src="img/book3.png">
-        </img>
+        <img
+            className="h-64 bg-gray-200 rounded-lg flex flex-col justify-center"
+            alt="도서 표지"
+            src={imgSrc}
+        />
         <div className="mt-2 text-left">
             <div className="text-2xl mb-1 truncate">{title}</div>
             <div className="text-base text-gray-600 truncate">{content}</div>
@@ -46,22 +49,26 @@ const Book: React.FC<BookProps> = ({ title, content }) => (
 
 export default function PopularBook() {
     const books = [
-        { title: '책 1', content: '내용 1' },
-        { title: '책 2', content: '내용 2' },
-        { title: '책 3', content: '내용 3' },
-        { title: '책 4', content: '내용 4' },
-        { title: '책 5', content: '내용 5' },
-        { title: '책 6', content: '내용 6' },
-        { title: '책 7', content: '내용 7' },
+        { title: '책 6', content: '내용 6', imgSrc: book6 },
+        { title: '책 7', content: '내용 7', imgSrc: book7 },
+        { title: '책 8', content: '내용 8', imgSrc: book8 },
+        { title: '책 9', content: '내용 9', imgSrc: book9 },
+        { title: '책 10', content: '내용 10', imgSrc: book10 },
+        { title: '책 11', content: '내용 11', imgSrc: book11 },
+        { title: '책 12', content: '내용 12', imgSrc: book12 },
     ];
 
     return (
         <div className="py-4">
-            <h2 className="text-3xl  mb-8 text-center" style={{ fontFamily: "bmfont" }} >인기있는 도서</h2>
+            <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: "bmfont" }}>인기있는 도서</h2>
             <div className="flex justify-center space-x-8 w-full overflow-x-auto">
-
                 {books.map((book, index) => (
-                    <Book key={index} title={book.title} content={book.content} />
+                    <Book
+                        key={index}
+                        title={book.title}
+                        content={book.content}
+                        imgSrc={book.imgSrc}
+                    />
                 ))}
             </div>
         </div>
