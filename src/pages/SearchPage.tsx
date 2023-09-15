@@ -1,3 +1,4 @@
+import Ask from '../components/search/Ask'
 import SearchBar from '../components/search/SearchBar'
 import Swipe from '../components/search/swiper/Swipe'
 
@@ -209,6 +210,7 @@ const SearchPage = () => {
           '쪽수 14',
         ]}
       />
+      <Ask />
     </>
   )
 }
