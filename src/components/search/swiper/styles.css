@@ -33,6 +33,10 @@ body {
   object-fit: cover;
 }
 
+.swiper-pagination-bullets {
+  display: none;
+}
+
 .accordion-content {
   background-color: #fff;
   padding: 10px;
