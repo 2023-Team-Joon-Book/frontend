@@ -4,9 +4,12 @@ import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/pagination'
 import { FreeMode, Pagination } from 'swiper/modules'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface SwipeProps {
+  index: number
+  onSwipeClick: (index: number) => void
+  active: boolean
   title?: string
   name?: string[]
   author?: string[]
@@ -20,21 +23,52 @@ interface BookState {
   heartBlack: boolean
 }
 
-export default function Swipe({ title, name, author, publisher, pages }: SwipeProps) {
+export default function Swipe({
+  title,
+  name,
+  author,
+  publisher,
+  pages,
+  onSwipeClick,
+  active,
+  index,
+}: SwipeProps) {
   const [activeBook, setActiveBook] = useState<number | null>(null)
   const [booksState, setBooksState] = useState<Record<number, BookState>>({})
+
   const currentBookState = booksState[activeBook!] || {
     read: false,
     readComplete: false,
     heartBlack: false,
   }
 
-  const toggleAccordion = (index: number) => {
-    if (activeBook === index) {
-      setActiveBook(null)
-    } else {
-      setActiveBook(index)
+  useEffect(() => {
+    const closeAccordion = (e: MouseEvent) => {
+      if (e.target !== e.currentTarget) {
+        setActiveBook(null)
+      }
     }
+
+    // 아코디언이 열렸을 때만 리스너를 추가합니다.
+    if (activeBook !== null) {
+      document.addEventListener('click', closeAccordion)
+    }
+
+    return () => {
+      document.removeEventListener('click', closeAccordion)
+    }
+  }, [activeBook])
+
+  const toggleAccordion = (clickedIndex: number) => {
+    setActiveBook((prev) => (prev === clickedIndex ? null : clickedIndex))
+  }
+
+  const handleInnerClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
+  const preventClosing = (event: React.MouseEvent) => {
+    event.stopPropagation()
   }
 
   const toggleRead = () => {
@@ -89,7 +123,7 @@ export default function Swipe({ title, name, author, publisher, pages }: SwipePr
           <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
             <BookCover>
               {/* <img src={`path/to/book${index + 1}.jpg`}  /> */}
-              <img src="https://i.postimg.cc/SNVct2d7/Book.png" alt={`Book ${index + 1}`} />
+              <StyledImg src="https://i.postimg.cc/SNVct2d7/Book.png" alt={`Book ${index + 1}`} />
               <BookTextContainer>
                 <BookName>{name && name[index]}</BookName>
                 <BookAuthor>{author && author[index]}</BookAuthor>
@@ -100,7 +134,7 @@ export default function Swipe({ title, name, author, publisher, pages }: SwipePr
       </StyledSwiper>
 
       {activeBook !== null && (
-        <AccordionContent>
+        <AccordionContent onClick={handleInnerClick}>
           <hr />
           <BookDetails>
             <BookImageDetail
@@ -184,11 +218,10 @@ const StyledSwiper = styled(Swiper)`
 `
 
 const AccordionContent = styled.div`
-  background-color: #fff;
   padding: 10px;
   display: block;
   width: 100%;
-  box-sizing: border-box;
+  min-height: 150px; // 최소 높이 추가
 `
 
 const BookDetails = styled.div`
@@ -218,10 +251,20 @@ const Info = styled.div`
   flex-direction: column;
   gap: 1rem;
 `
+
 const BookCover = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: pointer;
+`
+
+const StyledImg = styled.img`
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
 `
 
 const BookTextContainer = styled.div`

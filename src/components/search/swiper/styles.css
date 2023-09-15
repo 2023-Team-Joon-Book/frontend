@@ -51,27 +51,27 @@ hr {
   margin-right : auto; */
 }
 
-.book-image {
+/* .book-image {
   max-width: 100%;
   max-height: 100%;
-  margin: auto 0; /* 이미지를 수직으로 중앙 정렬 */
+  margin: auto 0; 이미지를 수직으로 중앙 정렬
 }
 
 .book-details {
   display: flex;
-  align-items: center; /* 세로 중앙 정렬 */
+  align-items: center; 세로 중앙 정렬
 }
 
 .book-image-detail {
-  max-width: 50%; /* 이미지 너비를 50%로 제한 */
-  margin-right: 1rem; /* 이미지와 오른쪽 정보 사이에 간격 추가 */
+  max-width: 50%; 이미지 너비를 50%로 제한
+  margin-right: 1rem; 이미지와 오른쪽 정보 사이에 간격 추가
   background-color: gray;
 }
 
 .book-info {
-  flex: 1; /* 책 정보가 차지하는 너비를 최대로 설정 */
+  flex: 1; 책 정보가 차지하는 너비를 최대로 설정
   display: flex;
-  flex-direction: column; /* 세로로 항목 정렬 */
-  align-items: flex-start; /* 항목을 왼쪽 정렬 */
-  gap: 0.5rem; /* 항목 간 간격 설정 */
-}
+  flex-direction: column; 세로로 항목 정렬
+  align-items: flex-start; 항목을 왼쪽 정렬
+  gap: 0.5rem; 항목 간 간격 설정
+} */

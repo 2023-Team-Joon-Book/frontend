@@ -1,8 +1,15 @@
+import { useState } from 'react'
 import Ask from '../components/search/Ask'
 import SearchBar from '../components/search/SearchBar'
 import Swipe from '../components/search/swiper/Swipe'
 
 const SearchPage = () => {
+  const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
+
+  const handleSwipeClick = (index: number) => {
+    setActiveSwipe((prev) => (prev === index ? null : index))
+  }
+
   return (
     <>
       <form>
@@ -10,6 +17,9 @@ const SearchPage = () => {
       </form>
 
       <Swipe
+        index={0}
+        onSwipeClick={handleSwipeClick}
+        active={activeSwipe === 0}
         title="최근에 본 도서"
         name={[
           '제목 1',
@@ -77,6 +87,9 @@ const SearchPage = () => {
         ]}
       />
       <Swipe
+        index={1}
+        onSwipeClick={handleSwipeClick}
+        active={activeSwipe === 1}
         title="인기 도서"
         name={[
           '제목 1',
@@ -144,6 +157,9 @@ const SearchPage = () => {
         ]}
       />
       <Swipe
+        index={2}
+        onSwipeClick={handleSwipeClick}
+        active={activeSwipe === 2}
         title="최근 출시작"
         name={[
           '제목 1',
