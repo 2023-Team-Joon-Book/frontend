@@ -67,10 +67,6 @@ export default function Swipe({
     event.stopPropagation()
   }
 
-  const preventClosing = (event: React.MouseEvent) => {
-    event.stopPropagation()
-  }
-
   const toggleRead = () => {
     const currentBookState = booksState[activeBook!] || {
       read: false,
