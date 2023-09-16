@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
+import DetailModal from './DetailModal'
 
 interface BookProps {
-  title: string
-  author: string
-  description: string
-  status: string
+  book: {
+    id: number
+    title: string
+    status: string
+    author: string
+    img_url: string
+  }
 }
 
-const Book: React.FC<BookProps> = ({ title, author, description, status }) => {
+const Book: React.FC<BookProps> = ({ book }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -19,24 +23,9 @@ const Book: React.FC<BookProps> = ({ title, author, description, status }) => {
   }
 
   return (
-    <div>
-      <div onClick={openModal} className="cursor-pointer">
-        <h2>{title}</h2>
-        <p>{author}</p>
-        <p>Status: {status}</p>
-      </div>
-      {isModalOpen && (
-        <div className="">
-          <div className="modal">
-            <button onClick={closeModal} className=" top-4 right-4 m-2">
-              <span className="text-lg font-bold"></span>
-            </button>
-            <h2>{title}</h2>
-            <p>{author}</p>
-            <p>{description}</p>
-          </div>
-        </div>
-      )}
+    <div className="bg-white p-4 rounded-lg shadow-md">
+      <img src={book.img_url} onClick={openModal}></img>
+      {isModalOpen && <DetailModal book={book} onClose={closeModal} />}
     </div>
   )
 }
