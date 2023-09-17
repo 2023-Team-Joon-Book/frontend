@@ -180,27 +180,26 @@ export default function Swipe({
                   </StyledButton>
                 </div>
               </Info>
-
-              {/* <Like> */}
-              <HeartButton onClick={toggleHeartColor}>
-                <img
-                  style={{
-                    width: '2rem',
-                    height: '2rem',
-                    marginTop: '0.5rem',
-                    // marginLeft: '8rem',
-                  }}
-                  src={
-                    currentBookState.heartBlack
-                      ? 'https://i.postimg.cc/1XkRS36B/blackheart.png'
-                      : 'https://i.postimg.cc/Z5jSxYp2/heart.png'
-                  }
-                  alt="heart"
-                />
-              </HeartButton>
-              {/* <p>명이 좋아합니다.</p> */}
-              {/* </Like> */}
             </BookInfo>
+            {/* <Like> */}
+            <HeartButton onClick={toggleHeartColor}>
+              <img
+                style={{
+                  width: '2rem',
+                  height: '2rem',
+                  marginTop: '0.5rem',
+                  // marginLeft: '8rem',
+                }}
+                src={
+                  currentBookState.heartBlack
+                    ? 'https://i.postimg.cc/1XkRS36B/blackheart.png'
+                    : 'https://i.postimg.cc/Z5jSxYp2/heart.png'
+                }
+                alt="heart"
+              />
+            </HeartButton>
+            {/* <p>명이 좋아합니다.</p> */}
+            {/* </Like> */}
           </BookDetails>
         </AccordionContent>
       )}
@@ -237,7 +236,7 @@ const BookDetails = styled.div`
   display: flex;
   align-items: flex-start;
   padding-top: 3.25rem;
-  padding-left: 3rem;
+  padding-left: 10rem;
 `
 
 const BookImageDetail = styled.img`
@@ -254,11 +253,12 @@ const BookInfo = styled.div`
   & > div {
     display: flex;
   }
+  margin-left: 2rem;
 `
 
 const Info = styled.div`
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.3rem;
 `
 
 const BookCover = styled.div`
