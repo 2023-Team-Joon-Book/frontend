@@ -12,18 +12,18 @@ function App() {
   return (
     <Router>
       <Routes>
-        원준
+        {/* 원준 */}
         <Route path="/" element={<MainPage />} />
-        추후 담당자
+        {/* 추후 담당자 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        우희
+        {/* 우희 */}
         <Route path="/booksearch" element={<SearchPage />} />
-        선재
+        {/* 선재 */}
         <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} />
-        추후 담당자
+        {/* 추후 담당자 */}
         <Route path="/activity" element={<Statistics />} />
       </Routes>
     </Router>

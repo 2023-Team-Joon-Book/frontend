@@ -119,10 +119,6 @@ export default function Swipe({
         {[...Array(14).keys()].map((index) => (
           <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
             <BookCover>
-              {/* <img src={`path/to/book${index + 1}.jpg`}  /> */}
-              {/* <StyledImg src="https://i.postimg.cc/SNVct2d7/Book.png" alt={`Book ${index + 1}`} /> */}
-
-              {/* 활성화된 책인지 확인하여 StyledImg에 active prop 전달 */}
               <StyledImg
                 active={activeBook === index}
                 src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
@@ -188,7 +184,6 @@ export default function Swipe({
                   width: '2rem',
                   height: '2rem',
                   marginTop: '0.5rem',
-                  // marginLeft: '8rem',
                 }}
                 src={
                   currentBookState.heartBlack
@@ -229,7 +224,7 @@ const AccordionContent = styled.div`
   padding: 10px;
   display: block;
   width: 100%;
-  min-height: 150px; // 최소 높이 추가
+  min-height: 150px;
 `
 
 const BookDetails = styled.div`
@@ -266,7 +261,7 @@ const BookCover = styled.div`
   flex-direction: column;
   align-items: flex-start;
   cursor: pointer;
-  position: relative; // 아이콘과 이미지를 포함하는 컨테이너의 위치 속성 설정
+  position: relative;
 `
 
 const StyledImg = styled.img<{ active: boolean }>`
@@ -277,10 +272,10 @@ const StyledImg = styled.img<{ active: boolean }>`
   filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
 `
 const StyledIcon = styled.div`
-  position: absolute; // 아이콘을 이미지 위에 오게 합니다
-  top: 43%; // 상위 요소 (BookCover)의 중앙에 아이콘을 위치시킵니다
-  left: 50%; // 상위 요소의 중앙에 아이콘을 위치시킵니다
-  transform: translate(-50%, -50%); // 아이콘의 중앙이 정확히 상위 요소의 중앙에 오도록 합니다
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
 
 const BookTextContainer = styled.div`
