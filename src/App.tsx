@@ -14,11 +14,10 @@ function App() {
       <Routes>
         {/* 원준 */}
         <Route path="/" element={<MainPage />} />
-        {/* 추후 담당자 */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
         {/* 우희 */}
         <Route path="/booksearch" element={<SearchPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         {/* 선재 */}
         <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
