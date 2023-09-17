@@ -5,6 +5,7 @@ import 'swiper/css/free-mode'
 import 'swiper/css/pagination'
 import { FreeMode, Pagination } from 'swiper/modules'
 import { useEffect, useState } from 'react'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 
 interface SwipeProps {
   index: number
@@ -119,7 +120,19 @@ export default function Swipe({
           <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
             <BookCover>
               {/* <img src={`path/to/book${index + 1}.jpg`}  /> */}
-              <StyledImg src="https://i.postimg.cc/SNVct2d7/Book.png" alt={`Book ${index + 1}`} />
+              {/* <StyledImg src="https://i.postimg.cc/SNVct2d7/Book.png" alt={`Book ${index + 1}`} /> */}
+
+              {/* 활성화된 책인지 확인하여 StyledImg에 active prop 전달 */}
+              <StyledImg
+                active={activeBook === index}
+                src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
+                alt={`Book ${index + 1}`}
+              />
+              {activeBook === index && (
+                <StyledIcon>
+                  <SearchRoundedIcon style={{ width: '7rem', height: '7rem', color: '#fff' }} />
+                </StyledIcon>
+              )}
               <BookTextContainer>
                 <BookName>{name && name[index]}</BookName>
                 <BookAuthor>{author && author[index]}</BookAuthor>
@@ -135,7 +148,7 @@ export default function Swipe({
           <BookDetails>
             <BookImageDetail
               // src={`path/to/book${activeBook + 1}.jpg`}
-              src="https://i.postimg.cc/SNVct2d7/Book.png"
+              src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
               alt={`Book ${activeBook + 1}`}
             />
             <BookInfo>
@@ -228,8 +241,8 @@ const BookDetails = styled.div`
 `
 
 const BookImageDetail = styled.img`
-  width: 36.25rem;
-  height: 50.25rem;
+  width: 25.25rem;
+  height: 35.25rem;
   background-color: gray;
   margin-right: 1rem;
 `
@@ -253,14 +266,21 @@ const BookCover = styled.div`
   flex-direction: column;
   align-items: flex-start;
   cursor: pointer;
+  position: relative; // 아이콘과 이미지를 포함하는 컨테이너의 위치 속성 설정
 `
 
-const StyledImg = styled.img`
+const StyledImg = styled.img<{ active: boolean }>`
   transition: box-shadow 0.3s ease;
-
   &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
+  filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
+`
+const StyledIcon = styled.div`
+  position: absolute; // 아이콘을 이미지 위에 오게 합니다
+  top: 43%; // 상위 요소 (BookCover)의 중앙에 아이콘을 위치시킵니다
+  left: 50%; // 상위 요소의 중앙에 아이콘을 위치시킵니다
+  transform: translate(-50%, -50%); // 아이콘의 중앙이 정확히 상위 요소의 중앙에 오도록 합니다
 `
 
 const BookTextContainer = styled.div`
