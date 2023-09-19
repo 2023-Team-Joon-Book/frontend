@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import WishShelf from "./pages/WishShelf";
-import ReadingShelf from "./pages/ReadingShelf";
-import EndShelf from "./pages/EndShelf";
-import Statistics from "./pages/Statistics";
-import BookSearch from "./pages/BookSearch";
-import MainPage from "./pages/MainPage"
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import BookShelf from "./pages/BookShelf";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import WishShelf from './pages/WishShelf'
+import ReadingShelf from './pages/ReadingShelf'
+import EndShelf from './pages/EndShelf'
+import Statistics from './pages/Statistics'
+import BookSearch from './pages/BookSearch'
+import MainPage from './pages/MainPage'
+import LoginPage from './pages/LoginPage'
+import SignUpPage from './pages/SignUpPage'
+import BookShelf from './pages/BookShelfPage'
 
 function App() {
   return (
@@ -29,8 +29,7 @@ function App() {
         <Route path="/activity" element={<Statistics />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
-
+export default App
