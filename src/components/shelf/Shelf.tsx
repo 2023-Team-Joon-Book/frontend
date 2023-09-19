@@ -1,6 +1,7 @@
 import React from 'react'
 import Books from './Books'
 import { motion } from 'framer-motion'
+import '../../scss/Shelf.scss'
 
 interface ShelfProps {
   selectedShelf: 'shelf1' | 'shelf2' | 'shelf3' // 선택된 책장은 이 세 가지 중 하나여야 합니다.
@@ -231,15 +232,16 @@ const Shelf: React.FC<ShelfProps> = ({ selectedShelf }) => {
   // 선택된 책장의 책 목록을 가져옵니다.
   const currentShelfBooks = shelves[selectedShelf]
 
+  // border-bottom scss로 커스터마이징
   return (
     <div>
-      <div className="border-b-8 border-white shadow-lg m-4 ">
+      <div className="custom-border  m-4 ">
         <motion.div
           initial={{ x: '100%' }}
           animate={{ x: '0' }}
           exit={{ x: '100%' }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}>
-          <div className="grid grid-cols-5  gap-0 ">
+          <div className="grid grid-cols-5  gap-4 ">
             {currentShelfBooks.slice(0, 5).map((book) => (
               <Books key={book.id} book={book} />
             ))}
@@ -247,13 +249,13 @@ const Shelf: React.FC<ShelfProps> = ({ selectedShelf }) => {
         </motion.div>
       </div>
 
-      <div className="border-b-8 border-white shadow-lg m-4">
+      <div className="custom-border  m-4">
         <motion.div
           initial={{ x: '100%' }}
           animate={{ x: '0' }}
           exit={{ x: '100%' }}
           transition={{ duration: 1.0, ease: 'easeInOut' }}>
-          <div className="grid grid-cols-5  gap-0 ">
+          <div className="grid grid-cols-5  gap-4 ">
             {currentShelfBooks.slice(5, 10).map((book) => (
               <Books key={book.id} book={book} />
             ))}

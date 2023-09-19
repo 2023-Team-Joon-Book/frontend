@@ -23,7 +23,7 @@ const Book: React.FC<BookProps> = ({ book }) => {
   }
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <div className="bg-white p-4 drop-shadow-xl">
       <img src={book.img_url} onClick={openModal}></img>
       {isModalOpen && <DetailModal book={book} onClose={closeModal} />}
     </div>
