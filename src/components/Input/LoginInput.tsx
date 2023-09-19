@@ -30,23 +30,23 @@ const Layout = styled.div`
 const Label = styled.label`
   color: #000;
   font-family: Noto Sans;
-  font-size: 1.2rem; // 줄임
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-left: 1rem; // 줄임
+  margin-left: 1rem;
 `
 
 const Input = styled.input`
-  width: 26rem; // 줄임
-  height: 3.2rem; // 줄임
+  width: 26rem;
+  height: 3.2rem;
   flex-shrink: 0;
   fill: rgba(255, 255, 255, 0.8);
   border: 1px solid #000;
-  border-radius: 3rem; // 줄임
+  border-radius: 3rem;
   color: black;
-  font-size: 1.2rem; // 줄임
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 400;
-  padding-left: 1.3rem; // 줄임
+  padding-left: 1.3rem;
 `
