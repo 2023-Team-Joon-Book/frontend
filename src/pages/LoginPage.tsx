@@ -65,7 +65,7 @@ export default function LoginPage() {
               title="Password"
               placeholder=""
               value={pw}
-              type="pw"
+              type="password"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
               onKeyPress={handlePwKeyPress}
               ref={pwInputRef} // 비밀번호 입력 필드에 대한 ref를 전달합니다.
