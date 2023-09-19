@@ -2,7 +2,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 
 const SearchBar = () => {
   return (
-    <div style={{ paddingTop: '2rem' }} className="w-full max-w-sm mx-auto">
+    <div style={{ paddingTop: '9rem' }} className="w-full max-w-sm mx-auto">
       <div className="relative">
         <input
           type="text"

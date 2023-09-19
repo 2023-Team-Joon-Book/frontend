@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Ask from '../components/search/Ask'
 import SearchBar from '../components/search/SearchBar'
 import Swipe from '../components/search/swiper/Swipe'
+import MyHeader from '../components/Header/MyHeader'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
@@ -12,6 +13,7 @@ const SearchPage = () => {
 
   return (
     <>
+      <MyHeader />
       <form>
         <SearchBar />
       </form>
