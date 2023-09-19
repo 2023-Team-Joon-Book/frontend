@@ -42,6 +42,7 @@ const BookShelf: React.FC = () => {
             startIndex={startIndex}
             endIndex={startIndex + booksPerPage}
           />
+
           <img
             src="src/assets/images/nextBtn.svg"
             onClick={handleNextPage}

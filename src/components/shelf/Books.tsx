@@ -15,7 +15,7 @@ interface BookProps {
   closeModal: () => void
 }
 
-const Book: React.FC<BookProps> = ({ book }) => {
+const Books: React.FC<BookProps> = ({ book }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -27,7 +27,7 @@ const Book: React.FC<BookProps> = ({ book }) => {
   }
 
   return (
-    <div className="bg-white p-4 drop-shadow-xl">
+    <div className="bg-white p-2 drop-shadow-xl">
       <motion.img src={book.img_url} onClick={openModal} />
       <AnimatePresence>
         {isModalOpen && book.status === '읽음' && (
@@ -51,4 +51,4 @@ const Book: React.FC<BookProps> = ({ book }) => {
   )
 }
 
-export default Book
+export default Books

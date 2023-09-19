@@ -11,19 +11,19 @@ const ChangeShelf: React.FC<ChangeShelfProps> = ({ onShelfChange, selectedShelf 
       <div className="flex space-x-2" style={{ fontFamily: 'bmfont' }}>
         <button
           onClick={() => onShelfChange('shelf1')}
-          className={`${selectedShelf === 'shelf1' ? 'text-5xl' : 'text-xl'}  font`}>
+          className={`${selectedShelf === 'shelf1' ? 'text-4xl' : 'text-xl'}  font`}>
           찜한 책
         </button>
         <button
           onClick={() => onShelfChange('shelf2')}
           className={`${
-            selectedShelf === 'shelf2' ? 'text-5xl' : 'text-xl'
+            selectedShelf === 'shelf2' ? 'text-4xl' : 'text-xl'
           }  px-2 py-1 rounded-md`}>
           읽고 있는 책
         </button>
         <button
           onClick={() => onShelfChange('shelf3')}
-          className={`${selectedShelf === 'shelf3' ? 'text-5xl' : 'text-xl'} px-2 py-1 rounded-md`}>
+          className={`${selectedShelf === 'shelf3' ? 'text-4xl' : 'text-xl'} px-2 py-1 rounded-md`}>
           다 읽은 책
         </button>
       </div>

@@ -299,7 +299,7 @@ const Shelf: React.FC<ShelfProps> = ({ selectedShelf, startIndex, endIndex }) =>
           animate={{ x: '0' }}
           exit={{ x: '100%' }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}>
-          <div className="grid grid-cols-5  gap-4 ">
+          <div className="grid grid-cols-5 gap-4 ">
             {currentShelfBooks.slice(startIndex, endIndex - 5).map((book) => (
               <Books
                 key={book.id}
@@ -319,7 +319,7 @@ const Shelf: React.FC<ShelfProps> = ({ selectedShelf, startIndex, endIndex }) =>
           animate={{ x: '0' }}
           exit={{ x: '100%' }}
           transition={{ duration: 1.0, ease: 'easeInOut' }}>
-          <div className="grid grid-cols-5  gap-4 ">
+          <div className="grid grid-cols-5 gap-4 ">
             {currentShelfBooks.slice(endIndex - 5, endIndex).map((book) => (
               <Books
                 key={book.id}
