@@ -7,6 +7,7 @@ import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import SearchPage from './pages/SearchPage'
+import BookStackPage from './pages/BookStackPage'
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route path="/finish" element={<EndShelf />} />
         {/* 추후 담당자 */}
         <Route path="/activity" element={<Statistics />} />
+        <Route path="/BookStack" element={<BookStackPage />} />
+
       </Routes>
     </Router>
   )
