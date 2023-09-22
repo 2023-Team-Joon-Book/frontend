@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import SearchPage from './pages/SearchPage'
 import ChoosePage from './pages/ChoosePage'
+import Statistics from './pages/Statistics'
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         {/* 추후 담당자 */}
         <Route path="/choose" element={<ChoosePage />} />
         {/* <Route path="/stack" element={< />} /> */}
-        {/* <Route path="/statistics" element={< />} /> */}
+        <Route path="/statistics" element={< />} />
       </Routes>
     </Router>
   )

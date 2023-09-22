@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Title, Legend, ChartConfiguration } from 'chart.js';
-import 'chartjs-adapter-date-fns';
-import { add, format } from 'date-fns';
-import { IoMdArrowBack, IoMdArrowForward } from 'react-icons/io';
+import React, { useState } from 'react'
+import { Line } from 'react-chartjs-2'
+import {
+  Chart,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Title,
+  Legend,
+  ChartConfiguration,
+} from 'chart.js'
+import 'chartjs-adapter-date-fns'
+import { add, format } from 'date-fns'
+import { IoMdArrowBack, IoMdArrowForward } from 'react-icons/io'
 
-Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Title, Legend);
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Title, Legend)
 
-const ReadingChart: React.FC = () => {
+const LineChart: React.FC = () => {
   const initialData = {
     labels: ['03.13', '03.14', '03.15', '03.16', '03.17', '03.18', '03.19'],
     datasets: [
       {
         label: '독서 통계',
-        data: [12, 15, 3, 5, 2, 3, 10], // 임의의 데이터
+        data: [12, 14, 3, 5, 2, 3, 10], // 임의의 데이터
         fill: false,
         backgroundColor: 'rgba(191, 198, 106, 1)',
         borderColor: 'rgba(191, 198, 106, 1)',
@@ -21,18 +31,18 @@ const ReadingChart: React.FC = () => {
         pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
         pointBackgroundColor: 'rgba(191, 198, 106, 1)',
         borderWidth: 5,
-        pointRadius: 8,
+        pointRadius: 6,
       },
     ],
-  };
+  }
 
-  const [data, setData] = useState(initialData);
-  const [startDate, setStartDate] = useState(new Date('2023-03-13'));
-  const [endDate, setEndDate] = useState(new Date('2023-03-19'));
+  const [data, setData] = useState(initialData)
+  const [startDate, setStartDate] = useState(new Date('2023-03-13'))
+  const [endDate, setEndDate] = useState(new Date('2023-03-19'))
 
   const handlePrevWeek = () => {
-    const prevStartDate = add(startDate, { weeks: -1 });
-    const prevEndDate = add(endDate, { weeks: -1 });
+    const prevStartDate = add(startDate, { weeks: -1 })
+    const prevEndDate = add(endDate, { weeks: -1 })
 
     // TODO: Fetch chart data for the previous week
     // Replace the sample data below with actual data fetching logic
@@ -49,19 +59,19 @@ const ReadingChart: React.FC = () => {
           pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
           pointBackgroundColor: 'rgba(191, 198, 106, 1)',
           borderWidth: 5,
-          pointRadius: 8,
+          pointRadius: 6,
         },
       ],
-    };
+    }
 
-    setData(prevWeekData);
-    setStartDate(prevStartDate);
-    setEndDate(prevEndDate);
-  };
+    setData(prevWeekData)
+    setStartDate(prevStartDate)
+    setEndDate(prevEndDate)
+  }
 
   const handleNextWeek = () => {
-    const nextStartDate = add(startDate, { weeks: 1 });
-    const nextEndDate = add(endDate, { weeks: 1 });
+    const nextStartDate = add(startDate, { weeks: 1 })
+    const nextEndDate = add(endDate, { weeks: 1 })
 
     // TODO: Fetch chart data for the next week
     // Replace the sample data below with actual data fetching logic
@@ -78,15 +88,15 @@ const ReadingChart: React.FC = () => {
           pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
           pointBackgroundColor: 'rgba(191, 198, 106, 1)',
           borderWidth: 5,
-          pointRadius: 8,
+          pointRadius: 6,
         },
       ],
-    };
+    }
 
-    setData(nextWeekData);
-    setStartDate(nextStartDate);
-    setEndDate(nextEndDate);
-  };
+    setData(nextWeekData)
+    setStartDate(nextStartDate)
+    setEndDate(nextEndDate)
+  }
 
   const options: ChartConfiguration<'line'> = {
     type: 'line',
@@ -116,7 +126,8 @@ const ReadingChart: React.FC = () => {
           },
           ticks: {
             font: {
-              size: 15,
+              family: 'bmfont',
+              size: 20,
               weight: 'bold',
             },
           },
@@ -125,24 +136,29 @@ const ReadingChart: React.FC = () => {
           display: true,
           grid: {
             display: true,
-
           },
           ticks: {
-            stepSize: 5, // Set the interval of y-axis data values to 1
+            stepSize: 5,
+            font: {
+              family: 'bmfont',
+              size: 25,
+              weight: 'bold',
+            },
           },
         },
       },
     },
-  };
+  }
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20 h-3/4">
-      <div className="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-3/4">
+    <div
+      className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20 h-3/4 "
+      style={{ fontFamily: 'bmfont' }}>
+      <div className="w-10/12 sm:w-8/12 lg:w-9/12 h-3/4">
         <div className="flex items-center justify-between mb-4 border border-green-700 rounded-full p-2 absolute top-1 left-1/2 transform -translate-x-1/2">
           <button
             className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-200"
-            onClick={handlePrevWeek}
-          >
+            onClick={handlePrevWeek}>
             <IoMdArrowBack className="w-5 h-5" />
           </button>
           <span className="text-lg font-semibold whitespace-nowrap">
@@ -150,15 +166,14 @@ const ReadingChart: React.FC = () => {
           </span>
           <button
             className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-200"
-            onClick={handleNextWeek}
-          >
+            onClick={handleNextWeek}>
             <IoMdArrowForward className="w-5 h-5" />
           </button>
         </div>
         <Line {...options} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ReadingChart;
+export default LineChart
