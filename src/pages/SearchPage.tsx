@@ -2,20 +2,37 @@ import { useState } from 'react'
 import Ask from '../components/search/Ask'
 import SearchBar from '../components/search/SearchBar'
 import Swipe from '../components/search/swiper/Swipe'
+import MyHeader from '../components/Header/MyHeader'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
+  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [hasSearched, setHasSearched] = useState<boolean>(false)
 
   const handleSwipeClick = (index: number) => {
     setActiveSwipe((prev) => (prev === index ? null : index))
   }
 
+  const handleSearch = () => {
+    setHasSearched(true)
+    const dummyResults = searchQuery ? ['결과1', '결과2', '결과3'] : []
+    setSearchResults(dummyResults)
+  }
+
   return (
     <>
+      <MyHeader />
       <form>
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} onInputChange={setSearchQuery} />
       </form>
-
+      {hasSearched ? (
+        searchResults.length ? (
+          searchResults.map((result) => <div key={result}>{result}</div>)
+        ) : (
+          <div>조회할 결과가 없습니다.</div>
+        )
+      ) : null}
       <Swipe
         index={0}
         onSwipeClick={handleSwipeClick}
