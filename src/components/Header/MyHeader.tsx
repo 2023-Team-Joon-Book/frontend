@@ -1,16 +1,16 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import logo from '../../../public/logo.png'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-const Header: FC = () => {
+const MyHeader: FC = () => {
   const navigate = useNavigate()
-
+  const location = useLocation()
   const goToWish = () => {
     navigate('/wish')
   }
 
   const goToStatistic = () => {
-    navigate('/activity')
+    navigate('/choose')
   }
 
   const logout = () => {
@@ -47,7 +47,10 @@ const Header: FC = () => {
         <button className="text-black  text-2xl px-4 py-2 mb-8 rounded-md" onClick={goToWish}>
           내 서재
         </button>
-        <button className="text-black text-2xl px-4 py-2 mb-8 rounded-md" onClick={goToStatistic}>
+        <button
+          className="text-black text-2xl px-4 py-2 mb-8 rounded-md"
+          style={{ color: location.pathname === '/choose' ? '#BFC66A' : 'black' }}
+          onClick={goToStatistic}>
           독서 통계
         </button>
         <button className="text-black text-2xl px-4 py-2 mb-8 rounded-md" onClick={logout}>
@@ -58,4 +61,4 @@ const Header: FC = () => {
   )
 }
 
-export default Header
+export default MyHeader
