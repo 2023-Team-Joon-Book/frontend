@@ -5,7 +5,7 @@ import Header from '../components/shelf/Header.tsx'
 
 const BookShelf: React.FC = () => {
   // 3개의 책장 구성
-  const [selectedShelf, setSelectedShelf] = useState<'shelf1' | 'shelf2' | 'shelf3'>('shelf1') // 초기 책장 선택 상태
+  const [selectedShelf, setSelectedShelf] = useState<'shelf1' | 'shelf2' | 'shelf3'>('shelf2') // 초기 책장 선택 상태
 
   const handleShelfChange = (newShelf: 'shelf1' | 'shelf2' | 'shelf3') => {
     setSelectedShelf(newShelf)
@@ -41,8 +41,8 @@ const BookShelf: React.FC = () => {
             selectedShelf={selectedShelf}
             startIndex={startIndex}
             endIndex={startIndex + booksPerPage}
+            currentPage={currentPage}
           />
-
           <img
             src="src/assets/images/nextBtn.svg"
             onClick={handleNextPage}

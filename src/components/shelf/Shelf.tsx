@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Books from './Books'
 import { motion } from 'framer-motion'
 import '../../scss/Shelf.scss'
@@ -7,9 +7,10 @@ interface ShelfProps {
   selectedShelf: 'shelf1' | 'shelf2' | 'shelf3' // 선택된 책장은 이 세 가지 중 하나여야 합니다.
   startIndex: number // 현재 페이지의 시작 인덱스
   endIndex: number // 현재 페이지의 끝 인덱스
+  currentPage: number
 }
 
-const Shelf: React.FC<ShelfProps> = ({ selectedShelf, startIndex, endIndex }) => {
+const Shelf: React.FC<ShelfProps> = ({ selectedShelf, startIndex, endIndex, currentPage }) => {
   // 책장에 보여줄 책 목록을 상태로 관리
   const shelves = {
     //찜한책
@@ -290,24 +291,31 @@ const Shelf: React.FC<ShelfProps> = ({ selectedShelf, startIndex, endIndex }) =>
   // 선택된 책장의 책 목록을 가져옵니다.
   const currentShelfBooks = shelves[selectedShelf]
 
+  // 첫 페이지 렌더링 시에만 애니메이션을 비활성화하기 위한 상태를 추가합니다.
+  const [disableAnimation, setDisableAnimation] = React.useState(true)
+
+  // 첫 페이지 렌더링 시에 애니메이션을 활성화하고, 나중에 다시 비활성화합니다.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDisableAnimation(false)
+    }, 500) // 원하는 시간(밀리초)을 설정하세요.
+
+    return () => clearTimeout(timer)
+  }, [])
+
   // border-bottom scss로 커스터마이징
   return (
     <div>
       <div className="custom-border p-2 m-4 shelf-container">
         <motion.div
-          initial={{ x: '100%' }}
+          initial={disableAnimation ? false : { x: '100%' }}
           animate={{ x: '0' }}
           exit={{ x: '100%' }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}>
-          <div className="grid grid-cols-5 gap-4 ">
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          key={currentPage}>
+          <div className="grid grid-cols-5 gap-4">
             {currentShelfBooks.slice(startIndex, endIndex - 5).map((book) => (
-              <Books
-                key={book.id}
-                book={book}
-                closeModal={function (): void {
-                  throw new Error('Function not implemented.')
-                }}
-              />
+              <Books key={book.id} book={book} />
             ))}
           </div>
         </motion.div>
@@ -315,19 +323,14 @@ const Shelf: React.FC<ShelfProps> = ({ selectedShelf, startIndex, endIndex }) =>
 
       <div className="custom-border p-2 m-4 shelf-container">
         <motion.div
-          initial={{ x: '100%' }}
+          initial={disableAnimation ? false : { x: '100%' }}
           animate={{ x: '0' }}
           exit={{ x: '100%' }}
-          transition={{ duration: 1.0, ease: 'easeInOut' }}>
-          <div className="grid grid-cols-5 gap-4 ">
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          key={currentPage}>
+          <div className="grid grid-cols-5 gap-4">
             {currentShelfBooks.slice(endIndex - 5, endIndex).map((book) => (
-              <Books
-                key={book.id}
-                book={book}
-                closeModal={function (): void {
-                  throw new Error('Function not implemented.')
-                }}
-              />
+              <Books key={book.id} book={book} />
             ))}
           </div>
         </motion.div>
