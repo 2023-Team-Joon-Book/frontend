@@ -1,40 +1,36 @@
-import React, { useState } from 'react';
-import NavigationBar from '../components/NavigationBar';
-import BookStack from '../components/statistics/BookStack';
-import '../scss/MyShelf.scss';
-import BookStackHeader from '../components/statistics/StatisticsHeader';
-import StatisticsToolbar from '../components/statistics/StatisticsToolbar';
-import ReadingChart from '../components/statistics/ReadingChart';
+import React, { useState } from 'react'
+import '../scss/MyShelf.scss'
+import Header from '../components/statistics/Header'
+import StatisticsToolbar from '../components/statistics/StatisticsToolbar'
+import BarChart from '../components/statistics/BarChart'
+import LineChart from '../components/statistics/LineChart'
 
 export default function Statistics() {
-  const [activeTab, setActiveTab] = useState('stack');
+  const [activeTab, setActiveTab] = useState('stack')
 
   const handleTabToggle = (tab: React.SetStateAction<string>) => {
-    setActiveTab(tab);
-  };
+    setActiveTab(tab)
+  }
 
   return (
     <div className="flex flex-col h-screen">
       <div>
-        <BookStackHeader />
+        <Header />
       </div>
-      <div>
+      <div className="mt-32">
         <StatisticsToolbar onTabToggle={handleTabToggle} />
       </div>
       <div className="flex-grow relative">
         {activeTab === 'stack' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
           <div className="bookstack-container h-full">
-            <BookStack />
+            <BarChart />
           </div>
         ) : (
           <div className="booktrend-container h-full">
-            <ReadingChart />
+            <LineChart />
           </div>
         )}
       </div>
-      <div className="navbar">
-        <NavigationBar />
-      </div>
     </div>
-  );
+  )
 }
