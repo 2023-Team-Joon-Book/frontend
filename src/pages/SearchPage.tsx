@@ -6,18 +6,34 @@ import MyHeader from '../components/Header/MyHeader'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
+  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [hasSearched, setHasSearched] = useState<boolean>(false)
 
   const handleSwipeClick = (index: number) => {
     setActiveSwipe((prev) => (prev === index ? null : index))
+  }
+
+  // 검색 로직 (여기서는 임시로 사용하는 데이터만 반환하도록 만들었습니다)
+  const handleSearch = () => {
+    setHasSearched(true)
+    const dummyResults = searchQuery ? ['결과1', '결과2', '결과3'] : []
+    setSearchResults(dummyResults)
   }
 
   return (
     <>
       <MyHeader />
       <form>
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} onInputChange={setSearchQuery} />
       </form>
-
+      {hasSearched ? (
+        searchResults.length ? (
+          searchResults.map((result) => <div key={result}>{result}</div>)
+        ) : (
+          <div>조회할 결과가 없습니다.</div>
+        )
+      ) : null}
       <Swipe
         index={0}
         onSwipeClick={handleSwipeClick}
