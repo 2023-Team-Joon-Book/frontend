@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../scss/MyShelf.scss'
 import Header from '../components/statistics/Header'
-import StatisticsToolbar from '../components/statistics/StatisticsToolbar'
+import Toolbar from '../components/statistics/Toolbar'
 import BarChart from '../components/statistics/BarChart'
 import LineChart from '../components/statistics/LineChart'
 
@@ -18,7 +18,7 @@ export default function Statistics() {
         <Header />
       </div>
       <div className="mt-32">
-        <StatisticsToolbar onTabToggle={handleTabToggle} />
+        <Toolbar onTabToggle={handleTabToggle} />
       </div>
       <div className="flex-grow relative">
         {activeTab === 'bar' ? ( // activeTab 값에 따라 컴포넌트를 렌더링

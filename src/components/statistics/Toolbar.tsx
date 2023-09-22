@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-interface StatisticsToolbarProps {
+interface ToolbarProps {
   onTabToggle: (tab: string) => void
 }
 
-const StatisticsToolbar: React.FC<StatisticsToolbarProps> = ({ onTabToggle }) => {
+const Toolbar: React.FC<ToolbarProps> = ({ onTabToggle }) => {
   const [activeTab, setActiveTab] = useState('bar')
 
   const handleTabToggle = (tab: string) => {
@@ -38,4 +38,4 @@ const StatisticsToolbar: React.FC<StatisticsToolbarProps> = ({ onTabToggle }) =>
   )
 }
 
-export default StatisticsToolbar
+export default Toolbar
