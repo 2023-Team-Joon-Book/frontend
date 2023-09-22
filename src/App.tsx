@@ -26,7 +26,7 @@ function App() {
         {/* 추후 담당자 */}
         <Route path="/choose" element={<ChoosePage />} />
         {/* <Route path="/stack" element={< />} /> */}
-        <Route path="/statistics" element={< />} />
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </Router>
   )
