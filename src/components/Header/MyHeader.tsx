@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import logo from '../../../public/logo.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const Header: FC = () => {
+const MyHeader: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const goToWish = () => {
@@ -61,4 +61,4 @@ const Header: FC = () => {
   )
 }
 
-export default Header
+export default MyHeader
