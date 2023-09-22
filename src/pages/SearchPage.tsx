@@ -14,7 +14,6 @@ const SearchPage = () => {
     setActiveSwipe((prev) => (prev === index ? null : index))
   }
 
-  // 검색 로직 (여기서는 임시로 사용하는 데이터만 반환하도록 만들었습니다)
   const handleSearch = () => {
     setHasSearched(true)
     const dummyResults = searchQuery ? ['결과1', '결과2', '결과3'] : []
