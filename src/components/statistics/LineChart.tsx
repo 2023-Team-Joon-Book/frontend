@@ -23,7 +23,7 @@ const LineChart: React.FC = () => {
     datasets: [
       {
         label: '독서 통계',
-        data: [12, 15, 3, 5, 2, 3, 10], // 임의의 데이터
+        data: [12, 14, 3, 5, 2, 3, 10], // 임의의 데이터
         fill: false,
         backgroundColor: 'rgba(191, 198, 106, 1)',
         borderColor: 'rgba(191, 198, 106, 1)',
@@ -31,7 +31,7 @@ const LineChart: React.FC = () => {
         pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
         pointBackgroundColor: 'rgba(191, 198, 106, 1)',
         borderWidth: 5,
-        pointRadius: 8,
+        pointRadius: 6,
       },
     ],
   }
@@ -59,7 +59,7 @@ const LineChart: React.FC = () => {
           pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
           pointBackgroundColor: 'rgba(191, 198, 106, 1)',
           borderWidth: 5,
-          pointRadius: 8,
+          pointRadius: 6,
         },
       ],
     }
@@ -88,7 +88,7 @@ const LineChart: React.FC = () => {
           pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
           pointBackgroundColor: 'rgba(191, 198, 106, 1)',
           borderWidth: 5,
-          pointRadius: 8,
+          pointRadius: 6,
         },
       ],
     }
@@ -126,7 +126,8 @@ const LineChart: React.FC = () => {
           },
           ticks: {
             font: {
-              size: 15,
+              family: 'bmfont',
+              size: 20,
               weight: 'bold',
             },
           },
@@ -137,7 +138,12 @@ const LineChart: React.FC = () => {
             display: true,
           },
           ticks: {
-            stepSize: 5, // Set the interval of y-axis data values to 1
+            stepSize: 5,
+            font: {
+              family: 'bmfont',
+              size: 25,
+              weight: 'bold',
+            },
           },
         },
       },
@@ -145,8 +151,10 @@ const LineChart: React.FC = () => {
   }
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20 h-3/4">
-      <div className="w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 h-3/4">
+    <div
+      className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20 h-3/4 "
+      style={{ fontFamily: 'bmfont' }}>
+      <div className="w-10/12 sm:w-8/12 lg:w-9/12 h-3/4">
         <div className="flex items-center justify-between mb-4 border border-green-700 rounded-full p-2 absolute top-1 left-1/2 transform -translate-x-1/2">
           <button
             className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-200"

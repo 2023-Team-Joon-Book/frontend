@@ -6,7 +6,7 @@ import BarChart from '../components/statistics/BarChart'
 import LineChart from '../components/statistics/LineChart'
 
 export default function Statistics() {
-  const [activeTab, setActiveTab] = useState('stack')
+  const [activeTab, setActiveTab] = useState('bar')
 
   const handleTabToggle = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab)
@@ -21,12 +21,12 @@ export default function Statistics() {
         <StatisticsToolbar onTabToggle={handleTabToggle} />
       </div>
       <div className="flex-grow relative">
-        {activeTab === 'stack' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
-          <div className="bookstack-container h-full">
+        {activeTab === 'bar' ? ( // activeTab 값에 따라 컴포넌트를 렌더링
+          <div className="h-screen w-fit">
             <BarChart />
           </div>
         ) : (
-          <div className="booktrend-container h-full">
+          <div className="h-screen w-fit">
             <LineChart />
           </div>
         )}
