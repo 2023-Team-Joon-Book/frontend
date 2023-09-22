@@ -23,7 +23,7 @@ function App() {
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} />
         {/* 추후 담당자 */}
-        <Route path="/activity" element={<Statistics />} />
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </Router>
   )
