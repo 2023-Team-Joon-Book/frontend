@@ -24,8 +24,9 @@ const Header: FC = () => {
   }
 
   return (
+    // modal 효과를 위해 z 값 삭제
     <div
-      className="fixed top-0 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-between w-full px-4"
+      className="fixed top-0 left-1/2 transform -translate-x-1/2 flex items-center justify-between w-full px-4"
       style={headerStyle}>
       <div className="opacity-0 invisible">
         <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md">

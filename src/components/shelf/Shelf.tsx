@@ -8,9 +8,24 @@ interface ShelfProps {
   endIndex: number // 현재 페이지의 끝 인덱스
   currentPage: number
   currentShelfBooks: {}
+  setIsModalOpen: (isOpen: boolean) => void
+  openModal: (book: {
+    id: number
+    title: string
+    status: string
+    author: string
+    img_url: string
+  }) => void // 수정된 openModal 함수의 타입
 }
 
-const Shelf: React.FC<ShelfProps> = ({ startIndex, endIndex, currentPage, currentShelfBooks }) => {
+const Shelf: React.FC<ShelfProps> = ({
+  startIndex,
+  endIndex,
+  currentPage,
+  currentShelfBooks,
+
+  openModal,
+}) => {
   // 첫 페이지 렌더링 시에만 애니메이션을 비활성화하기 위한 상태를 추가합니다.
   const [disableAnimation, setDisableAnimation] = React.useState(true)
 
@@ -44,7 +59,7 @@ const Shelf: React.FC<ShelfProps> = ({ startIndex, endIndex, currentPage, curren
           key={currentPage}>
           <div className="grid grid-cols-5 gap-4">
             {currentShelfBooksArray.slice(startIndex, endIndex - 5).map((book) => (
-              <Books key={book.id} book={book} />
+              <Books key={book.id} book={book} openModal={openModal} />
             ))}
           </div>
         </motion.div>
@@ -59,7 +74,7 @@ const Shelf: React.FC<ShelfProps> = ({ startIndex, endIndex, currentPage, curren
           key={currentPage}>
           <div className="grid grid-cols-5 gap-4">
             {currentShelfBooksArray.slice(endIndex - 5, endIndex).map((book) => (
-              <Books key={book.id} book={book} />
+              <Books key={book.id} book={book} openModal={openModal} />
             ))}
           </div>
         </motion.div>

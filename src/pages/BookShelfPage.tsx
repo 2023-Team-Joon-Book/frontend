@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import Shelf from '../components/shelf/Shelf.tsx'
 import ChangeShelf from '../components/shelf/ChangeShelf.tsx'
 import Header from '../components/shelf/Header.tsx'
+import DetailModal from '../components/shelf/DetailModal.tsx'
 
-const BookShelf: React.FC = () => {
+const BookShelfPage: React.FC = () => {
   // 3개의 책장 구성
   const [selectedShelf, setSelectedShelf] = useState<'shelf1' | 'shelf2' | 'shelf3'>('shelf2') // 초기 책장 선택 상태
 
@@ -307,6 +308,34 @@ const BookShelf: React.FC = () => {
   // 선택된 책장의 책 목록을 가져옵니다.
   const currentShelfBooks = shelves[selectedShelf]
 
+  // 모달창 상태 관리
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // const openModal = () => {
+  //   setIsModalOpen(true)
+  // }
+
+  // 선택된 책 정보를 관리할 상태
+  const [selectedBook, setSelectedBook] = useState<{
+    id: number
+    title: string
+    status: string
+    author: string
+    img_url: string
+  } | null>(null)
+
+  const openModal = (book: {
+    id: number
+    title: string
+    status: string
+    author: string
+    img_url: string
+  }) => {
+    setSelectedBook(book)
+    setIsModalOpen(true)
+    console.log('****')
+  }
+
   return (
     <div>
       <Header />
@@ -323,6 +352,8 @@ const BookShelf: React.FC = () => {
             endIndex={startIndex + booksPerPage}
             currentPage={currentPage}
             currentShelfBooks={currentShelfBooks}
+            setIsModalOpen={setIsModalOpen}
+            openModal={openModal}
           />
           <img
             src="src/assets/images/nextBtn.svg"
@@ -331,8 +362,13 @@ const BookShelf: React.FC = () => {
           />
         </div>
       </div>
+      {isModalOpen && selectedBook && (
+        <div className="">
+          <DetailModal setIsModalOpen={setIsModalOpen} book={selectedBook} />
+        </div>
+      )}
     </div>
   )
 }
 
-export default BookShelf
+export default BookShelfPage
