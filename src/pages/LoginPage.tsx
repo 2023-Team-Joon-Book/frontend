@@ -5,6 +5,7 @@ import { useState } from 'react'
 import StartNavigator from '../components/main/StartNavigator'
 import LoginHeader from '../components/Header/LoginHeader'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
@@ -12,6 +13,28 @@ import Bar3 from '../../public/img/Bar3.png'
 
 export default function LoginPage() {
   const navigate = useNavigate()
+
+  const handleLogin = async () => {
+    if (id && pw) {
+      try {
+        const response = await axios.post('/login', {
+          username: id,
+          password: pw,
+        })
+        if (response.data.code === 'U004') {
+          localStorage.setItem('accessToken', response.data.data.accessToken)
+          localStorage.setItem('refreshToken', response.data.data.refreshToken)
+          navigate('/booksearch')
+        } else {
+          // 로그인 실패 처리
+          alert(response.data.message)
+        }
+      } catch (error) {
+        // 에러 처리
+        alert('로그인 중 오류가 발생했습니다.')
+      }
+    }
+  }
 
   // 아이디, 비밀번호
   const [id, setId] = useState<string>('')
@@ -86,10 +109,10 @@ export default function LoginPage() {
       </div>
 
       {/* 연동 안해놔서 아직 link to로 이동, 연동 후엔 link to 삭제 후 SignUpBtn에 navigation해서 사용 */}
-      <Link to="/booksearch">
-        <StartNavigator />
-        {/* <StartNavigator disabled={!id || !pw} /> */}
-      </Link>
+      {/* <Link to="/booksearch"> */}
+      <StartNavigator onClick={handleLogin} disabled={!id || !pw} />
+      {/* <StartNavigator disabled={!id || !pw} /> */}
+      {/* </Link> */}
     </LoginContainer>
   )
 }
