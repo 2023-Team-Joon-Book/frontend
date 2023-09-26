@@ -75,12 +75,12 @@ export default function SignUpPage() {
 
   // 비밀번호
   const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/
     const passwordCurrent = e.target.value
     setPw(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('* 영문 + 숫자 + 6자리 이상으로 입력바랍니다.')
+      setPasswordMessage('* 대소문자 + 숫자 + 특수문자 + 8~16자리로 입력바랍니다.')
       setIsPassword(false)
     } else {
       setPasswordMessage('')
