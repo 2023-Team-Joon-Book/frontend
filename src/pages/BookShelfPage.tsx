@@ -3,6 +3,7 @@ import Shelf from '../components/shelf/Shelf.tsx'
 import ChangeShelf from '../components/shelf/ChangeShelf.tsx'
 import Header from '../components/shelf/Header.tsx'
 import DetailModal from '../components/shelf/DetailModal.tsx'
+import ReviewModal from '../components/shelf/ReviewModal.tsx'
 
 const BookShelfPage: React.FC = () => {
   // 3개의 책장 구성
@@ -357,9 +358,14 @@ const BookShelfPage: React.FC = () => {
           />
         </div>
       </div>
-      {isModalOpen && selectedBook && (
+      {isModalOpen && selectedBook?.status == '읽는 중' && (
         <div className="">
           <DetailModal setIsModalOpen={setIsModalOpen} book={selectedBook} />
+        </div>
+      )}
+      {isModalOpen && selectedBook?.status == '읽음' && (
+        <div className="">
+          <ReviewModal setIsModalOpen={setIsModalOpen} book={selectedBook} />
         </div>
       )}
     </div>
