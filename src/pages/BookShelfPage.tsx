@@ -311,10 +311,6 @@ const BookShelfPage: React.FC = () => {
   // 모달창 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // const openModal = () => {
-  //   setIsModalOpen(true)
-  // }
-
   // 선택된 책 정보를 관리할 상태
   const [selectedBook, setSelectedBook] = useState<{
     id: number
@@ -333,7 +329,6 @@ const BookShelfPage: React.FC = () => {
   }) => {
     setSelectedBook(book)
     setIsModalOpen(true)
-    console.log('****')
   }
 
   return (

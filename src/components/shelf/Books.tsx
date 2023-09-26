@@ -22,16 +22,6 @@ interface BookProps {
 }
 
 const Books: React.FC<BookProps> = ({ book, openModal }) => {
-  // const [isModalOpen, setIsModalOpen] = useState(false)
-
-  // const openModal = () => {
-  //   setIsModalOpen(true)
-  // }
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false)
-  // }
-
   return (
     <div className="bg-white p-2 drop-shadow-xl z-0">
       <img
@@ -41,14 +31,6 @@ const Books: React.FC<BookProps> = ({ book, openModal }) => {
           console.log('**')
         }}
       />
-      {/* {isModalOpen && book.status === '읽음' && (
-        <ReviewModal book={book} setIsModalOpen={setIsModalOpen} reviewText={''} />
-      )} */}
-      {/* {isModalOpen && book.status === '읽는 중' && (
-        <div className="">
-          <DetailModal book={book} setIsModalOpen={setIsModalOpen} />
-        </div>
-      )} */}
     </div>
   )
 }
