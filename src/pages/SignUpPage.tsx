@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
 import LoginHeader from '../components/Header/LoginHeader'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
@@ -12,6 +13,28 @@ import Bar3 from '../../public/img/Bar3.png'
 
 export default function SignUpPage() {
   const navigate = useNavigate()
+
+  const handleSignUp = async () => {
+    if (id && pw && passwordConfirm) {
+      try {
+        const response = await axios.post('/api/v1/users/join', {
+          username: id,
+          password: pw,
+        })
+        if (response.data.code === 'U004') {
+          localStorage.setItem('accessToken', response.data.data.accescToken)
+          localStorage.setItem('refreshToken', response.data.data.refreshToken)
+          navigate('/login')
+        } else {
+          // 회원가입 실패 처리
+          alert(response.data.message)
+        }
+      } catch (error) {
+        // 에러 처리
+        alert('회원가입 중 오류가 발생했습니다.')
+      }
+    }
+  }
 
   const idInputRef = React.useRef<HTMLInputElement>(null)
   const pwInputRef = React.useRef<HTMLInputElement>(null)
@@ -173,9 +196,9 @@ export default function SignUpPage() {
       </div>
 
       {/* 연동 안해놔서 아직 link to로 이동, 연동 후엔 link to 삭제 후 SignUpBtn에 navigation해서 사용 */}
-      <Link to="/login">
-        <SignUpBtn disabled={!(isId && isPassword && isPasswordConfirm)} />
-      </Link>
+      {/* <Link to="/login"> */}
+      <SignUpBtn onClick={handleSignUp} disabled={!(isId && isPassword && isPasswordConfirm)} />
+      {/* </Link> */}
     </LoginContainer>
   )
 }
