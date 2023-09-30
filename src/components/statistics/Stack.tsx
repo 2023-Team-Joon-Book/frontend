@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Box } from "@react-three/drei";
+import { useFBX } from "@react-three/drei";
 
 const Book = (props: any) => {
     const mesh = useRef<any>(null);
-    const targetY = props.position[1];
+    const { model, position } = props;
+    const targetY = position[1];
 
     useEffect(() => {
         if (mesh.current) {
@@ -13,29 +14,31 @@ const Book = (props: any) => {
     }, [targetY]);
 
     return (
-        <Box
+        <primitive
             ref={mesh}
-            args={[3.5, 0.5, 4.5]}
+            object={model}
+            scale={[0.15, 0.15, 0.15]}
             receiveShadow
             castShadow
-        >
-            <meshStandardMaterial color="lightblue" />
-        </Box>
+        />
     );
 };
 
 const Stack = () => {
-    const [numBooks, setNumBooks] = useState(0);
+    const [books, setBooks] = useState<any[]>([]);  // books 배열로 관리
+    const originalModel = useFBX("/book.fbx");
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setNumBooks(prev => (prev < 10 ? prev + 1 : prev)); // 책 개수
+            if (books.length < 10) {
+                setBooks(prev => [...prev, originalModel.clone()]);  // 새로운 복제본을 배열에 추가
+            }
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [books, originalModel]);
 
-    const bookHeight = 0.6;  // 책의 높이에 약간의 간격을 추가 구분선 느낌
+    const bookHeight = 0.6;
 
     return (
         <div className="w-screen h-screen">
@@ -54,9 +57,10 @@ const Stack = () => {
                     shadow-camera-bottom={-10}
                 />
                 <group position={[0, -2, 0]}>
-                    {Array.from({ length: numBooks }).map((_, idx) => (
+                    {books.map((model, idx) => (
                         <Book
                             key={idx}
+                            model={model}
                             position={[0, idx * bookHeight, 0]}
                         />
                     ))}
@@ -68,3 +72,4 @@ const Stack = () => {
 };
 
 export default Stack;
+
