@@ -1,19 +1,36 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import * as THREE from 'three';
-import { Group } from "three";
+import { Group, Object3D } from "three";
 
-const Book = (props: any) => {
+interface BookProps {
+    model: Object3D;
+    position: [number, number, number];
+    isSelected: boolean;
+    onSelect: (index: number) => void;
+}
+
+const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect }) => {
     const mesh = useRef<THREE.Object3D | null>(null);
-    const { model, position } = props;
-    const targetY = position[1];
+
+    useFrame(() => {
+        if (mesh.current) {
+            if (isSelected) {
+                mesh.current.position.z += (1 - mesh.current.position.z) * 0.1;
+                mesh.current.rotation.y += (-Math.PI / 4 - mesh.current.rotation.y) * 0.1;
+            } else {
+                mesh.current.position.z += (0 - mesh.current.position.z) * 0.1;
+                mesh.current.rotation.y += (0 - mesh.current.rotation.y) * 0.1;
+            }
+        }
+    });
 
     useEffect(() => {
         if (mesh.current) {
-            mesh.current.position.y = targetY;
+            mesh.current.position.y = position[1];
         }
-    }, [targetY]);
+    }, [position]);
 
     return (
         <primitive
@@ -22,32 +39,56 @@ const Book = (props: any) => {
             scale={[0.15, 0.15, 0.15]}
             receiveShadow
             castShadow
+            onClick={() => onSelect(position[1])}
         />
     );
 };
 
-const Stack = () => {
+const Stack: React.FC = () => {
     const [books, setBooks] = useState<THREE.Object3D[]>([]);
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const [firstClick, setFirstClick] = useState<boolean>(true);
 
     useEffect(() => {
         const loader = new FBXLoader();
         loader.load("/book.fbx", (model: Group) => {
             const interval = setInterval(() => {
                 setBooks((prevBooks) => {
-                    // 이전 상태 기반으로 책의 개수가 10개 미만이라면 책을 새로 추가
                     return prevBooks.length < 10 ? [...prevBooks, model.clone()] : prevBooks;
                 });
-            }, 1000);
+            }, 100);
 
-            return () => clearInterval(interval); // 정리 함수로 타이머를 제거
+            return () => clearInterval(interval);
         });
-    }, []); // 의존성 배열을 빈 배열로 설정하여, 컴포넌트 마운트 시에만 이펙트가 실행되게 합니다.
+    }, []);
 
     const bookHeight = 0.6;
 
+    const handleSelect = (index: number) => {
+        setSelectedIndex(selectedIndex === index ? null : index);
+    };
+
+    const moveSelectionDown = () => {
+        if (firstClick) {
+            setSelectedIndex(books.length - 1);
+            setFirstClick(false);
+        } else if (selectedIndex !== null && selectedIndex > 0) {
+            setSelectedIndex(prev => (prev !== null ? prev - 1 : null));
+        }
+    };
+
+    const moveSelectionUp = () => {
+        if (firstClick) {
+            setSelectedIndex(books.length - 1);
+            setFirstClick(false);
+        } else if (selectedIndex !== null && selectedIndex < books.length - 1) {
+            setSelectedIndex(prev => (prev !== null ? prev + 1 : null));
+        }
+    };
+
     return (
-        <div className="w-screen h-screen">
-            <Canvas shadows camera={{ position: [0, 5, 10], fov: 50 }}>
+        <div className="w-screen h-screen relative">
+            <Canvas shadows camera={{ position: [0, 3, 10], fov: 50 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight
                     castShadow
@@ -67,11 +108,25 @@ const Stack = () => {
                             key={idx}
                             model={model}
                             position={[0, idx * bookHeight, 0]}
+                            isSelected={selectedIndex === idx}
+                            onSelect={() => handleSelect(idx)}
                         />
                     ))}
                 </group>
                 <gridHelper args={[10, 10]} />
             </Canvas>
+            <button
+                onClick={moveSelectionUp}
+                style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 1000 }}
+            >
+                Up
+            </button>
+            <button
+                onClick={moveSelectionDown}
+                style={{ position: 'absolute', top: '50px', left: '10px', zIndex: 1000 }}
+            >
+                Down
+            </button>
         </div>
     );
 };
