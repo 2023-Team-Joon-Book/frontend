@@ -61,7 +61,7 @@ const Stack = () => {
                     shadow-camera-top={10}
                     shadow-camera-bottom={-10}
                 />
-                <group position={[0, -2, 0]}>
+                <group position={[0, -3, 0]}>
                     {books.map((model, idx) => (
                         <Book
                             key={idx}
