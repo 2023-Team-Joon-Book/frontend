@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import * as THREE from 'three';
+import { Html } from "@react-three/drei";
 import { Group, Object3D } from "three";
 
 interface BookProps {
@@ -85,7 +86,6 @@ const Stack: React.FC = () => {
             setSelectedIndex(prev => (prev !== null ? prev + 1 : null));
         }
     };
-
     return (
         <div className="w-screen h-screen relative">
             <Canvas shadows camera={{ position: [0, 3, 10], fov: 50 }}>
@@ -113,22 +113,25 @@ const Stack: React.FC = () => {
                         />
                     ))}
                 </group>
+                <Html position={[3, 0, 0]} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <button
+                        onClick={moveSelectionUp}
+                        className="mb-2 bg-bfc66a hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                    >
+                        ⬆️
+                    </button>
+                    <button
+                        onClick={moveSelectionDown}
+                        className="bg-bfc66a hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                    >
+                        ⬇️
+                    </button>
+                </Html>
                 <gridHelper args={[10, 10]} />
             </Canvas>
-            <button
-                onClick={moveSelectionUp}
-                style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 1000 }}
-            >
-                Up
-            </button>
-            <button
-                onClick={moveSelectionDown}
-                style={{ position: 'absolute', top: '50px', left: '10px', zIndex: 1000 }}
-            >
-                Down
-            </button>
         </div>
     );
+
 };
 
 export default Stack;
