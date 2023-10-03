@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { useFBX } from "@react-three/drei";
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+import * as THREE from 'three';
+import { Group } from "three";
 
 const Book = (props: any) => {
-    const mesh = useRef<any>(null);
+    const mesh = useRef<THREE.Object3D | null>(null);
     const { model, position } = props;
     const targetY = position[1];
 
@@ -25,18 +27,21 @@ const Book = (props: any) => {
 };
 
 const Stack = () => {
-    const [books, setBooks] = useState<any[]>([]);  // books 배열로 관리
-    const originalModel = useFBX("/book.fbx");
+    const [books, setBooks] = useState<THREE.Object3D[]>([]);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            if (books.length < 10) {
-                setBooks(prev => [...prev, originalModel.clone()]);  // 새로운 복제본을 배열에 추가
-            }
-        }, 1000);
+        const loader = new FBXLoader();
+        loader.load("/book.fbx", (model: Group) => {
+            const interval = setInterval(() => {
+                setBooks((prevBooks) => {
+                    // 이전 상태 기반으로 책의 개수가 10개 미만이라면 책을 새로 추가
+                    return prevBooks.length < 10 ? [...prevBooks, model.clone()] : prevBooks;
+                });
+            }, 1000);
 
-        return () => clearInterval(interval);
-    }, [books, originalModel]);
+            return () => clearInterval(interval); // 정리 함수로 타이머를 제거
+        });
+    }, []); // 의존성 배열을 빈 배열로 설정하여, 컴포넌트 마운트 시에만 이펙트가 실행되게 합니다.
 
     const bookHeight = 0.6;
 
@@ -72,4 +77,3 @@ const Stack = () => {
 };
 
 export default Stack;
-
