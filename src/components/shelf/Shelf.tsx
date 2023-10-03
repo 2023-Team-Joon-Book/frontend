@@ -50,7 +50,7 @@ const Shelf: React.FC<ShelfProps> = ({
   // border-bottom scss로 커스터마이징
   return (
     <div>
-      <div className="custom-border p-2 m-4 shelf-container">
+      <div className="custom-border px-24 m-4 shelf-container">
         <motion.div
           initial={disableAnimation ? false : { x: '100%' }}
           animate={{ x: '0' }}
@@ -65,7 +65,7 @@ const Shelf: React.FC<ShelfProps> = ({
         </motion.div>
       </div>
 
-      <div className="custom-border p-2 m-4 shelf-container">
+      <div className="custom-border px-24 m-4 shelf-container">
         <motion.div
           initial={disableAnimation ? false : { x: '100%' }}
           animate={{ x: '0' }}
