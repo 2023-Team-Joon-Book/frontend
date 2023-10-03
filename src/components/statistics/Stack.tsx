@@ -10,9 +10,10 @@ interface BookProps {
     position: [number, number, number];
     isSelected: boolean;
     onSelect: (index: number) => void;
+    thickness: number; // 두께를 전달받도록 추가
 }
 
-const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect }) => {
+const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect, thickness }) => {
     const mesh = useRef<THREE.Object3D | null>(null);
 
     useFrame(() => {
@@ -30,14 +31,15 @@ const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect }) =>
     useEffect(() => {
         if (mesh.current) {
             mesh.current.position.y = position[1];
+            // 두께를 적용
+            mesh.current.scale.set(0.15, thickness, 0.15);
         }
-    }, [position]);
+    }, [position, thickness]);
 
     return (
         <primitive
             ref={mesh}
             object={model}
-            scale={[0.15, 0.15, 0.15]}
             receiveShadow
             castShadow
             onClick={() => onSelect(position[1])}
@@ -46,7 +48,7 @@ const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect }) =>
 };
 
 const Stack: React.FC = () => {
-    const [books, setBooks] = useState<THREE.Object3D[]>([]);
+    const [books, setBooks] = useState<{ model: Object3D; thickness: number }[]>([]); // 책의 모델과 두께를 저장
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const [firstClick, setFirstClick] = useState<boolean>(true);
 
@@ -54,8 +56,11 @@ const Stack: React.FC = () => {
         const loader = new FBXLoader();
         loader.load("/book.fbx", (model: Group) => {
             const interval = setInterval(() => {
+                // 랜덤 두께 생성 (0.1에서 0.2 사이의 랜덤 값)
+                const randomThickness = 0.08 + Math.random() * 0.09;
+
                 setBooks((prevBooks) => {
-                    return prevBooks.length < 10 ? [...prevBooks, model.clone()] : prevBooks;
+                    return prevBooks.length < 10 ? [...prevBooks, { model: model.clone(), thickness: randomThickness }] : prevBooks;
                 });
             }, 100);
 
@@ -86,9 +91,10 @@ const Stack: React.FC = () => {
             setSelectedIndex(prev => (prev !== null ? prev + 1 : null));
         }
     };
+
     return (
         <div className="w-screen h-screen relative">
-            <Canvas shadows camera={{ position: [0, 3, 10], fov: 50 }}>
+            <Canvas shadows camera={{ position: [0, 5, 10], fov: 50 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight
                     castShadow
@@ -103,13 +109,14 @@ const Stack: React.FC = () => {
                     shadow-camera-bottom={-10}
                 />
                 <group position={[0, -3, 0]}>
-                    {books.map((model, idx) => (
+                    {books.map((book, idx) => (
                         <Book
                             key={idx}
-                            model={model}
+                            model={book.model}
                             position={[0, idx * bookHeight, 0]}
                             isSelected={selectedIndex === idx}
                             onSelect={() => handleSelect(idx)}
+                            thickness={book.thickness} // 두께를 전달
                         />
                     ))}
                 </group>
