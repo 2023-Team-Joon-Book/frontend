@@ -1,13 +1,17 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 @font-face {
   font-family: 'bmfont';
   src: url('src/assets/fonts/bmfont.ttf') format('truetype');
 }
+
+body {
+  font-family: "GowunDodum-Regular";
+}
+
 body {
   margin: 0;
   font-family:

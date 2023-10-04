@@ -8,6 +8,7 @@ import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import BookShelf from './pages/BookShelfPage'
+import ChoosePage from './pages/ChoosePage'
 
 function App() {
   return (
@@ -15,18 +16,19 @@ function App() {
       <Routes>
         {/* 원준 */}
         <Route path="/" element={<MainPage />} />
-        {/* 추후 담당자 */}
+        {/* 우희 */}
+        <Route path="/booksearch" element={<SearchPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        {/* 우희 */}
-        <Route path="/booksearch" element={<BookSearch />} />
         {/* 선재 */}
         <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} />
         <Route path="/shelf" element={<BookShelf />} />
         {/* 추후 담당자 */}
-        <Route path="/activity" element={<Statistics />} />
+        <Route path="/choose" element={<ChoosePage />} />
+        {/* <Route path="/stack" element={< />} /> */}
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </Router>
   )
