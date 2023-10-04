@@ -40,9 +40,9 @@ const Text = styled.h1`
   color: #fff;
   text-align: center;
   font-size: 22px;
+  font-family: BM Jua;
   font-style: normal;
-  /* font-weight: 400; */
-  font-weight: bold;
+  font-weight: 400;
   line-height: normal;
   margin-left: 22px;
 `

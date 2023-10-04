@@ -3,11 +3,14 @@ import WishShelf from './pages/WishShelf'
 import ReadingShelf from './pages/ReadingShelf'
 import EndShelf from './pages/EndShelf'
 import Statistics from './pages/Statistics'
+import BookSearch from './pages/BookSearch'
 import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import SearchPage from './pages/SearchPage'
 import BookStackPage from './pages/BookStackPage'
+import BookShelf from './pages/BookShelfPage'
+import ChoosePage from './pages/ChoosePage'
 
 function App() {
   return (
@@ -15,19 +18,21 @@ function App() {
       <Routes>
         {/* 원준 */}
         <Route path="/" element={<MainPage />} />
-        {/* 추후 담당자 */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
         {/* 우희 */}
         <Route path="/booksearch" element={<SearchPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         {/* 선재 */}
         <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} />
+        <Route path="/shelf" element={<BookShelf />} />
         {/* 추후 담당자 */}
         <Route path="/activity" element={<Statistics />} />
         <Route path="/BookStack" element={<BookStackPage />} />
-
+        <Route path="/choose" element={<ChoosePage />} />
+        {/* <Route path="/stack" element={< />} /> */}
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </Router>
   )

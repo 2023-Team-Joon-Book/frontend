@@ -150,12 +150,12 @@ export default function Swipe({
             <BookInfo>
               <Info>
                 <div>
-                  <h2 style={{ fontSize: '2rem', fontWeight: 'bold' }}>
+                  <h2 style={{ fontFamily: 'BM Jua', fontSize: '2rem' }}>
                     {name && name[activeBook]}
                   </h2>
                 </div>
 
-                <div style={{ display: 'flex' }}>
+                <div style={{ fontFamily: 'BM Hanna Air', display: 'flex' }}>
                   <p>{author && author[activeBook]}</p>
                   <p style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>|</p>
                   <p>{publisher && publisher[activeBook]}</p>
@@ -163,7 +163,12 @@ export default function Swipe({
                   <p>{pages && pages[activeBook]}</p>
                 </div>
 
-                <div style={{ fontSize: '1.25rem', display: 'flex', fontWeight: 'bold' }}>
+                <div
+                  style={{
+                    fontFamily: 'BM Jua',
+                    fontSize: '1.4rem',
+                    display: 'flex',
+                  }}>
                   <StyledButton
                     active={currentBookState.read}
                     onClick={toggleRead}
