@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Shelf from '../components/shelf/Shelf.tsx'
 import ChangeShelf from '../components/shelf/ChangeShelf.tsx'
-import Header from '../components/shelf/Header.tsx'
+import Header from '../components/Header/ShelfHeader.tsx'
 import DetailModal from '../components/shelf/DetailModal.tsx'
 import ReviewModal from '../components/shelf/ReviewModal.tsx'
 

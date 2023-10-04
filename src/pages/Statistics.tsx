@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import '../scss/MyShelf.scss'
-import Header from '../components/statistics/Header'
 import Toolbar from '../components/statistics/Toolbar'
 import BarChart from '../components/statistics/BarChart'
 import LineChart from '../components/statistics/LineChart'
+import MyHeader from '../components/Header/MyHeader'
 
 export default function Statistics() {
   const [activeTab, setActiveTab] = useState('bar')
@@ -15,7 +15,7 @@ export default function Statistics() {
   return (
     <div className="flex flex-col h-screen">
       <div>
-        <Header />
+        <MyHeader />
       </div>
       <div className="mt-32">
         <Toolbar onTabToggle={handleTabToggle} />
