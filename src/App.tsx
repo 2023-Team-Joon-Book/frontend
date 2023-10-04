@@ -7,6 +7,8 @@ import BookSearch from './pages/BookSearch'
 import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
+import SearchPage from './pages/SearchPage'
+import BookStackPage from './pages/BookStackPage'
 import BookShelf from './pages/BookShelfPage'
 import ChoosePage from './pages/ChoosePage'
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/finish" element={<EndShelf />} />
         <Route path="/shelf" element={<BookShelf />} />
         {/* 추후 담당자 */}
+        <Route path="/activity" element={<Statistics />} />
+        <Route path="/BookStack" element={<BookStackPage />} />
         <Route path="/choose" element={<ChoosePage />} />
         {/* <Route path="/stack" element={< />} /> */}
         <Route path="/statistics" element={<Statistics />} />
