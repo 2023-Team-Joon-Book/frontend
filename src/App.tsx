@@ -2,12 +2,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import WishShelf from './pages/WishShelf'
 import ReadingShelf from './pages/ReadingShelf'
 import EndShelf from './pages/EndShelf'
+import Statistics from './pages/Statistics'
+import BookSearch from './pages/BookSearch'
 import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
-import SearchPage from './pages/SearchPage'
+import BookShelf from './pages/BookShelfPage'
 import ChoosePage from './pages/ChoosePage'
-import Statistics from './pages/Statistics'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} />
+        <Route path="/shelf" element={<BookShelf />} />
         {/* 추후 담당자 */}
         <Route path="/choose" element={<ChoosePage />} />
         {/* <Route path="/stack" element={< />} /> */}
