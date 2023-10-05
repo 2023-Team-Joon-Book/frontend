@@ -4,6 +4,7 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import * as THREE from 'three';
 import { Html } from "@react-three/drei";
 import { Group, Object3D } from "three";
+import axios from 'axios';
 
 interface BookProps {
     model: Object3D;
@@ -55,16 +56,36 @@ const Stack: React.FC = () => {
     useEffect(() => {
         const loader = new FBXLoader();
         loader.load("/book.fbx", (model: Group) => {
-            const interval = setInterval(() => {
-                // 랜덤 두께 생성 (0.1에서 0.2 사이의 랜덤 값)
-                const randomThickness = 0.08 + Math.random() * 0.09;
+            // 환경변수에서 인증 토큰 불러오기
+            const authHeader = import.meta.env.VITE_REACT_APP_AUTH_TOKEN
+            axios.get('http://localhost:8080/api/v1/readings?status=READ', {
+                headers: {
+                    'Authorization': authHeader,
+                    'Accept': '*/*'
+                }
+            })
+                .then((response) => {
+                    // API에서 가져온 데이터를 이용해 책 두께 설정
+                    const fetchedBooks = response.data.map((bookData: any) => {
+                        return {
+                            model: model.clone(),
+                            // 여기서 pages를 적당한 스케일로 환산하여 두께로 사용
+                            thickness: bookData.pages / 1000
+                        };
+                    });
 
-                setBooks((prevBooks) => {
-                    return prevBooks.length < 10 ? [...prevBooks, { model: model.clone(), thickness: randomThickness }] : prevBooks;
+                    // 정기적으로 책 추가
+                    const interval = setInterval(() => {
+                        setBooks((prevBooks) => {
+                            return prevBooks.length < 10 ? [...prevBooks, fetchedBooks[prevBooks.length]] : prevBooks;
+                        });
+                    }, 1000); // 여기에서 1000은 1초를 의미합니다. 필요에 따라 조절 가능
+
+                    return () => clearInterval(interval);
+                })
+                .catch((error) => {
+                    console.error("Error fetching data: ", error);
                 });
-            }, 100);
-
-            return () => clearInterval(interval);
         });
     }, []);
 
@@ -142,3 +163,4 @@ const Stack: React.FC = () => {
 };
 
 export default Stack;
+
