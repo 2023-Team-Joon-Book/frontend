@@ -5,11 +5,11 @@ import { useState } from 'react'
 import StartNavigator from '../components/main/StartNavigator'
 import LoginHeader from '../components/Header/LoginHeader'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
+import { baseInstance } from '../api/config'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -17,21 +17,27 @@ export default function LoginPage() {
   const handleLogin = async () => {
     if (id && pw) {
       try {
-        const response = await axios.post('/login', {
+        const response = await baseInstance.post('/users/login', {
           username: id,
           password: pw,
         })
         if (response.data.code === 'U004') {
           localStorage.setItem('accessToken', response.data.data.accessToken)
           localStorage.setItem('refreshToken', response.data.data.refreshToken)
+          console.log('로그인 잘됨')
           navigate('/booksearch')
-        } else {
-          // 로그인 실패 처리
+        } else if (response.data.businessCode === 'U002') {
+          // 사용자가 없을 때
+          console.log('에러 내용: ', response.data.message)
           alert(response.data.message)
+        } else if (response.data.code === 'U001') {
+          // 비밀번호가 틀렸을 때
+          console.log('에러 내용: ', response.data.message)
+          alert('비밀번호가 틀렸습니다.')
         }
       } catch (error) {
         // 에러 처리
-        alert('로그인 중 오류가 발생했습니다.')
+        alert('로그인 실패')
       }
     }
   }
@@ -55,9 +61,7 @@ export default function LoginPage() {
     if (e.key === 'Enter') {
       e.preventDefault()
       // 모든 입력이 완료되면 '시작하기' 버튼의 동작을 수행
-      if (id && pw) {
-        navigate('/booksearch')
-      }
+      handleLogin()
     }
   }
 
@@ -108,11 +112,7 @@ export default function LoginPage() {
         </ImgContainer>
       </div>
 
-      {/* 연동 안해놔서 아직 link to로 이동, 연동 후엔 link to 삭제 후 SignUpBtn에 navigation해서 사용 */}
-      {/* <Link to="/booksearch"> */}
       <StartNavigator onClick={handleLogin} disabled={!id || !pw} />
-      {/* <StartNavigator disabled={!id || !pw} /> */}
-      {/* </Link> */}
     </LoginContainer>
   )
 }
