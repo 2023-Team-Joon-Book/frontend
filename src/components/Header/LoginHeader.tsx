@@ -15,6 +15,10 @@ const LoginHeader: FC = () => {
     height: '144px',
   }
 
+  const goToMain = () => {
+    navigate('/')
+  }
+
   return (
     <div
       className="fixed top-0 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-between w-full px-4"
@@ -26,7 +30,7 @@ const LoginHeader: FC = () => {
         </button>
       </div> */}
 
-      <img src={logo} alt="Header Image" className="w-full mx-auto" style={imageStyle} />
+      <img src={logo} alt="Header Image" className="w-full mx-auto cursor-pointer" style={imageStyle} onClick={goToMain} />
 
       {/* <div className="flex items-center space-x-4" style={{ fontFamily: 'bmfont' }}>
         <button className="text-black  text-2xl px-4 py-2 mb-8 rounded-md" onClick={goToLogin}>
