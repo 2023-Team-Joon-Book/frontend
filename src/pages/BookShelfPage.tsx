@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Shelf from '../components/shelf/Shelf.tsx'
 import ChangeShelf from '../components/shelf/ChangeShelf.tsx'
 import Header from '../components/Header/ShelfHeader.tsx'
 import DetailModal from '../components/shelf/DetailModal.tsx'
 import ReviewModal from '../components/shelf/ReviewModal.tsx'
+import axios from 'axios'
 
 const BookShelfPage: React.FC = () => {
   // 3개의 책장 구성
@@ -28,6 +29,51 @@ const BookShelfPage: React.FC = () => {
     // 이전 페이지로 이동
     setCurrentPage((currrentPage) => currrentPage - 1)
   }
+
+  const shelve_B = {
+    shelf2: [
+      {
+        id: 1,
+        title: '책 제목 1',
+        status: '찜',
+        author: '저자 1',
+        img_url: 'src/assets/images/1.png',
+        pageCount: 70,
+      },
+    ],
+  }
+
+  // 로그인 페이지와 미연동 -> 수동으로 로컬스토리지에 access 토큰설정
+  localStorage.setItem(
+    'access',
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdW5qYWUxMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjk2NjA4MDYzLCJleHAiOjE2OTY2MDk4NjN9.UW5L6oxqt6Tl7xjDVJ-KWtQFr8gQS8_xMR5vlH0rQiI',
+  )
+  // const user_ID = '11';
+
+  // api 요청
+  async function bookInfo() {
+    try {
+      const access = localStorage.getItem('access')
+      const response_2 = await axios.get('http://localhost:8080/api/v1/readings?status=READING', {
+        headers: { Authorization: `Bearer ${access}` },
+      })
+      const readingData = response_2.data
+
+      // // 읽은 책 서재 배열에 넣어줌
+      // shelves.shelf2.push(readingData)
+
+      shelve_B.shelf2.push(readingData)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // 컴포넌트가 마운트될 때만 실행되도록 설정
+  useEffect(() => {
+    console.log(shelve_B.shelf2, '***')
+    bookInfo()
+    console.log(shelve_B.shelf2)
+  }, []) // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
 
   // 책장에 보여줄 책 목록을 상태로 관리
   const shelves = {
