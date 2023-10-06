@@ -4,12 +4,12 @@ import LoginInput from '../components/Input/LoginInput'
 import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
 import LoginHeader from '../components/Header/LoginHeader'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
+import { baseInstance } from '../api/config'
 
 export default function SignUpPage() {
   const navigate = useNavigate()
@@ -17,16 +17,17 @@ export default function SignUpPage() {
   const handleSignUp = async () => {
     if (id && pw && passwordConfirm) {
       try {
-        const response = await axios.post('/api/v1/users/join', {
+        const response = await baseInstance.post('/users/join', {
           username: id,
           password: pw,
+          nickname: 'null',
         })
-        if (response.data.code === 'U004') {
-          localStorage.setItem('accessToken', response.data.data.accescToken)
-          localStorage.setItem('refreshToken', response.data.data.refreshToken)
+        if (response.data.code === 'U001') {
+          console.log('회원가입 잘됨')
           navigate('/login')
         } else {
           // 회원가입 실패 처리
+          console.log(response.data.message)
           alert(response.data.message)
         }
       } catch (error) {
@@ -60,9 +61,7 @@ export default function SignUpPage() {
     if (e.key === 'Enter') {
       e.preventDefault()
       // 모든 입력이 완료되면 '회원가입' 버튼의 동작을 수행
-      if (id && pw && passwordConfirm) {
-        navigate('/login')
-      }
+      handleSignUp()
     }
   }
 
@@ -195,10 +194,7 @@ export default function SignUpPage() {
         </ImgContainer>
       </div>
 
-      {/* 연동 안해놔서 아직 link to로 이동, 연동 후엔 link to 삭제 후 SignUpBtn에 navigation해서 사용 */}
-      {/* <Link to="/login"> */}
       <SignUpBtn onClick={handleSignUp} disabled={!(isId && isPassword && isPasswordConfirm)} />
-      {/* </Link> */}
     </LoginContainer>
   )
 }
