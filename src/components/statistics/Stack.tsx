@@ -4,7 +4,7 @@ import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 import * as THREE from 'three';
 import { Html } from "@react-three/drei";
 import { Group, Object3D } from "three";
-import axios from 'axios';
+import { baseInstance } from '../../api/config'
 
 interface BookProps {
     model: Object3D;
@@ -56,11 +56,8 @@ const Stack: React.FC = () => {
     useEffect(() => {
         const loader = new FBXLoader();
         loader.load("/book.fbx", (model: Group) => {
-            // 환경변수에서 인증 토큰 불러오기
-            const authHeader = import.meta.env.VITE_REACT_APP_AUTH_TOKEN
-            axios.get('http://localhost:8080/api/v1/readings?status=READ', {
+            baseInstance.get('/readings?status=READ', {
                 headers: {
-                    'Authorization': authHeader,
                     'Accept': '*/*'
                 }
             })
