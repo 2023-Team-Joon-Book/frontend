@@ -4,14 +4,38 @@ import LoginInput from '../components/Input/LoginInput'
 import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
 import LoginHeader from '../components/Header/LoginHeader'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
+import { baseInstance } from '../api/config'
 
 export default function SignUpPage() {
   const navigate = useNavigate()
+
+  const handleSignUp = async () => {
+    if (id && pw && passwordConfirm) {
+      try {
+        const response = await baseInstance.post('/users/join', {
+          username: id,
+          password: pw,
+          nickname: 'null',
+        })
+        if (response.data.code === 'U001') {
+          console.log('회원가입 잘됨')
+          navigate('/login')
+        } else {
+          // 회원가입 실패 처리
+          console.log(response.data.message)
+          alert(response.data.message)
+        }
+      } catch (error) {
+        // 에러 처리
+        alert('회원가입 중 오류가 발생했습니다.')
+      }
+    }
+  }
 
   const idInputRef = React.useRef<HTMLInputElement>(null)
   const pwInputRef = React.useRef<HTMLInputElement>(null)
@@ -37,9 +61,7 @@ export default function SignUpPage() {
     if (e.key === 'Enter') {
       e.preventDefault()
       // 모든 입력이 완료되면 '회원가입' 버튼의 동작을 수행
-      if (id && pw && passwordConfirm) {
-        navigate('/login')
-      }
+      handleSignUp()
     }
   }
 
@@ -75,12 +97,12 @@ export default function SignUpPage() {
 
   // 비밀번호
   const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/
     const passwordCurrent = e.target.value
     setPw(passwordCurrent)
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('* 영문 + 숫자 + 6자리 이상으로 입력바랍니다.')
+      setPasswordMessage('* 대소문자 + 숫자 + 특수문자 + 8~16자리로 입력바랍니다.')
       setIsPassword(false)
     } else {
       setPasswordMessage('')
@@ -172,10 +194,7 @@ export default function SignUpPage() {
         </ImgContainer>
       </div>
 
-      {/* 연동 안해놔서 아직 link to로 이동, 연동 후엔 link to 삭제 후 SignUpBtn에 navigation해서 사용 */}
-      <Link to="/login">
-        <SignUpBtn disabled={!(isId && isPassword && isPasswordConfirm)} />
-      </Link>
+      <SignUpBtn onClick={handleSignUp} disabled={!(isId && isPassword && isPasswordConfirm)} />
     </LoginContainer>
   )
 }
