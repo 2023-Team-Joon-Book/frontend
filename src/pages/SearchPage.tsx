@@ -35,9 +35,9 @@ const SearchPage = () => {
           <div>조회할 결과가 없습니다.</div>
         )
       ) : null}
+      <ResentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
-      <ResentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <Ask />
     </>
   )
