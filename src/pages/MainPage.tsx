@@ -14,7 +14,12 @@ const MainPage: React.FC = () => {
       <MainFirst />
       <MainSecond />
       <MainThird />
-      <StartNavigator />
+      <StartNavigator
+        onClick={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+        disabled={false}
+      />
     </div>
   )
 }
