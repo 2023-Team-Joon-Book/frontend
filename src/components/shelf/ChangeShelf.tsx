@@ -6,7 +6,7 @@ interface ChangeShelfProps {
 }
 
 const ChangeShelf: React.FC<ChangeShelfProps> = ({ onShelfChange, selectedShelf }) => {
-  const [btn, setBtn] = useState(['찜한 책', '읽고 있는 책', '다 읽은 책'])
+  const [btn] = useState(['찜한 책', '읽고 있는 책', '다 읽은 책'])
 
   return (
     <div className="mb-4">
@@ -17,14 +17,18 @@ const ChangeShelf: React.FC<ChangeShelfProps> = ({ onShelfChange, selectedShelf 
           {btn[0]}
         </button>
         <button
-          onClick={() => onShelfChange('shelf2')}
+          onClick={() => {
+            onShelfChange('shelf2')
+          }}
           className={`${
             selectedShelf === 'shelf2' ? 'text-5xl' : 'text-xl'
           }  px-2 py-1 rounded-md`}>
           {btn[1]}
         </button>
         <button
-          onClick={() => onShelfChange('shelf3')}
+          onClick={() => {
+            onShelfChange('shelf3')
+          }}
           className={`${selectedShelf === 'shelf3' ? 'text-5xl' : 'text-xl'} px-2 py-1 rounded-md`}>
           {btn[2]}
         </button>

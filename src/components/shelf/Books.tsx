@@ -5,12 +5,6 @@ import React, { useState } from 'react'
 
 interface BookProps {
   book: {
-    // id: number
-    // title: string
-    // status: string
-    // author: string
-    // img_url: string
-    // // pageCount: number
     author: string
     cover_image_url: string
     height: string
@@ -24,11 +18,6 @@ interface BookProps {
     status: string
   }
   openModal: (book: {
-    // id: number
-    // title: string
-    // status: string
-    // author: string
-    // img_url: string
     author: string
     cover_image_url: string
     height: string
