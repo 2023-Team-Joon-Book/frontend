@@ -1,6 +1,6 @@
 // RecentlyViewedBooks.tsx
 import React from 'react';
-import Swipe from './swiper/Swipe';
+import ViewedSwipe from './swiper/ViewedSwipe';
 
 interface Book {
     id: string | null;
@@ -20,7 +20,7 @@ interface ViewedBooksProps {
 
 const ViewedBooks: React.FC<ViewedBooksProps> = ({ onSwipeClick, active, books }) => {
     return (
-        <Swipe
+        <ViewedSwipe
             index={0}
             onSwipeClick={onSwipeClick}
             active={active}

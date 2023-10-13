@@ -116,28 +116,29 @@ export default function Swipe({
                     clickable: false,
                 }}
                 modules={[FreeMode, Pagination]}>
-                {[...Array(14).keys()].map((index) => (
-                    <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
-                        <BookCover>
-                            <StyledImg
-                                active={activeBook === index}
-                                src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                                alt={`Book ${index + 1}`}
-                            />
-                            {activeBook === index && (
-                                <StyledIcon>
-                                    <SearchRoundedIcon style={{ width: '7rem', height: '7rem', color: '#fff' }} />
-                                </StyledIcon>
-                            )}
-                            <BookTextContainer>
-                                <BookName>{name && name[index]}</BookName>
-                                <BookAuthor>{author && author[index]}</BookAuthor>
-                            </BookTextContainer>
-                        </BookCover>
-                    </SwiperSlide>
-                ))}
+                {
+                    name && name.slice(0, 30).map((bookName, index) => (   // 현재 30개로 제한을 넣었는데, 추후 버튼형 스타일로 바꾸는데 UX적으로 좋을 듯 합니다.
+                        <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
+                            <BookCover>
+                                <StyledImg
+                                    active={activeBook === index}
+                                    src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
+                                    alt={`Book ${index + 1}`}
+                                />
+                                {activeBook === index && (
+                                    <StyledIcon>
+                                        <SearchRoundedIcon style={{ width: '7rem', height: '7rem', color: '#fff' }} />
+                                    </StyledIcon>
+                                )}
+                                <BookTextContainer>
+                                    <BookName>{bookName}</BookName>
+                                    <BookAuthor>{author && author[index]}</BookAuthor>
+                                </BookTextContainer>
+                            </BookCover>
+                        </SwiperSlide>
+                    ))
+                }
             </StyledSwiper>
-
             {activeBook !== null && (
                 <AccordionContent onClick={handleInnerClick}>
                     <hr />
