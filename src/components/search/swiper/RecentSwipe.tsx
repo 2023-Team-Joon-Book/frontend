@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { baseInstance } from '../../../api/config'
 
-interface ResentSwipeProps {
+interface RecentSwipeProps {
     index: number
     onSwipeClick: (index: number) => void
     active: boolean
@@ -34,7 +34,7 @@ export default function Swipe({
     // onSwipeClick,
     // active,
     // index,
-}: ResentSwipeProps) {
+}: RecentSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
     const [booksState, setBooksState] = useState<Record<number, BookState>>({})
     const [booksData, setBooksData] = useState<any[]>([]);  // 추가: API로부터 불러온 책 데이터를 저장할 상태

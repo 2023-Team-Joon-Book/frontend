@@ -4,7 +4,7 @@ import SearchBar from '../components/search/SearchBar'
 import MyHeader from '../components/Header/MyHeader'
 import ViewedBooks from '../components/search/ViewedBooks'
 import PopularBooks from '../components/search/PopularBook'
-import ResentBooks from '../components/search/ResentBooks'
+import RecentBooks from '../components/search/RecentBooks'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
@@ -35,8 +35,8 @@ const SearchPage = () => {
           <div>조회할 결과가 없습니다.</div>
         )
       ) : null}
-      <ResentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
+      <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <Ask />
     </>

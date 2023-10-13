@@ -1,9 +1,8 @@
-// ResentBooks.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ResentSwipe from './swiper/ResentSwipe';
+import RecentSwipe from './swiper/RecentSwipe';
 
-interface ResentBooksProps {
+interface RecentBooksProps {
     onSwipeClick: (index: number) => void;
     active: boolean;
 }
@@ -16,7 +15,7 @@ interface Book {
     category: string;
 }
 
-const ResentBooks: React.FC<ResentBooksProps> = ({ onSwipeClick, active }) => {
+const RecentBooks: React.FC<RecentBooksProps> = ({ onSwipeClick, active }) => {
     const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
@@ -36,7 +35,7 @@ const ResentBooks: React.FC<ResentBooksProps> = ({ onSwipeClick, active }) => {
     }, []); // Empty dependency array means this useEffect runs once when component mounts
 
     return (
-        <ResentSwipe
+        <RecentSwipe
             index={0}
             onSwipeClick={onSwipeClick}
             active={active}
@@ -50,4 +49,4 @@ const ResentBooks: React.FC<ResentBooksProps> = ({ onSwipeClick, active }) => {
     );
 }
 
-export default ResentBooks;
+export default RecentBooks;
