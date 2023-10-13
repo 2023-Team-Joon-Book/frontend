@@ -58,7 +58,7 @@ const BookShelfPage: React.FC = () => {
       const response_2 = await axios.get('http://localhost:8080/api/v1/readings?status=READING', {
         headers: { Authorization: `Bearer ${access}` },
       })
-      const readingData_2 = response_2.data
+      const readingData_2 = response_2.data.bookInfos
 
       console.log(readingData_2)
       // 책장 데이터를 업데이트
@@ -78,7 +78,7 @@ const BookShelfPage: React.FC = () => {
       const response_3 = await axios.get('http://localhost:8080/api/v1/readings?status=READ', {
         headers: { Authorization: `Bearer ${access}` },
       })
-      const readingData_3 = response_3.data
+      const readingData_3 = response_3.data.bookInfos
 
       // 책장 데이터를 업데이트
       setShelves((prevShelves) => {

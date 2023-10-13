@@ -2,12 +2,6 @@ import React, { useState } from 'react'
 
 interface DetailModalProps {
   book: {
-    // id: number
-    // title: string
-    // status: string
-    // author: string
-    // img_url: string
-
     author: string
     cover_image_url: string
     height: string
