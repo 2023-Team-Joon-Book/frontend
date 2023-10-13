@@ -20,8 +20,8 @@ interface DetailModalProps {
 
 const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
   const id = book.id
-  const [lastPage, setLastPage] = useState()
-  const [percentages, setPercentages] = useState()
+  const [lastPage, setLastPage] = useState(0)
+  const [percentages, setPercentages] = useState(0)
   const [loading, setLoading] = useState(true) // 로딩 상태 추가
 
   async function readPercentages() {
@@ -78,7 +78,12 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
                 현재까지 읽은 페이지 수 :{loading ? '로딩 중...' : `${lastPage}/${book.pages}`}
               </h3>
               <p className="text-3xl flex flex-col items-center m-20">
-                progress : {loading ? '로딩 중...' : percentages}
+                {/* progress : {loading ? '로딩 중...' : percentages} */}
+                <div className="w-full bg-gray-200 rounded">
+                  <div
+                    className="h-4 bg-blue-500 rounded"
+                    style={{ width: `${percentages}%` }}></div>
+                </div>
               </p>
             </div>
             <button
