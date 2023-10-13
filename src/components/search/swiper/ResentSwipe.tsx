@@ -85,16 +85,39 @@ export default function Swipe({
         event.stopPropagation()
     }
 
-    const toggleRead = () => {
+    const toggleRead = async () => {
         const currentBookState = booksState[activeBook!] || {
             read: false,
             readComplete: false,
             heartBlack: false,
         }
+
         setBooksState({
             ...booksState,
             [activeBook!]: { ...currentBookState, read: true, readComplete: false },
         })
+
+        // 책이 선택되지 않았다면, API 호출을 진행하지 않습니다.
+        if (activeBook === null) return;
+
+        try {
+            // API 호출을 수행합니다. 이 경우 POST 메서드를 사용하여, 서버로 데이터를 전송합니다.
+            // activeBook 값을 사용하여 현재 활성화된 책의 ID를 가져와서 API 호출에 사용합니다.
+            const bookId = booksData[activeBook].id;  // 또는 적절한 ID 프로퍼티를 사용합니다.
+
+            await baseInstance.post('/readings', {
+                headers: {
+                    'Accept': '*/*'
+                },
+                bookId: bookId,
+                lastPage: 0,  // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
+                status: 'reading',
+            });
+
+        } catch (error) {
+            console.error('Error updating reading status:', error);
+            // 여기에 오류 처리 로직을 추가하세요. 예를 들면, 사용자에게 오류 메시지를 표시합니다.
+        }
     }
 
     const toggleReadComplete = () => {
@@ -339,4 +362,5 @@ const HeartButton = styled.button`
   margin-right: 3rem;
   margin-left: auto;
 `
+
 
