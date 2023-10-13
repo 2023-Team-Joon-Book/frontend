@@ -59,11 +59,15 @@ const BookShelfPage: React.FC = () => {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingData_2 = response_2.data.bookInfos
+      const statusData = response_2.data.status
 
-      console.log(readingData_2)
-      // 책장 데이터를 업데이트
+      console.log('응답 값', response_2.data)
+      // 책장 데이터를 업데이트하고 "status"를 추가합니다.
       setShelves((prevShelves) => {
-        return { ...prevShelves, shelf2: readingData_2 }
+        return {
+          ...prevShelves,
+          shelf2: readingData_2.map((book: any) => ({ ...book, status: statusData })),
+        }
       })
     } catch (error) {
       console.log(error)
@@ -79,10 +83,17 @@ const BookShelfPage: React.FC = () => {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingData_3 = response_3.data.bookInfos
+      const statusData = response_3.data.status
+
+      console.log('응답 값', response_3.data)
 
       // 책장 데이터를 업데이트
+      // 책장 데이터를 업데이트하고 "status"를 추가합니다.
       setShelves((prevShelves) => {
-        return { ...prevShelves, shelf3: readingData_3 }
+        return {
+          ...prevShelves,
+          shelf3: readingData_3.map((book: any) => ({ ...book, status: statusData })),
+        }
       })
     } catch (error) {
       console.log(error)
@@ -153,12 +164,12 @@ const BookShelfPage: React.FC = () => {
           />
         </div>
       </div>
-      {isModalOpen && selectedBook?.status == '읽는 중' && (
+      {isModalOpen && selectedBook?.status == 'READING' && (
         <div className="">
           <DetailModal setIsModalOpen={setIsModalOpen} book={selectedBook} />
         </div>
       )}
-      {isModalOpen && selectedBook?.status == '읽음' && (
+      {isModalOpen && selectedBook?.status == 'READ' && (
         <div className="">
           <ReviewModal setIsModalOpen={setIsModalOpen} book={selectedBook} />
         </div>
