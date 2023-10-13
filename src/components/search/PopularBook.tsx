@@ -1,7 +1,7 @@
 // ResentBooks.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PopularSwipe from './swiper/Swipe';
+import PopularSwipe from './swiper/Swipe';   // 추후 PopularSwipe 추가
 
 interface PopularBooksProps {
     onSwipeClick: (index: number) => void;

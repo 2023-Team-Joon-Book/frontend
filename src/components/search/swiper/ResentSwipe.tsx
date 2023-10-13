@@ -31,9 +31,9 @@ export default function Swipe({
     author,
     publisher,
     pages,
-    onSwipeClick,
-    active,
-    index,
+    // onSwipeClick,
+    // active,
+    // index,
 }: ResentSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
     const [booksState, setBooksState] = useState<Record<number, BookState>>({})
@@ -85,6 +85,23 @@ export default function Swipe({
         event.stopPropagation()
     }
 
+    // 읽기 / 다 읽은 책 버튼에 따른 readings/read 상태로 API post 함수
+    const updateReadingStatus = async (bookId: number, status: string) => {
+        try {
+            await baseInstance.post('/readings', {
+                bookId,
+                lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
+                status,
+            });
+        } catch (error: any) {
+            console.error('Error updating reading status:', error);
+            const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
+            console.error('Server Error Message:', errorMessage);
+            alert(`Error: ${errorMessage}`);
+        }
+    }
+
+    // 읽기 버튼을 눌렀을 시 updateReadingStatus 'reading' 설정
     const toggleRead = async () => {
         const currentBookState = booksState[activeBook!] || {
             read: false,
@@ -100,38 +117,30 @@ export default function Swipe({
         // 책이 선택되지 않았다면, API 호출을 진행하지 않습니다.
         if (activeBook === null) return;
 
-        try {
-            // API 호출을 수행합니다. 이 경우 POST 메서드를 사용하여, 서버로 데이터를 전송합니다.
-            // activeBook 값을 사용하여 현재 활성화된 책의 ID를 가져와서 API 호출에 사용합니다.
-            const bookId = booksData[activeBook].id;  // 또는 적절한 ID 프로퍼티를 사용합니다.
+        const bookId = booksData[activeBook].id;
 
-            await baseInstance.post('/readings', {
-                bookId: 72, // 추후 bookId 로 변경
-                lastPage: 0,  // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
-                status: 'reading',
-            });
-
-        } catch (error: any) {
-            console.error('Error updating reading status:', error);
-
-            // 'any' 타입을 사용해 직접 속성에 접근
-            const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
-
-            console.error('Server Error Message:', errorMessage);
-            alert(`Error: ${errorMessage}`);
-        }
+        await updateReadingStatus(bookId, 'reading');
     }
 
-    const toggleReadComplete = () => {
+    // 읽기 버튼을 눌렀을 시 updateReadingStatus 'read' 설정
+    const toggleReadComplete = async () => {
         const currentBookState = booksState[activeBook!] || {
             read: false,
             readComplete: false,
             heartBlack: false,
         }
+
         setBooksState({
             ...booksState,
             [activeBook!]: { ...currentBookState, read: false, readComplete: true },
         })
+
+        // 책이 선택되지 않았다면, API 호출을 진행하지 않습니다.
+        if (activeBook === null) return;
+
+        const bookId = booksData[activeBook].id;
+
+        await updateReadingStatus(bookId, 'read');
     }
 
     const toggleHeartColor = (event: React.MouseEvent<HTMLButtonElement>) => {
