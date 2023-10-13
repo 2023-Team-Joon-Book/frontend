@@ -39,7 +39,6 @@ const Books: React.FC<BookProps> = ({ book, openModal }) => {
         src={book.cover_image_url}
         onClick={() => {
           openModal(book)
-          console.log('**')
         }}
       />
     </div>
