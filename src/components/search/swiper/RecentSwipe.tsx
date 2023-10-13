@@ -25,7 +25,7 @@ interface BookState {
     heartBlack: boolean
 }
 
-export default function Swipe({
+export default function RecentSwipe({
     title,
     name,
     author,
