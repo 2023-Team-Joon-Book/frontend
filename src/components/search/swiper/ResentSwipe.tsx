@@ -106,14 +106,19 @@ export default function Swipe({
             const bookId = booksData[activeBook].id;  // 또는 적절한 ID 프로퍼티를 사용합니다.
 
             await baseInstance.post('/readings', {
-                bookId: 72,
+                bookId: 72, // 추후 bookId 로 변경
                 lastPage: 0,  // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status: 'reading',
             });
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error updating reading status:', error);
-            // 여기에 오류 처리 로직을 추가하세요. 예를 들면, 사용자에게 오류 메시지를 표시합니다.
+
+            // 'any' 타입을 사용해 직접 속성에 접근
+            const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
+
+            console.error('Server Error Message:', errorMessage);
+            alert(`Error: ${errorMessage}`);
         }
     }
 
