@@ -106,10 +106,7 @@ export default function Swipe({
             const bookId = booksData[activeBook].id;  // 또는 적절한 ID 프로퍼티를 사용합니다.
 
             await baseInstance.post('/readings', {
-                headers: {
-                    'Accept': '*/*'
-                },
-                bookId: bookId,
+                bookId: 72,
                 lastPage: 0,  // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status: 'reading',
             });
