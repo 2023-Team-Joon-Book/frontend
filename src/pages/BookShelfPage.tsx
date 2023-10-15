@@ -43,12 +43,38 @@ const BookShelfPage: React.FC = () => {
         await bookInfo2()
       } else if (selectedShelf === 'shelf3') {
         await bookInfo3()
+      } else if (selectedShelf === 'shelf1') {
+        await bookInfo1()
       }
     }
 
     fetchData()
-    // console.log('api요청')
+    console.log('api요청')
   }, [selectedShelf]) // selectedShelf가 변경될 때마다 이펙트 함수 실행
+
+  // 찜한 책 api 요청
+  async function bookInfo1() {
+    try {
+      const access = localStorage.getItem('accessToken')
+
+      const response_1 = await axios.get('http://localhost:8080/api/v1/readings?status=UNREAD', {
+        headers: { Authorization: `Bearer ${access}` },
+      })
+      const readingData_1 = response_1.data.bookInfos
+      const statusData = response_1.data.status
+
+      console.log('응답 값', response_1.data)
+      // 책장 데이터를 업데이트하고 "status"를 추가합니다.
+      setShelves((prevShelves) => {
+        return {
+          ...prevShelves,
+          shelf1: readingData_1.map((book: any) => ({ ...book, status: statusData })),
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   // 읽고 있는 책 api 요청
   async function bookInfo2() {
