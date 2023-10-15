@@ -77,13 +77,13 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
               <h3 className="text-3xl flex flex-col font-semibold mb-2 mt-20 items-center">
                 현재까지 읽은 페이지 수 :{loading ? '로딩 중...' : `${lastPage}/${book.pages}`}
               </h3>
-              <p className="text-3xl flex flex-col items-center m-20">
-                {/* progress : {loading ? '로딩 중...' : percentages} */}
-                <div className="w-full bg-gray-200 rounded">
+              <p className="text-3xl flex flex-row items-center m-20">
+                <div className="w-full  bg-gray-200 rounded">
                   <div
                     className="h-4 bg-blue-500 rounded"
                     style={{ width: `${percentages}%` }}></div>
                 </div>
+                <div className="pl-3 text-2xl"> {percentages}%</div>
               </p>
             </div>
             <button
