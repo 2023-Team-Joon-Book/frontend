@@ -43,17 +43,17 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
             {!isWriting ? (
               <React.Fragment>
                 <p className="text-3xl flex flex-col items-center p-10">리뷰내용</p>
-                {/* <button
+                <button
                   onClick={() => {
                     setIsWriting(true)
                   }}
                   className="text-blue-500 hover:text-blue-700">
                   리뷰 작성하기
-                </button> */}
+                </button>
               </React.Fragment>
             ) : (
-              <div className="">
-                <Writng></Writng>
+              <div className="h-full">
+                <Writng book={book}></Writng>
               </div>
             )}
           </div>

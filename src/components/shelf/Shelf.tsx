@@ -10,12 +10,6 @@ interface ShelfProps {
   currentShelfBooks: {}
   setIsModalOpen: (isOpen: boolean) => void
   openModal: (book: {
-    // id: number
-    // title: string
-    // status: string
-    // author: string
-    // img_url: string
-
     author: string
     cover_image_url: string
     height: string
@@ -51,12 +45,6 @@ const Shelf: React.FC<ShelfProps> = ({
   }, [])
 
   const currentShelfBooksArray: Array<{
-    // id: number
-    // title: string
-    // status: string
-    // author: string
-    // img_url: string
-    // pageCount?: number
     author: string
     cover_image_url: string
     height: string
