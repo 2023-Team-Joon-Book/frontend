@@ -57,7 +57,7 @@ const BookShelfPage: React.FC = () => {
     try {
       const access = localStorage.getItem('accessToken')
 
-      const response_1 = await axios.get('http://localhost:8080/api/v1/readings?status=UNREAD', {
+      const response_1 = await axios.get('http://localhost:8080/api/v1/readings?status=LIKE', {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingData_1 = response_1.data.bookInfos
