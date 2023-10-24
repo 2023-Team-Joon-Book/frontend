@@ -29,6 +29,7 @@ const ViewedBooks: React.FC<ViewedBooksProps> = ({ onSwipeClick, active, books }
             author={books.map((book) => book.author)}
             publisher={books.map((book) => book.publisher)}
             pages={books.map((book) => book.pages.toString())}
+            coverImageUrl={books.map((book) => book.cover_image_url)}
         />
     );
 }

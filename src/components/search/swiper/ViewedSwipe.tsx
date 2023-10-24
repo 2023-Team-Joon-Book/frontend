@@ -16,6 +16,7 @@ interface ViewedSwipeProps {
     author?: string[]
     publisher?: string[]
     pages?: string[]
+    coverImageUrl: string[]
 }
 
 interface BookState {
@@ -30,6 +31,7 @@ export default function Swipe({
     author,
     publisher,
     pages,
+    coverImageUrl,
     onSwipeClick,
     active,
     index,
@@ -112,32 +114,31 @@ export default function Swipe({
                 slidesPerView={7}
                 spaceBetween={30}
                 freeMode={true}
-                pagination={{
-                    clickable: false,
-                }}
-                modules={[FreeMode, Pagination]}>
+                modules={[FreeMode, Pagination]}
+            >
                 {
-                    name && name.slice(0, 30).map((bookName, index) => (   // 현재 30개로 제한을 넣었는데, 추후 버튼형 스타일로 바꾸는데 UX적으로 좋을 듯 합니다.
+                    name && name.slice(0, 30).map((bookName, index) => (
                         <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
                             <BookCover>
                                 <StyledImg
                                     active={activeBook === index}
-                                    src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
+                                    src={coverImageUrl && coverImageUrl.length > index ? coverImageUrl[index] : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
                                     alt={`Book ${index + 1}`}
                                 />
+
                                 {activeBook === index && (
                                     <StyledIcon>
                                         <SearchRoundedIcon style={{ width: '7rem', height: '7rem', color: '#fff' }} />
                                     </StyledIcon>
                                 )}
                                 <BookTextContainer>
-                                    <BookName>{bookName}</BookName>
-                                    <BookAuthor>{author && author[index]}</BookAuthor>
+                                    <BookName>{bookName}</BookName>  {/* name 배열에서 가져온 제목을 사용 */}
+                                    <BookAuthor>{author && author[index]}</BookAuthor>  {/* author 배열에서 가져온 저자를 사용 */}
                                 </BookTextContainer>
                             </BookCover>
                         </SwiperSlide>
-                    ))
-                }
+                    ))}
+
             </StyledSwiper>
             {activeBook !== null && (
                 <AccordionContent onClick={handleInnerClick}>
@@ -145,8 +146,8 @@ export default function Swipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src="https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                            alt={`Book ${activeBook + 1}`}
+                            src={coverImageUrl && coverImageUrl.length > index ? coverImageUrl[index] : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={`Book ${index + 1}`}
                         />
                         <BookInfo>
                             <Info>
