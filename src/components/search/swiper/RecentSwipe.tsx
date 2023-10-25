@@ -201,16 +201,16 @@ export default function RecentSwipe({
                             <Info>
                                 <div>
                                     <h2 style={{ fontFamily: 'BM Jua', fontSize: '2rem' }}>
-                                        {name && name[activeBook]}
+                                        {booksData[activeBook]?.title}
                                     </h2>
                                 </div>
 
                                 <div style={{ fontFamily: 'BM Hanna Air', display: 'flex' }}>
-                                    <p>{author && author[activeBook]}</p>
+                                    <p>{booksData[activeBook]?.author}</p>
                                     <p style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>|</p>
-                                    <p>{publisher && publisher[activeBook]}</p>
+                                    <p>{booksData[activeBook]?.publisher}</p>
                                     <p style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>|</p>
-                                    <p>{pages && pages[activeBook]}</p>
+                                    <p>{booksData[activeBook]?.pages}</p>
                                 </div>
 
                                 <div
