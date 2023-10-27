@@ -46,8 +46,25 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
       setReview(content)
       setLoading(false) // 데이터 로딩 완료 후 로딩 상태 변경
     } catch (error) {
-      console.error('에러밣생')
+      console.error(error)
       setLoading(false) // 데이터 로딩 실패 시에도 로딩 상태 변경
+    }
+  }
+
+  // 리뷰 삭제 api 요청
+  async function deleteReview() {
+    const access = localStorage.getItem('accessToken')
+
+    try {
+      const response = await axios.delete(`http://localhost:8080/api/v1/reviews/${book.id}`, {
+        headers: { Authorization: `Bearer ${access}` },
+      })
+      console.log(response)
+      alert('리뷰가 삭제되었습니다.')
+      setReview('책에 대한 줄거리와 소감을 남겨보세요!')
+    } catch (error) {
+      console.error(error)
+      console.log('에러밣생')
     }
   }
 
@@ -83,12 +100,12 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
             <div className="w-8/12 p-10 flex flex-col">
               <div className="flex flex-col h-2/3 border-2">
                 {isWriting ? (
-                  // 리뷰가 있다면
+                  // 리뷰를 작성중인 상태라면
                   <div className="h-full">
                     <Writng book={book}></Writng>
                   </div>
                 ) : (
-                  // 리뷰가 없다면
+                  // 초기상태
                   <React.Fragment>
                     <p className="text-3xl flex flex-col items-center p-10">{review}</p>
                     <button
@@ -97,6 +114,13 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                       }}
                       className="text-blue-500 hover:text-blue-700">
                       리뷰 작성하기
+                    </button>
+                    <button
+                      onClick={() => {
+                        deleteReview()
+                      }}
+                      className="text-blue-500 hover:text-blue-700">
+                      리뷰 삭제하기
                     </button>
                   </React.Fragment>
                 )}
