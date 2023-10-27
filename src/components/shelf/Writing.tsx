@@ -49,17 +49,17 @@ const Writng: React.FC<WritngProps> = ({ book }) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex-col">
       <input
         defaultValue={editedLastPage}
         onChange={handleLastPageChange}
         placeholder="리뷰 내용(책에 대한 줄거리와 소감을 남겨보세요!)"
-        className="w-full h-60 flex text-center text-2xl"></input>
+        className="w-full h-72 flex text-center text-2xl p-10"></input>
       <button
         onClick={() => {
           registering()
         }}
-        className="text-blue-500 hover:text-blue-700 flex justify-end">
+        className="text-lime-500 hover:text-lime-600 text-2xl ml-4 mt-2">
         등록하기
       </button>
     </div>

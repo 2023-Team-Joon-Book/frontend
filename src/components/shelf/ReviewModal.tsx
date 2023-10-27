@@ -107,21 +107,34 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                 ) : (
                   // 초기상태
                   <React.Fragment>
-                    <p className="text-3xl flex flex-col items-center p-10">{review}</p>
-                    <button
-                      onClick={() => {
-                        setIsWriting(true)
-                      }}
-                      className="text-blue-500 hover:text-blue-700">
-                      리뷰 작성하기
-                    </button>
-                    <button
-                      onClick={() => {
-                        deleteReview()
-                      }}
-                      className="text-blue-500 hover:text-blue-700">
-                      리뷰 삭제하기
-                    </button>
+                    <p
+                      className={`flex flex-col items-center p-10 ${
+                        review == '책에 대한 줄거리와 소감을 남겨보세요!'
+                          ? 'text-gray-400 text-xl'
+                          : 'text-3xl '
+                      }`}>
+                      {review}
+                    </p>
+                    <div className="flex flex-row mt-36">
+                      <button
+                        onClick={() => {
+                          if (review != '책에 대한 줄거리와 소감을 남겨보세요!') {
+                            alert('기존에 작성한 리뷰를 먼저 삭제 해주세요')
+                          } else {
+                            setIsWriting(true)
+                          }
+                        }}
+                        className="text-lime-500 hover:text-lime-600 ml-4 mt-6 text-2xl">
+                        리뷰 작성하기
+                      </button>
+                      <button
+                        onClick={() => {
+                          deleteReview()
+                        }}
+                        className="text-lime-500 hover:text-lime-600 ml-4 mt-6 text-2xl">
+                        리뷰 삭제하기
+                      </button>
+                    </div>
                   </React.Fragment>
                 )}
               </div>
