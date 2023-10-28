@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import logo from '../../../public/logo.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { baseInstance } from '../../api/config'
@@ -6,8 +6,11 @@ import { baseInstance } from '../../api/config'
 const MyHeader: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const [isLogoutClicked, setIsLogoutClicked] = useState(false)
 
   const handleLogout = async () => {
+    setIsLogoutClicked(true)
+
     try {
       const accessToken = localStorage.getItem('accessToken')
       const refreshToken = localStorage.getItem('refreshToken')
@@ -97,7 +100,12 @@ const MyHeader: FC = () => {
           onClick={goToStatistic}>
           독서 통계
         </button>
-        <button className="text-black text-2xl px-4 py-2 mb-8 rounded-md" onClick={handleLogout}>
+        <button
+          className="text-black text-2xl px-4 py-2 mb-8 rounded-md"
+          style={{
+            color: isLogoutClicked ? '#BFC66A' : 'black', // 클릭 상태에 따라 색상 변경
+          }}
+          onClick={handleLogout}>
           로그아웃
         </button>
       </div>
