@@ -93,11 +93,12 @@ export default function PopularSwipe({
                 lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status,
             });
+            alert('책 등록 성공!');
         } catch (error: any) {
             console.error('Error updating reading status:', error);
             const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`Error: ${errorMessage}`);
+            alert(`${errorMessage} 입니다.`);
         }
     }
 
