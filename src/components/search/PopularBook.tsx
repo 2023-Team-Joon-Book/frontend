@@ -1,7 +1,7 @@
 // ResentBooks.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PopularSwipe from './swiper/Swipe';   // 추후 PopularSwipe 추가
+import PopularSwipe from './swiper/PopularSwipe'  // 추후 PopularSwipe 추가
 
 interface PopularBooksProps {
     onSwipeClick: (index: number) => void;
@@ -17,14 +17,14 @@ interface Book {
     category: string;
 }
 
-const ResentBooks: React.FC<PopularBooksProps> = ({ onSwipeClick, active }) => {
+const PopularBooks: React.FC<PopularBooksProps> = ({ onSwipeClick, active }) => {
     const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
         // Define an async function
         const fetchBooks = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/books/new');
+                const response = await axios.get('http://localhost:8080/api/v1/books/like');
                 // Update state with fetched books
                 setBooks(response.data.data.content);
             } catch (error) {
@@ -51,4 +51,4 @@ const ResentBooks: React.FC<PopularBooksProps> = ({ onSwipeClick, active }) => {
     );
 }
 
-export default ResentBooks;
+export default PopularBooks;
