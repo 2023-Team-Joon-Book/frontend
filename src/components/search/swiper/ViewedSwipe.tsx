@@ -146,7 +146,13 @@ export default function Swipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={coverImageUrl && coverImageUrl.length > index ? coverImageUrl[index] : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            src={
+                                activeBook !== null
+                                    ? coverImageUrl && coverImageUrl[activeBook].length > index
+                                        ? coverImageUrl[activeBook]
+                                        : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
+                                    : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
+                            }
                             alt={`Book ${index + 1}`}
                         />
                         <BookInfo>
