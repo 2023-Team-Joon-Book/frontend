@@ -25,6 +25,7 @@ const ViewedBooks: React.FC<ViewedBooksProps> = ({ onSwipeClick, active, books }
             onSwipeClick={onSwipeClick}
             active={active}
             title="검색한 도서"
+            id={books.map((book) => book.id)} // "id" 추가
             name={books.map((book) => book.title)}
             author={books.map((book) => book.author)}
             publisher={books.map((book) => book.publisher)}

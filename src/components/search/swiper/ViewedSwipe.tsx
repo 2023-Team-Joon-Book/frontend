@@ -6,11 +6,13 @@ import 'swiper/css/pagination'
 import { FreeMode, Pagination } from 'swiper/modules'
 import { useEffect, useState } from 'react'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import { baseInstance } from '../../../api/config'
 
 interface ViewedSwipeProps {
     index: number
     onSwipeClick: (index: number) => void
     active: boolean
+    id: (string | null)[];
     title?: string
     name?: string[]
     author?: string[]
@@ -32,6 +34,7 @@ export default function Swipe({
     publisher,
     pages,
     coverImageUrl,
+    id,
     onSwipeClick,
     active,
     index,
@@ -70,41 +73,102 @@ export default function Swipe({
         event.stopPropagation()
     }
 
-    const toggleRead = () => {
+    const updateReadingStatus = async (bookId: string, status: string) => {
+        try {
+            await baseInstance.post('/readings', {
+                bookId,
+                lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
+                status,
+            });
+            alert('책 등록 성공!');
+        } catch (error: any) {
+            console.error('Error updating reading status:', error);
+            const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
+            console.error('Server Error Message:', errorMessage);
+            alert(`${errorMessage} 입니다.`);
+        }
+    }
+
+    const toggleRead = async () => {
         const currentBookState = booksState[activeBook!] || {
             read: false,
             readComplete: false,
             heartBlack: false,
         }
+
         setBooksState({
             ...booksState,
             [activeBook!]: { ...currentBookState, read: true, readComplete: false },
         })
+
+        if (activeBook === null) return;
+
+        // 아래에서 책의 ID를 가져옵니다.
+        const bookId = id[activeBook];
+        if (!bookId) return;
+
+        await updateReadingStatus(bookId, 'reading');
     }
 
-    const toggleReadComplete = () => {
+
+    const toggleReadComplete = async () => {
         const currentBookState = booksState[activeBook!] || {
             read: false,
             readComplete: false,
             heartBlack: false,
         }
+
         setBooksState({
             ...booksState,
             [activeBook!]: { ...currentBookState, read: false, readComplete: true },
         })
+
+        if (activeBook === null) return;
+
+        // 아래에서 책의 ID를 가져옵니다.
+        const bookId = id[activeBook];
+        if (!bookId) return;
+
+        await updateReadingStatus(bookId, 'read');
     }
 
-    const toggleHeartColor = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation()
+    const updateBookLike = async (bookId: string | null) => {
+        try {
+            if (bookId !== null) {
+                await baseInstance.post(`/books/like/${bookId}`);
+                alert('찜한 책 갱신 성공!');
+            } else {
+                alert('책 ID가 유효하지 않습니다.');
+            }
+        } catch (error: any) {
+            console.error('좋아요 업데이트 중 오류 발생:', error);
+            const errorMessage = error.response?.data?.message || '알 수 없는 오류가 발생했습니다.';
+            console.error('서버 오류 메시지:', errorMessage);
+            alert(`오류: ${errorMessage}`);
+        }
+    }
+
+    const toggleHeartColor = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+
         const currentBookState = booksState[activeBook!] || {
             read: false,
             readComplete: false,
             heartBlack: false,
         }
+
         setBooksState({
             ...booksState,
             [activeBook!]: { ...currentBookState, heartBlack: !currentBookState.heartBlack },
         })
+
+        // 책이 선택되지 않았다면, API 호출을 진행하지 않습니다.
+        if (activeBook === null) return;
+
+        const bookId = id[activeBook];
+
+        // 좋아요 API 호출
+        await updateBookLike(bookId);
     }
 
     return (
