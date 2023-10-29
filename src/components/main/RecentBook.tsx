@@ -17,7 +17,7 @@ const Book: React.FC<BookProps> = ({ title, author, imgSrc }) => (
   <div className="w-44">
     <img
       className="h-64 bg-gray-200 rounded-lg flex flex-col justify-center"
-      alt="도서 표지"
+      alt="책 표지"
       src={imgSrc}
     />
     <div className="mt-2 text-left">
@@ -27,28 +27,28 @@ const Book: React.FC<BookProps> = ({ title, author, imgSrc }) => (
   </div>
 )
 
-export default function PopularBook() {
-  const [popular, setPopular] = useState<BookData[]>([])
+export default function RecentBook() {
+  const [recent, setRecent] = useState<BookData[]>([])
 
   useEffect(() => {
-    const fetchPopular = async () => {
+    const fetchRecent = async () => {
       try {
-        const response = await baseInstance.get('/books/like')
-        setPopular(response.data.data.content.slice(0, 7))
+        const response = await baseInstance.get('/books/new')
+        setRecent(response.data.data.content.slice(0, 7))
       } catch (error) {
         console.error('API 호출 오류: ', error)
       }
     }
-    fetchPopular()
+    fetchRecent()
   }, [])
 
   return (
     <div className="py-4">
       <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: 'bmfont' }}>
-        인기있는 도서
+        최근 출시작
       </h2>
       <div className="flex justify-center space-x-8 w-full overflow-x-auto">
-        {popular.map((book, index) => (
+        {recent.map((book, index) => (
           <Book key={index} title={book.title} author={book.author} imgSrc={book.cover_image_url} />
         ))}
       </div>
