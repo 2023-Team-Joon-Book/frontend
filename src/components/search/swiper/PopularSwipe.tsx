@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { baseInstance } from '../../../api/config'
 
-interface ResentSwipeProps {
+interface PopularSwipeProps {
     index: number
     onSwipeClick: (index: number) => void
     active: boolean
@@ -25,7 +25,7 @@ interface BookState {
     heartBlack: boolean
 }
 
-export default function Swipe({
+export default function PopularSwipe({
     title,
     name,
     author,
@@ -34,7 +34,7 @@ export default function Swipe({
     // onSwipeClick,
     // active,
     // index,
-}: ResentSwipeProps) {
+}: PopularSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
     const [booksState, setBooksState] = useState<Record<number, BookState>>({})
     const [booksData, setBooksData] = useState<any[]>([]);  // 추가: API로부터 불러온 책 데이터를 저장할 상태
@@ -42,7 +42,7 @@ export default function Swipe({
     useEffect(() => {
         const fetchBooksData = async () => {
             try {
-                const response = await baseInstance.get('/books/new');
+                const response = await baseInstance.get('/books/like');
                 if (response.data && response.data.data && response.data.data.content) {
                     setBooksData(response.data.data.content);  // 불러온 데이터를 상태에 저장
                 }
@@ -93,11 +93,12 @@ export default function Swipe({
                 lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status,
             });
+            alert('책 등록 성공!');
         } catch (error: any) {
             console.error('Error updating reading status:', error);
             const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`Error: ${errorMessage}`);
+            alert(`${errorMessage} 입니다.`);
         }
     }
 
@@ -201,16 +202,16 @@ export default function Swipe({
                             <Info>
                                 <div>
                                     <h2 style={{ fontFamily: 'BM Jua', fontSize: '2rem' }}>
-                                        {name && name[activeBook]}
+                                        {booksData[activeBook]?.title}
                                     </h2>
                                 </div>
 
                                 <div style={{ fontFamily: 'BM Hanna Air', display: 'flex' }}>
-                                    <p>{author && author[activeBook]}</p>
+                                    <p>{booksData[activeBook]?.author}</p>
                                     <p style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>|</p>
-                                    <p>{publisher && publisher[activeBook]}</p>
+                                    <p>{booksData[activeBook]?.publisher}</p>
                                     <p style={{ paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>|</p>
-                                    <p>{pages && pages[activeBook]}</p>
+                                    <p>{booksData[activeBook]?.pages}</p>
                                 </div>
 
                                 <div
