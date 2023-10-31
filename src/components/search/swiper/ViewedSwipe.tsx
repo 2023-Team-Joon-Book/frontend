@@ -173,6 +173,7 @@ export default function Swipe({
 
     return (
         <Container>
+
             {title && <SwiperTitle>{title}</SwiperTitle>}
             <StyledSwiper
                 slidesPerView={7}
@@ -180,6 +181,9 @@ export default function Swipe({
                 freeMode={true}
                 modules={[FreeMode, Pagination]}
             >
+                <div className="absolute inset-0 flex items-center justify-center bg-white opacity-70">
+                    <span className="text-xl font-bold">책 제목을 검색해보세요! 📚</span>
+                </div>
                 {
                     name && name.slice(0, 30).map((bookName, index) => (
                         <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
