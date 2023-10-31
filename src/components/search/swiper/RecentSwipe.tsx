@@ -144,17 +144,39 @@ export default function RecentSwipe({
         await updateReadingStatus(bookId, 'read');
     }
 
-    const toggleHeartColor = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation()
+    const updateBookLike = async (bookId: number) => {
+        try {
+            await baseInstance.post(`/books/like/${bookId}`);
+            alert('찜한 책 갱신 성공!');
+        } catch (error: any) {
+            console.error('Error updating book like:', error);
+            const errorMessage = error.response?.data?.message || 'An unknown error occurred.';
+            console.error('Server Error Message:', errorMessage);
+            alert(`Error: ${errorMessage}`);
+        }
+    }
+
+    const toggleHeartColor = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+
         const currentBookState = booksState[activeBook!] || {
             read: false,
             readComplete: false,
             heartBlack: false,
         }
+
         setBooksState({
             ...booksState,
             [activeBook!]: { ...currentBookState, heartBlack: !currentBookState.heartBlack },
         })
+
+        // 책이 선택되지 않았다면, API 호출을 진행하지 않습니다.
+        if (activeBook === null) return;
+
+        const bookId = booksData[activeBook].id;
+
+        // 좋아요 API 호출
+        await updateBookLike(bookId);
     }
 
     return (
