@@ -25,6 +25,19 @@ interface BookState {
     heartBlack: boolean
 }
 
+// 책 한권 조회로 API 호출 타입 선언
+
+interface BookDetail {
+    id: number;
+    title: string;
+    author: string;
+    publisher: string;
+    cover_image_url: string;
+    pages: number;
+    // 다른 필요한 속성들...
+}
+
+
 export default function RecentSwipe({
     title,
     name,
@@ -79,6 +92,8 @@ export default function RecentSwipe({
 
     const toggleAccordion = (clickedIndex: number) => {
         setActiveBook((prev) => (prev === clickedIndex ? null : clickedIndex))
+        const bookId = booksData[clickedIndex].id;
+        fetchBookDetail(bookId);
     }
 
     const handleInnerClick = (event: React.MouseEvent) => {
@@ -179,6 +194,22 @@ export default function RecentSwipe({
         await updateBookLike(bookId);
     }
 
+    // 책 디테일 한권 조회 상태 선언
+    const [selectedBookDetail, setSelectedBookDetail] = useState<BookDetail | null>(null);
+
+    // 책 디테일 한권 조회 API 호출
+    const fetchBookDetail = async (bookId: number) => {
+        try {
+            const response = await baseInstance.get(`/books/${bookId}`);
+            console.log(response); // This will log the entire response object to the console.
+            if (response.data && response.data.data) {
+                setSelectedBookDetail(response.data.data); // Update the stored state
+            }
+        } catch (error) {
+            console.error('Error fetching book details:', error);
+        }
+    };
+
     return (
         <Container>
             {title && <SwiperTitle>{title}</SwiperTitle>}
@@ -217,8 +248,8 @@ export default function RecentSwipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={activeBook !== null ? booksData[activeBook].cover_image_url : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
-                            alt={`Book ${activeBook !== null ? activeBook + 1 : ""}`}
+                            src={selectedBookDetail?.cover_image_url ?? "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={`Book ${selectedBookDetail?.title ?? ""}`}
                         />
                         <BookInfo>
                             <Info>
