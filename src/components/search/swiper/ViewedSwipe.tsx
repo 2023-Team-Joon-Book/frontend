@@ -27,6 +27,23 @@ interface BookState {
     heartBlack: boolean
 }
 
+interface BookDetails {
+    code: string;
+    message: string;
+    data: {
+        id: number;
+        title: string;
+        author: string;
+        publisher: string;
+        cover_image_url: string;
+        height: number;
+        width: number;
+        pages: number;
+        likes: number;
+        like_status: boolean;
+    };
+}
+
 export default function Swipe({
     title,
     name,
@@ -171,6 +188,27 @@ export default function Swipe({
         await updateBookLike(bookId);
     }
 
+
+    const [bookDetails, setBookDetails] = useState<BookDetails | null>(null);
+
+
+    useEffect(() => {
+        // activeBook 상태가 바뀔 때마다 호출되어 책 정보를 가져오는 함수
+        const fetchBookDetails = async () => {
+            if (activeBook !== null) {
+                try {
+                    const response = await baseInstance.get(`/books/${id[activeBook]}`);
+                    console.log(response);
+                    setBookDetails(response.data);
+                } catch (error) {
+                    console.error('Failed to fetch book details:', error);
+                }
+            }
+        };
+
+        fetchBookDetails();
+    }, [activeBook, id]);
+
     return (
         <Container>
 
@@ -214,14 +252,8 @@ export default function Swipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={
-                                activeBook !== null
-                                    ? coverImageUrl && coverImageUrl[activeBook].length > index
-                                        ? coverImageUrl[activeBook]
-                                        : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                                    : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                            }
-                            alt={`Book ${index + 1}`}
+                            src={bookDetails ? bookDetails.data.cover_image_url : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={bookDetails ? bookDetails.data.title : `Book ${index + 1}`}
                         />
                         <BookInfo>
                             <Info>
