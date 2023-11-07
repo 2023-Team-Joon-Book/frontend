@@ -12,7 +12,7 @@ import {
   ChartConfiguration,
 } from 'chart.js'
 import 'chartjs-adapter-date-fns'
-import { format } from 'date-fns'
+import { eachDayOfInterval, format } from 'date-fns'
 import { IoMdArrowBack, IoMdArrowForward } from 'react-icons/io'
 import { baseInstance } from '../../api/config'
 
@@ -80,47 +80,64 @@ const LineChart: React.FC<LineChartProps> = ({
           },
         )
 
-        if (
-          sortedData.length === 0 ||
-          sortedData.every((entry: { page: number }) => entry.page === 0)
-        ) {
-          setIsEmptyData(true)
-        } else {
-          setIsEmptyData(false)
+        // startDate부터 endDate까지의 모든 날짜를 포함하는 labels 배열 생성
+        const dateRange = eachDayOfInterval({ start: startDate, end: endDate })
+        const labels = dateRange.map((day) => format(day, 'yyyy.MM.dd'))
 
-          const labels = sortedData.map((entry: { date: number[] }) =>
-            format(new Date(entry.date[0], entry.date[1] - 1, entry.date[2]), 'yyyy.MM.dd'),
+        // 모든 날짜에 대한 기본 데이터 값 설정 (여기서는 0으로 설정)
+        const defaultData = new Array(labels.length).fill(0)
+
+        // API에서 반환된 데이터가 있는 날짜를 찾아 해당 값으로 업데이트
+        sortedData.forEach((entry: { date: number[]; page: number }) => {
+          const entryDateStr = format(
+            new Date(entry.date[0], entry.date[1] - 1, entry.date[2]),
+            'yyyy.MM.dd',
           )
-
-          const data = sortedData.map((entry: { page: number }) => entry.page)
-
-          const newChartData = {
-            labels,
-            datasets: [
-              {
-                label: '독서 통계',
-                data,
-                fill: false,
-                backgroundColor: 'rgba(191, 198, 106, 1)',
-                borderColor: 'rgba(191, 198, 106, 1)',
-                pointHoverBackgroundColor: 'rgba(191, 198, 106, 1)',
-                pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
-                pointBackgroundColor: 'rgba(191, 198, 106, 1)',
-                borderWidth: 5,
-                pointRadius: 6,
-              },
-            ],
+          const index = labels.indexOf(entryDateStr)
+          if (index !== -1) {
+            defaultData[index] = entry.page
           }
+        })
 
-          setData(newChartData)
-          console.log('API 응답 데이터:', responseData.data)
-          console.log('가공된 차트 데이터:', newChartData)
+        const hasData = defaultData.some((value) => value > 0)
+        setIsEmptyData(!hasData)
+
+        // 새로운 차트 데이터로 상태를 업데이트합니다.
+        const newChartData = {
+          labels,
+          datasets: [
+            {
+              label: '독서 통계',
+              data: defaultData,
+              fill: false,
+              backgroundColor: 'rgba(191, 198, 106, 1)',
+              borderColor: 'rgba(191, 198, 106, 1)',
+              pointHoverBackgroundColor: 'rgba(191, 198, 106, 1)',
+              pointHoverBorderColor: 'rgba(191, 198, 106, 1)',
+              pointBackgroundColor: 'rgba(191, 198, 106, 1)',
+              borderWidth: 5,
+              pointRadius: 6,
+            },
+          ],
         }
+
+        setData(newChartData)
+
+        // 로그 출력
+        console.log(
+          'API 요청 날짜:',
+          format(startDate, 'yyyy-MM-dd'),
+          format(endDate, 'yyyy-MM-dd'),
+        )
+        console.log('API 응답 데이터:', responseData.data)
+        console.log('가공된 차트 데이터:', newChartData)
       } else {
         console.error('API 요청 실패:', response.status, response.statusText)
+        setIsEmptyData(true) // API 요청 실패 시 데이터가 없는 것으로 간주
       }
     } catch (error) {
       console.error('API 요청 중 오류 발생:', error)
+      setIsEmptyData(true) // 예외 발생 시 데이터가 없는 것으로 간주
     }
   }
 
@@ -144,7 +161,7 @@ const LineChart: React.FC<LineChartProps> = ({
           mode: 'nearest',
           intersect: false,
           callbacks: {
-            label: (context) => `${context.parsed.y} 회`,
+            label: (context) => `${context.parsed.y} 장`,
           },
         },
         legend: {
