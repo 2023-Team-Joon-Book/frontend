@@ -25,12 +25,26 @@ interface BookState {
     heartBlack: boolean
 }
 
+// 책 한권 조회로 API 호출 타입 선언
+
+interface BookDetail {
+    id: number;
+    title: string;
+    author: string;
+    publisher: string;
+    cover_image_url: string;
+    pages: number;
+    like_status: boolean;
+    // 다른 필요한 속성들...
+}
+
+
 export default function RecentSwipe({
     title,
-    name,
-    author,
-    publisher,
-    pages,
+    // name,
+    // author,
+    // publisher,
+    // pages,
     // onSwipeClick,
     // active,
     // index,
@@ -79,6 +93,8 @@ export default function RecentSwipe({
 
     const toggleAccordion = (clickedIndex: number) => {
         setActiveBook((prev) => (prev === clickedIndex ? null : clickedIndex))
+        const bookId = booksData[clickedIndex].id;
+        fetchBookDetail(bookId);
     }
 
     const handleInnerClick = (event: React.MouseEvent) => {
@@ -155,9 +171,17 @@ export default function RecentSwipe({
             alert(`Error: ${errorMessage}`);
         }
     }
-
+    // 1. 책 상세 정보가 null 이 아니면  toggleHeartColor 함수 실행
+    // 2. bookDetail 상태에 like_status 정보 업데이트
     const toggleHeartColor = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
+
+        if (selectedBookDetail) {
+            setSelectedBookDetail({
+                ...selectedBookDetail,
+                like_status: !selectedBookDetail.like_status,
+            });
+        }
 
         const currentBookState = booksState[activeBook!] || {
             read: false,
@@ -178,6 +202,22 @@ export default function RecentSwipe({
         // 좋아요 API 호출
         await updateBookLike(bookId);
     }
+
+    // 책 디테일 한권 조회 상태 선언
+    const [selectedBookDetail, setSelectedBookDetail] = useState<BookDetail | null>(null);
+
+    // 책 디테일 한권 조회 API 호출
+    const fetchBookDetail = async (bookId: number) => {
+        try {
+            const response = await baseInstance.get(`/books/${bookId}`);
+            console.log(response); // 책 id값에 따른 한권 조회 콘솔 디버깅
+            if (response.data && response.data.data) {
+                setSelectedBookDetail(response.data.data); // 책 상태 정보 업데이트
+            }
+        } catch (error) {
+            console.error('Error fetching book details:', error);
+        }
+    };
 
     return (
         <Container>
@@ -217,8 +257,8 @@ export default function RecentSwipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={activeBook !== null ? booksData[activeBook].cover_image_url : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
-                            alt={`Book ${activeBook !== null ? activeBook + 1 : ""}`}
+                            src={selectedBookDetail?.cover_image_url ?? "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={`Book ${selectedBookDetail?.title ?? ""}`}
                         />
                         <BookInfo>
                             <Info>
@@ -248,14 +288,13 @@ export default function RecentSwipe({
                                         style={{ marginRight: '1rem' }}>
                                         읽기
                                     </StyledButton>
-
                                     <StyledButton active={currentBookState.readComplete} onClick={toggleReadComplete}>
                                         다 읽은 책
                                     </StyledButton>
                                 </div>
                             </Info>
                         </BookInfo>
-                        {/* <Like> */}
+                        {/* 좋아요 누른 경우에 따른 하트 버튼 렌더링 */}
                         <HeartButton onClick={toggleHeartColor}>
                             <img
                                 style={{
@@ -264,7 +303,7 @@ export default function RecentSwipe({
                                     marginTop: '0.5rem',
                                 }}
                                 src={
-                                    currentBookState.heartBlack
+                                    selectedBookDetail && selectedBookDetail.like_status
                                         ? 'https://i.postimg.cc/1XkRS36B/blackheart.png'
                                         : 'https://i.postimg.cc/Z5jSxYp2/heart.png'
                                 }

@@ -20,21 +20,21 @@ interface Book {
 const PopularBooks: React.FC<PopularBooksProps> = ({ onSwipeClick, active }) => {
     const [books, setBooks] = useState<Book[]>([]);
 
-    useEffect(() => {
-        // Define an async function
-        const fetchBooks = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/api/v1/books/like');
-                // Update state with fetched books
-                setBooks(response.data.data.content);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-                // Handle error accordingly
-            }
-        };
-        // Call the async function
-        fetchBooks();
-    }, []); // Empty dependency array means this useEffect runs once when component mounts
+    // useEffect(() => {
+    //     // Define an async function
+    //     const fetchBooks = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:8080/api/v1/books/like');
+    //             // Update state with fetched books
+    //             setBooks(response.data.data.content);
+    //         } catch (error) {
+    //             console.error("Error fetching data: ", error);
+    //             // Handle error accordingly
+    //         }
+    //     };
+    //     // Call the async function
+    //     fetchBooks();
+    // }, []); // Empty dependency array means this useEffect runs once when component mounts
 
     return (
         <PopularSwipe

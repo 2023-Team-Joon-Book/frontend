@@ -27,6 +27,23 @@ interface BookState {
     heartBlack: boolean
 }
 
+interface BookDetails {
+    code: string;
+    message: string;
+    data: {
+        id: number;
+        title: string;
+        author: string;
+        publisher: string;
+        cover_image_url: string;
+        height: number;
+        width: number;
+        pages: number;
+        likes: number;
+        like_status: boolean;
+    };
+}
+
 export default function Swipe({
     title,
     name,
@@ -35,8 +52,8 @@ export default function Swipe({
     pages,
     coverImageUrl,
     id,
-    onSwipeClick,
-    active,
+    // onSwipeClick,
+    // active,
     index,
 }: ViewedSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
@@ -125,7 +142,7 @@ export default function Swipe({
 
         if (activeBook === null) return;
 
-        // 아래에서 책의 ID를 가져옵니다.
+        // 책의 ID를 가져오기
         const bookId = id[activeBook];
         if (!bookId) return;
 
@@ -133,23 +150,37 @@ export default function Swipe({
     }
 
     const updateBookLike = async (bookId: string | null) => {
+        if (bookId === null) return;
+
         try {
-            if (bookId !== null) {
-                await baseInstance.post(`/books/like/${bookId}`);
-                alert('찜한 책 갱신 성공!');
-            } else {
-                alert('책 ID가 유효하지 않습니다.');
-            }
+            await baseInstance.post(`/books/like/${bookId}`, {
+                like_status: bookDetails ? !bookDetails.data.like_status : true, // Assuming default 'like' status is false
+            });
+            alert('찜한 책 갱신 성공!');
         } catch (error: any) {
             console.error('좋아요 업데이트 중 오류 발생:', error);
             const errorMessage = error.response?.data?.message || '알 수 없는 오류가 발생했습니다.';
             console.error('서버 오류 메시지:', errorMessage);
             alert(`오류: ${errorMessage}`);
         }
-    }
+    };
 
     const toggleHeartColor = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
+
+        if (activeBook === null) return;
+
+        // 1. 책 상세 정보가 null 이 아니면  toggleHeartColor 함수 실행
+        // 2. bookDetail 상태에 like_status 정보 업데이트
+        if (bookDetails) {
+            setBookDetails({
+                ...bookDetails,
+                data: {
+                    ...bookDetails.data,
+                    like_status: !bookDetails.data.like_status,
+                }
+            });
+        }
 
         const currentBookState = booksState[activeBook!] || {
             read: false,
@@ -170,6 +201,27 @@ export default function Swipe({
         // 좋아요 API 호출
         await updateBookLike(bookId);
     }
+
+
+    const [bookDetails, setBookDetails] = useState<BookDetails | null>(null);
+
+
+    useEffect(() => {
+        // activeBook 상태가 바뀔 때마다 호출되어 책 정보를 가져오는 함수
+        const fetchBookDetails = async () => {
+            if (activeBook !== null) {
+                try {
+                    const response = await baseInstance.get(`/books/${id[activeBook]}`);
+                    console.log(response); // 책 id값에 따른 한권 조회 콘솔 디버깅
+                    setBookDetails(response.data); // 책 상태 정보 업데이트
+                } catch (error) {
+                    console.error('Failed to fetch book details:', error);
+                }
+            }
+        };
+
+        fetchBookDetails();
+    }, [activeBook, id]);
 
     return (
         <Container>
@@ -214,14 +266,8 @@ export default function Swipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={
-                                activeBook !== null
-                                    ? coverImageUrl && coverImageUrl[activeBook].length > index
-                                        ? coverImageUrl[activeBook]
-                                        : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                                    : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                            }
-                            alt={`Book ${index + 1}`}
+                            src={bookDetails ? bookDetails.data.cover_image_url : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={bookDetails ? bookDetails.data.title : `Book ${index + 1}`}
                         />
                         <BookInfo>
                             <Info>
@@ -258,7 +304,7 @@ export default function Swipe({
                                 </div>
                             </Info>
                         </BookInfo>
-                        {/* <Like> */}
+                        {/* 좋아요 누른 경우에 따른 하트 버튼 렌더링 */}
                         <HeartButton onClick={toggleHeartColor}>
                             <img
                                 style={{
@@ -267,7 +313,7 @@ export default function Swipe({
                                     marginTop: '0.5rem',
                                 }}
                                 src={
-                                    currentBookState.heartBlack
+                                    bookDetails && bookDetails.data.like_status
                                         ? 'https://i.postimg.cc/1XkRS36B/blackheart.png'
                                         : 'https://i.postimg.cc/Z5jSxYp2/heart.png'
                                 }
