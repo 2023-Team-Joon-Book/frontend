@@ -78,7 +78,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
     }
   }
 
-  // 책 상태변경 api 요청
+  // 책 페이지 변경 api 요청
   async function changePages() {
     const access = localStorage.getItem('accessToken')
 
@@ -95,6 +95,9 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
 
       console.log(response)
       alert('페이지가 기록되었습니다.')
+
+      // 변경후 조회를 바로 하도록 수정
+      readPercentages()
     } catch (error) {
       console.error(error)
     }
