@@ -10,11 +10,17 @@ interface ShelfProps {
   currentShelfBooks: {}
   setIsModalOpen: (isOpen: boolean) => void
   openModal: (book: {
-    id: number
-    title: string
-    status: string
     author: string
-    img_url: string
+    cover_image_url: string
+    height: string
+    id: number
+    like_status: boolean
+    likes: number
+    pages: number
+    publisher: string
+    title: string
+    width: number
+    status: string
   }) => void // 수정된 openModal 함수의 타입
 }
 
@@ -39,12 +45,17 @@ const Shelf: React.FC<ShelfProps> = ({
   }, [])
 
   const currentShelfBooksArray: Array<{
-    id: number
-    title: string
-    status: string
     author: string
-    img_url: string
-    pageCount?: number
+    cover_image_url: string
+    height: string
+    id: number
+    like_status: boolean
+    likes: number
+    pages: number
+    publisher: string
+    title: string
+    width: number
+    status: string
   }> = Object.values(currentShelfBooks)
 
   // border-bottom scss로 커스터마이징
