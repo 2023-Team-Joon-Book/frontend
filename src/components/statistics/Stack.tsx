@@ -20,8 +20,8 @@ const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect, thic
     useFrame(() => {
         if (mesh.current) {
             if (isSelected) {
-                mesh.current.position.z += (1 - mesh.current.position.z) * 0.1;
-                mesh.current.rotation.y += (-Math.PI / 4 - mesh.current.rotation.y) * 0.1;
+                mesh.current.position.z += (4 - mesh.current.position.z) * 0.3;
+                mesh.current.rotation.y += (-Math.PI / 2 - mesh.current.rotation.y) * 0.1;
             } else {
                 mesh.current.position.z += (0 - mesh.current.position.z) * 0.1;
                 mesh.current.rotation.y += (0 - mesh.current.rotation.y) * 0.1;
@@ -33,7 +33,7 @@ const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect, thic
         if (mesh.current) {
             mesh.current.position.y = position[1];
             // 두께를 적용
-            mesh.current.scale.set(0.15, thickness, 0.15);
+            mesh.current.scale.set(0.20, thickness, 0.20);
         }
     }, [position, thickness]);
 
@@ -52,8 +52,6 @@ const Stack: React.FC = () => {
     const [books, setBooks] = useState<{ model: Object3D; thickness: number }[]>([]); // 책의 모델과 두께를 저장
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const [firstClick, setFirstClick] = useState<boolean>(true);
-    // 책의 두께에 따른 Y축 위치를 계산하기 위한 상태를 추가합니다.
-    const [bookPositions, setBookPositions] = useState<number[]>([]);
 
     useEffect(() => {
         const loader = new FBXLoader();
@@ -87,7 +85,7 @@ const Stack: React.FC = () => {
         });
     }, []);
 
-    const bookHeight = 0.6;
+    const bookHeight = 0.65;
 
     const handleSelect = (index: number) => {
         setSelectedIndex(selectedIndex === index ? null : index);
@@ -113,12 +111,12 @@ const Stack: React.FC = () => {
 
     return (
         <div className="w-screen h-screen relative">
-            <Canvas shadows camera={{ position: [0, 5, 10], fov: 50 }}>
+            <Canvas shadows camera={{ position: [-10, 5, 0], fov: 50 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight
                     castShadow
-                    position={[2.5, 18, 5]}
-                    intensity={1}
+                    position={[-10, 5, 0]}
+                    intensity={2}
                     shadow-mapSize-width={1024}
                     shadow-mapSize-height={1024}
                     shadow-camera-far={50}
@@ -127,7 +125,7 @@ const Stack: React.FC = () => {
                     shadow-camera-top={10}
                     shadow-camera-bottom={-10}
                 />
-                <group position={[0, -3, 0]}>
+                <group position={[0, -3.5, 0]}>
                     {books.map((book, idx) => (
                         <Book
                             key={idx}
@@ -139,7 +137,7 @@ const Stack: React.FC = () => {
                         />
                     ))}
                 </group>
-                <Html position={[3, 0, 0]} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Html position={[3, 0, -5]} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <button
                         onClick={moveSelectionUp}
                         className="mb-2 bg-bfc66a hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
@@ -153,7 +151,7 @@ const Stack: React.FC = () => {
                         ⬇️
                     </button>
                 </Html>
-                <gridHelper args={[10, 10]} />
+                {/* <gridHelper args={[10, 10]} /> */}
             </Canvas>
         </div>
     );
