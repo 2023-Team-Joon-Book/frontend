@@ -52,6 +52,8 @@ const Stack: React.FC = () => {
     const [books, setBooks] = useState<{ model: Object3D; thickness: number }[]>([]); // 책의 모델과 두께를 저장
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const [firstClick, setFirstClick] = useState<boolean>(true);
+    // 책의 두께에 따른 Y축 위치를 계산하기 위한 상태를 추가합니다.
+    const [bookPositions, setBookPositions] = useState<number[]>([]);
 
     useEffect(() => {
         const loader = new FBXLoader();
@@ -62,12 +64,11 @@ const Stack: React.FC = () => {
                 }
             })
                 .then((response) => {
-                    // API에서 가져온 데이터를 이용해 책 두께 설정
-                    const fetchedBooks = response.data.map((bookData: any) => {
+                    // 'response.data' 대신 'response.data.bookInfos'를 사용합니다.
+                    const fetchedBooks = response.data.bookInfos.map((bookData: { pages: number; }) => {
                         return {
                             model: model.clone(),
-                            // 여기서 pages를 적당한 스케일로 환산하여 두께로 사용
-                            thickness: bookData.pages / 1000
+                            thickness: bookData.pages / 2000
                         };
                     });
 
@@ -76,7 +77,7 @@ const Stack: React.FC = () => {
                         setBooks((prevBooks) => {
                             return prevBooks.length < 10 ? [...prevBooks, fetchedBooks[prevBooks.length]] : prevBooks;
                         });
-                    }, 1000); // 여기에서 1000은 1초를 의미합니다. 필요에 따라 조절 가능
+                    }, 300); // 여기에서 1000은 1초를 의미합니다. 필요에 따라 조절 가능
 
                     return () => clearInterval(interval);
                 })
