@@ -6,7 +6,7 @@ import MyHeader from '../components/Header/MyHeader'
 import ViewedBooks from '../components/search/ViewedBooks'
 import PopularBooks from '../components/search/PopularBook'
 import RecentBooks from '../components/search/RecentBooks'
-import Chat from '../components/search/Chat'
+import ChatModal from '../components/search/ChatModal'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
@@ -22,8 +22,12 @@ const SearchPage = () => {
     await fetchBooks(searchQuery) // Fetching books with the provided query
   }
 
-  const handleAsk = {
-    // setIsAsk(true)
+  const handleAsk = () => {
+    setIsAsk(true)
+  }
+
+  const disableHandleAsk = () => {
+    setIsAsk(false)
   }
 
   // 책 정보를 가져오는 함수
@@ -53,8 +57,7 @@ const SearchPage = () => {
       <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} />
       <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
-      <Ask />
-      <Chat />
+      {isAsk ? <ChatModal disableHandleAsk={disableHandleAsk} /> : <Ask handleAsk={handleAsk} />}
     </>
   )
 }

@@ -1,9 +1,15 @@
 import { styled } from 'styled-components'
 
-export default function Ask() {
+interface AskProps {
+  handleAsk: () => void
+}
+
+const Ask: React.FC<AskProps> = ({ handleAsk }) => {
+  // 컴포넌트 내용
+
   return (
     <div>
-      <AskContainer>
+      <AskContainer onClick={handleAsk}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -20,6 +26,8 @@ export default function Ask() {
     </div>
   )
 }
+
+export default Ask
 
 const AskContainer = styled.button`
   width: 12rem;

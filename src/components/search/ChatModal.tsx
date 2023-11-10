@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import sendImg from '../../assets/images/send.png'
 
-interface ChatProps {}
+interface ChatProps {
+  disableHandleAsk: () => void
+}
 
-const Chat: React.FC<ChatProps> = () => {
+const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
   const [messages, setMessages] = useState<string[]>([]) // 형식을 string 배열로 지정
   const [newMessage, setNewMessage] = useState('')
 
@@ -34,7 +36,7 @@ const Chat: React.FC<ChatProps> = () => {
           </TitleImg>
           문의하기
         </Title>
-        <CloseButton>X</CloseButton>
+        <CloseButton onClick={disableHandleAsk}>X</CloseButton>
       </Header>
       <MessageList>
         {messages.map((message, index) => (
