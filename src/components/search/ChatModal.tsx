@@ -1,20 +1,76 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import sendImg from '../../assets/images/send.png'
+import Stomp from '@stomp/stompjs'
+import { Client, Message } from '@stomp/stompjs'
 
 interface ChatProps {
   disableHandleAsk: () => void
 }
 
+interface Content {
+  content: string
+  own?: boolean
+}
+
 const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
-  const [messages, setMessages] = useState<string[]>([]) // 형식을 string 배열로 지정
-  const [newMessage, setNewMessage] = useState('')
+  const [messages, setMessages] = useState<Content[]>([])
+  const [inputMessage, setInputMessage] = useState('')
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null)
 
-  const handleSendMessage = () => {
-    if (newMessage.trim() === '') return
+  const access = localStorage.getItem('accessToken') // 토큰 저장
 
-    setMessages([...messages, newMessage])
-    setNewMessage('')
+  useEffect(() => {
+    // STOMP 클라이언트 초기화
+    const stomp = new Client({
+      brokerURL: 'ws://localhost:8080/chat',
+      connectHeaders: {
+        Authorization: `Bearer ${access}`,
+      },
+      debug: (str: string) => {
+        console.log(str)
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    })
+    setStompClient(stomp)
+
+    // 연결 시도
+    stomp.activate()
+
+    // 특정 주제로 구독
+    stomp.onConnect = () => {
+      console.log('WebSocket 연결이 열렸습니다.')
+      stomp.subscribe('/exchange/chat.exchange/room.10', (frame) => {
+        // 서버로부터 메시지 수신
+        const newMessages = [...messages, { content: frame.body, own: false }]
+        setMessages(newMessages)
+      })
+    }
+
+    // 컴포넌트가 언마운트될 때 연결 닫기
+    return () => {
+      if (stomp && stomp.connected) {
+        stomp.deactivate()
+      }
+    }
+  }, [messages])
+
+  const sendMessage = () => {
+    // 메시지 전송
+    if (stompClient && stompClient.connected) {
+      stompClient.publish({
+        destination: '/pub/chat.message.10',
+        body: JSON.stringify({ content: inputMessage }),
+      })
+
+      // 자신이 보낸 메시지를 화면에 표시하기 위해 클래스를 추가하여 상태 업데이트
+      const newMessages = [...messages, { content: inputMessage, own: true }]
+      setMessages(newMessages)
+    }
+
+    setInputMessage('')
   }
 
   return (
@@ -40,19 +96,20 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
       </Header>
       <MessageList>
         {messages.map((message, index) => (
-          <Message key={index} className={'own-message'}>
-            {message}
-          </Message>
+          <Messages key={index} className={message.own ? 'own-message' : ''}>
+            {message.content}
+          </Messages>
         ))}
       </MessageList>
       <InputBox>
         <InputField
           type="text"
-          placeholder="메세지를 입력하세요"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
         />
-        <SendButton onClick={handleSendMessage}></SendButton>
+        <SendButton
+          // onClick={handleSendMessage}
+          onClick={sendMessage}></SendButton>
       </InputBox>
     </ChatContainer>
   )
@@ -116,7 +173,7 @@ const MessageList = styled.div`
   flex-direction: column;
 `
 
-const Message = styled.div`
+const Messages = styled.div`
   background: rgba(231, 227, 227, 0.8);
   border-radius: 16px;
   padding: 8px;
