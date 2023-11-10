@@ -52,7 +52,8 @@
     "styled-components": "^6.0.7",
     "swiper": "^10.2.0",
     "three": "^0.156.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
