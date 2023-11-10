@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setISOWeek } from 'date-fns'
 import React, { useState } from 'react'
 
 interface WritngProps {
@@ -15,9 +16,11 @@ interface WritngProps {
     width: number
     status: string
   }
+  setIsWriting: (isWriting: boolean) => void
+  viewReview: () => void
 }
 
-const Writng: React.FC<WritngProps> = ({ book }) => {
+const Writng: React.FC<WritngProps> = ({ book, setIsWriting, viewReview }) => {
   const [editedLastPage, setEditedLastPage] = useState('') // 사용자가 입력한 페이지를 저장할 상태
 
   // 사용자가 페이지 입력란을 변경할 때 호출되는 함수
@@ -43,6 +46,8 @@ const Writng: React.FC<WritngProps> = ({ book }) => {
       })
       console.log(response)
       alert('리뷰가 등록되었습니다 !')
+      setIsWriting(false)
+      viewReview()
     } catch (error) {
       console.error(error)
     }
