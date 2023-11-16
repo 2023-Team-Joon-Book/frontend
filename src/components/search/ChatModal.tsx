@@ -44,7 +44,14 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
       console.log('WebSocket 연결이 열렸습니다.')
       stomp.subscribe('/exchange/chat.exchange/room.10', (frame) => {
         // 서버로부터 메시지 수신
-        const newMessages = [...messages, { content: frame.body, own: false }]
+
+        // 받은 JSON 메시지를 파싱합니다.
+        const parsedMessage = JSON.parse(frame.body)
+
+        // 메시지가 관리자로부터 온 것인지 확인합니다.
+        const isFromAdmin = parsedMessage.sender === 'admin'
+
+        const newMessages = [...messages, { content: parsedMessage.content, own: !isFromAdmin }]
         setMessages(newMessages)
       })
     }
