@@ -6,6 +6,7 @@ import { Client, Message } from '@stomp/stompjs'
 
 interface ChatProps {
   disableHandleAsk: () => void
+  isAdmin: boolean
 }
 
 interface Content {
@@ -13,13 +14,14 @@ interface Content {
   own?: boolean
 }
 
-const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
+const Chat: React.FC<ChatProps> = ({ disableHandleAsk, isAdmin }) => {
   const [messages, setMessages] = useState<Content[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null)
 
   const access = localStorage.getItem('accessToken') // 토큰 저장
 
+  console.log(isAdmin)
   useEffect(() => {
     // STOMP 클라이언트 초기화
     const stomp = new Client({
@@ -48,10 +50,10 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
         // 받은 JSON 메시지를 파싱합니다.
         const parsedMessage = JSON.parse(frame.body)
 
-        // 메시지가 관리자로부터 온 것인지 확인합니다.
-        const isFromAdmin = parsedMessage.sender === 'admin'
+        console.log('frame', frame)
+        console.log('****parsedMessage*****', parsedMessage)
 
-        const newMessages = [...messages, { content: parsedMessage.content, own: !isFromAdmin }]
+        const newMessages = [...messages, { content: parsedMessage, own: false }]
         setMessages(newMessages)
       })
     }
@@ -101,6 +103,15 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk }) => {
         </Title>
         <CloseButton onClick={disableHandleAsk}>X</CloseButton>
       </Header>
+
+      {isAdmin && (
+        <ChatRoomList>
+          <div className="chat-room-item">채팅방 1</div>
+          <div className="chat-room-item">채팅방 2</div>
+          <div className="chat-room-item">채팅방 3</div>
+        </ChatRoomList>
+      )}
+
       <MessageList>
         {messages.map((message, index) => (
           <Messages key={index} className={message.own ? 'own-message' : ''}>
@@ -221,4 +232,23 @@ const SendButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`
+
+const ChatRoomList = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+
+  // 채팅방 목록 아이템의 스타일
+  .chat-room-item {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
 `

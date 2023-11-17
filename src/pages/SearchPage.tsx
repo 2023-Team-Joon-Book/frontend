@@ -13,6 +13,17 @@ const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [books, setBooks] = useState<any[]>([]) // <--- books 상태 추가
   const [isAsk, setIsAsk] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  const access = localStorage.getItem('accessToken') // 토큰 저장
+
+  const decodedToken = access ? JSON.parse(atob(access.split('.')[1])) : null // 토큰 디코딩
+
+  // if (decodedToken.auth == 'ROLE_ADMIN') {
+  //   setIsAdmin(true)
+  // }
+
+  console.log('decodedToken :', decodedToken.auth)
 
   const handleSwipeClick = (index: number) => {
     setActiveSwipe((prev) => (prev === index ? null : index))
@@ -57,7 +68,11 @@ const SearchPage = () => {
       <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} />
       <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
-      {isAsk ? <ChatModal disableHandleAsk={disableHandleAsk} /> : <Ask handleAsk={handleAsk} />}
+      {isAsk ? (
+        <ChatModal disableHandleAsk={disableHandleAsk} isAdmin={isAdmin} />
+      ) : (
+        <Ask handleAsk={handleAsk} />
+      )}
     </>
   )
 }
