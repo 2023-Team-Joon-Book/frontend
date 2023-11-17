@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { Html, Text } from "@react-three/drei";
 import { Group, Object3D } from "three";
 import { baseInstance } from '../../api/config'
+import BookInfoModal from './BookModal';
 
 interface BookProps {
     model: Object3D;
@@ -12,6 +13,13 @@ interface BookProps {
     isSelected: boolean;
     onSelect: (index: number) => void;
     thickness: number; // 두께를 전달받도록 추가
+}
+
+interface BookData {
+    pages: number;
+    title: string;           // Add this line
+    cover_image_url: string;  // Add this line
+    // Add any other properties that you expect from the API
 }
 
 const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect, thickness }) => {
@@ -49,9 +57,20 @@ const Book: React.FC<BookProps> = ({ model, position, isSelected, onSelect, thic
 };
 
 const Stack: React.FC = () => {
-    const [books, setBooks] = useState<{ model: Object3D; thickness: number }[]>([]); // 책의 모델과 두께를 저장
+    const [isAutoPlay, setIsAutoPlay] = useState(false);
+    const [books, setBooks] = useState<{
+        title: string;
+        coverImageUrl: string;
+        pages: number; model: Object3D; thickness: number
+    }[]>([]); // 책의 모델과 두께를 저장
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-    const [firstClick, setFirstClick] = useState<boolean>(true);
+
+    const [selectedBookInfo, setSelectedBookInfo] = useState<{
+        title: string;
+        coverImageUrl: string;
+        pages: number;
+    } | null>(null);
+
 
     useEffect(() => {
         const loader = new FBXLoader();
@@ -63,10 +82,13 @@ const Stack: React.FC = () => {
             })
                 .then((response) => {
                     // 'response.data' 대신 'response.data.bookInfos'를 사용합니다.
-                    const fetchedBooks = response.data.bookInfos.map((bookData: { pages: number; }) => {
+                    const fetchedBooks = response.data.bookInfos.map((bookData: BookData) => {
                         return {
                             model: model.clone(),
-                            thickness: bookData.pages / 2000
+                            thickness: bookData.pages / 2000,
+                            title: bookData.title,                // Access title
+                            coverImageUrl: bookData.cover_image_url, // Access cover_image_url
+                            pages: bookData.pages                 // Access pages
                         };
                     });
 
@@ -87,27 +109,45 @@ const Stack: React.FC = () => {
 
     const bookHeight = 0.65;
 
+
     const handleSelect = (index: number) => {
-        setSelectedIndex(selectedIndex === index ? null : index);
-    };
-
-    const moveSelectionDown = () => {
-        if (firstClick) {
-            setSelectedIndex(books.length - 1);
-            setFirstClick(false);
-        } else if (selectedIndex !== null && selectedIndex > 0) {
-            setSelectedIndex(prev => (prev !== null ? prev - 1 : null));
+        if (selectedIndex === index) {
+            setSelectedIndex(null);
+            setSelectedBookInfo(null);
+        } else {
+            setSelectedIndex(index);
+            const book = books[index];
+            setSelectedBookInfo({
+                title: book.title,
+                coverImageUrl: book.coverImageUrl,
+                pages: book.pages
+            });
         }
     };
 
-    const moveSelectionUp = () => {
-        if (firstClick) {
-            setSelectedIndex(books.length - 1);
-            setFirstClick(false);
-        } else if (selectedIndex !== null && selectedIndex < books.length - 1) {
-            setSelectedIndex(prev => (prev !== null ? prev + 1 : null));
-        }
+
+    const moveToNextBook = () => {
+        const newIndex = selectedIndex !== null && selectedIndex < books.length - 1 ? selectedIndex + 1 : 0;
+        setSelectedIndex(newIndex);
+        setSelectedBookInfo({
+            title: books[newIndex].title,
+            coverImageUrl: books[newIndex].coverImageUrl,
+            pages: books[newIndex].pages
+        });
     };
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isAutoPlay) {
+            interval = setInterval(() => {
+                moveToNextBook();
+            }, 1000); // Change 2000 to your preferred interval in milliseconds
+        }
+
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [isAutoPlay, moveToNextBook]);
 
     return (
         <div className="w-screen h-screen relative">
@@ -139,24 +179,33 @@ const Stack: React.FC = () => {
                 </group>
                 <Html position={[3, 0, -8]} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <button
-                        onClick={moveSelectionUp}
-                        className="mb-2 bg-bfc66a hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                        onClick={moveToNextBook}
+                        className="bg-bfc66a hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                        style={{ fontFamily: 'bmfont' }}
                     >
-                        ⬆️
+                        Next
                     </button>
                     <button
-                        onClick={moveSelectionDown}
-                        className="bg-bfc66a hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                        onClick={() => setIsAutoPlay(!isAutoPlay)}
+                        className="mt-2 bg-bfc66a hover:bg-blue-700 text-white py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                        style={{ fontFamily: 'bmfont' }}
                     >
-                        ⬇️
+                        {isAutoPlay ? "멈춤 ⏹" : "자동 재생 ⏩"}
                     </button>
                 </Html>
                 {/* <gridHelper args={[10, 10]} /> */}
             </Canvas>
+            {selectedBookInfo && (
+                <BookInfoModal
+                    title={selectedBookInfo.title}
+                    coverImageUrl={selectedBookInfo.coverImageUrl}
+                    pages={selectedBookInfo.pages}
+                    onClose={() => setSelectedBookInfo(null)}
+                />
+            )}
         </div>
     );
 
 };
 
 export default Stack;
-
