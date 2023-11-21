@@ -428,11 +428,16 @@ const BookCover = styled.div`
 `
 
 const StyledImg = styled.img<{ active: boolean }>`
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
+width: 200px;  // 고정된 너비 설정
+height: 250px; // 고정된 높이 설정
+object-fit: contain; // 이미지가 컨테이너에 맞춰져서 잘리지 않도록 조정
+background-color: white; // 빈 공간에 배경색 추가
+transition: box-shadow 0.3s ease, filter 0.3s ease;
+box-shadow: ${({ active }) => (active ? '0 6px 12px rgba(0, 0, 0, 0.3)' : 'none')};
+&:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
 `
 const StyledIcon = styled.div`
   position: absolute;
