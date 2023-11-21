@@ -127,7 +127,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                         onClick={() => {
                           if (review != '책에 대한 줄거리와 소감을 남겨보세요!') {
                             Swal.fire({
-                              title: "기존에 작성한 리뷰를 먼저 삭제해주세요. 🥺",
+                              text: "기존에 작성한 리뷰를 먼저 삭제해주세요. 🥺",
                               icon: "warning"
                             });
                           } else {

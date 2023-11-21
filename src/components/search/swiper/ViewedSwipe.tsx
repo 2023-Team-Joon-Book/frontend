@@ -57,6 +57,7 @@ export default function Swipe({
     // onSwipeClick,
     // active,
     index,
+    books
 }: ViewedSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
     const [booksState, setBooksState] = useState<Record<number, BookState>>({})
@@ -269,9 +270,12 @@ export default function Swipe({
                 freeMode={true}
                 modules={[FreeMode, Pagination]}
             >
-                <div className="absolute inset-0 flex items-center justify-center bg-white opacity-70">
-                    <span className="text-xl font-bold">책 제목을 검색해보세요! 📚</span>
-                </div>
+                {/* 조건부 렌더링을 통해 검색 결과가 있을 경우 메시지를 숨깁니다. */}
+                {name && name.length === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white opacity-70">
+                        <span className="text-xl font-bold">책 제목을 검색해보세요! 📚</span>
+                    </div>
+                )}
                 {
                     name && name.slice(0, 30).map((bookName, index) => (
                         <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
