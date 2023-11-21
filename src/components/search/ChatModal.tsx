@@ -6,7 +6,7 @@ import { Client, Message } from '@stomp/stompjs'
 
 interface ChatProps {
   disableHandleAsk: () => void
-  isAdmin: boolean
+  userName: String
 }
 
 interface Content {
@@ -14,14 +14,16 @@ interface Content {
   own?: boolean
 }
 
-const Chat: React.FC<ChatProps> = ({ disableHandleAsk, isAdmin }) => {
+// const sender = sunjae333
+
+const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName }) => {
   const [messages, setMessages] = useState<Content[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null)
 
   const access = localStorage.getItem('accessToken') // 토큰 저장
 
-  console.log(isAdmin)
+  // console.log(isAdmin)
   useEffect(() => {
     // STOMP 클라이언트 초기화
     const stomp = new Client({
@@ -64,14 +66,14 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, isAdmin }) => {
         stomp.deactivate()
       }
     }
-  }, [messages])
+  }, [])
 
   const sendMessage = () => {
     // 메시지 전송
     if (stompClient && stompClient.connected) {
       stompClient.publish({
         destination: '/pub/chat.message.10',
-        body: JSON.stringify({ content: inputMessage }),
+        body: JSON.stringify({ content: inputMessage, sender: userName }),
       })
 
       // 자신이 보낸 메시지를 화면에 표시하기 위해 클래스를 추가하여 상태 업데이트
@@ -104,13 +106,13 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, isAdmin }) => {
         <CloseButton onClick={disableHandleAsk}>X</CloseButton>
       </Header>
 
-      {isAdmin && (
+      {/* {isAdmin && (
         <ChatRoomList>
           <div className="chat-room-item">채팅방 1</div>
           <div className="chat-room-item">채팅방 2</div>
           <div className="chat-room-item">채팅방 3</div>
         </ChatRoomList>
-      )}
+      )} */}
 
       <MessageList>
         {messages.map((message, index) => (
