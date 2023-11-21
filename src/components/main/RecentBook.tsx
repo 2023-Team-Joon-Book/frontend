@@ -34,7 +34,7 @@ export default function RecentBook() {
     const fetchRecent = async () => {
       try {
         const response = await baseInstance.get('/books/new')
-        setRecent(response.data.data.content.slice(0, 7))
+        setRecent(response.data.data.content.slice(0, 6))
       } catch (error) {
         console.error('API 호출 오류: ', error)
       }

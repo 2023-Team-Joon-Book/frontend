@@ -39,7 +39,13 @@ const MainSlider = () => {
                     <div className={"slide original".concat(animate ? "" : " stop")}>
                         {books.map((s, i) => (
                             <li key={i} className="big">
-                                <div className="item" style={{ backgroundImage: `url(${s.imgSrc})` }}>
+                                <div className="item" style={{
+                                    backgroundImage: `url(${s.imgSrc})`,
+                                    backgroundSize: 'cover', // 또는 'contain'으로 설정
+                                    backgroundPosition: 'center',
+                                    width: '100%', // 적절한 크기로 조정
+                                    height: '100%' // 적절한 크기로 조정
+                                }}>
                                     {/* Additional content can be added here if needed */}
                                 </div>
                             </li>
@@ -48,7 +54,13 @@ const MainSlider = () => {
                     <div className={"slide clone".concat(animate ? "" : " stop")}>
                         {books.map((s, i) => (
                             <li key={i} className="big">
-                                <div className="item" style={{ backgroundImage: `url(${s.imgSrc})` }}>
+                                <div className="item" style={{
+                                    backgroundImage: `url(${s.imgSrc})`,
+                                    backgroundSize: 'cover', // 또는 'contain'으로 설정
+                                    backgroundPosition: 'center',
+                                    width: '100%', // 적절한 크기로 조정
+                                    height: '100%' // 적절한 크기로 조정
+                                }}>
                                     {/* Additional content can be added here if needed */}
                                 </div>
                             </li>
