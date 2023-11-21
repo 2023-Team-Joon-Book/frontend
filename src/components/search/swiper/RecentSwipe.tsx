@@ -7,6 +7,8 @@ import { FreeMode, Pagination } from 'swiper/modules'
 import { useEffect, useState } from 'react'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { baseInstance } from '../../../api/config'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 interface RecentSwipeProps {
     index: number
@@ -109,12 +111,18 @@ export default function RecentSwipe({
                 lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status,
             });
-            alert('책 등록 성공!');
+            Swal.fire({
+                title: "책이 등록되었습니다.📚",
+                icon: "success"
+            });
         } catch (error: any) {
             console.error('Error updating reading status:', error);
             const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`${errorMessage} 입니다.`);
+            Swal.fire({
+                title: `${errorMessage} 입니다.`,
+                icon: "error"
+            });
         }
     }
 
@@ -163,12 +171,18 @@ export default function RecentSwipe({
     const updateBookLike = async (bookId: number) => {
         try {
             await baseInstance.post(`/books/like/${bookId}`);
-            alert('찜한 책 갱신 성공!');
+            Swal.fire({
+                title: "찜한 책 갱신 완료!",
+                icon: "success"
+            });
         } catch (error: any) {
             console.error('Error updating book like:', error);
             const errorMessage = error.response?.data?.message || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`Error: ${errorMessage}`);
+            Swal.fire({
+                title: `오류: ${errorMessage}`,
+                icon: "error"
+            });
         }
     }
     // 1. 책 상세 정보가 null 이 아니면  toggleHeartColor 함수 실행
