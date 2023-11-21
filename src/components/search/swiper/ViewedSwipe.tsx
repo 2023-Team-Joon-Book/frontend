@@ -57,7 +57,6 @@ export default function Swipe({
     // onSwipeClick,
     // active,
     index,
-    books
 }: ViewedSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
     const [booksState, setBooksState] = useState<Record<number, BookState>>({})
