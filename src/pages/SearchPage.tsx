@@ -29,15 +29,37 @@ const SearchPage = () => {
         params: { title: query }
       });
       const fetchedBooks = response.data;
-      Swal.fire({
-        title: "검색 성공",
-        icon: "success"
-      }); // 없으면 알림
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "검색 성공!"
+      });
       if (fetchedBooks.length === 0) {  // 데이터 없는지 체크
-        Swal.fire({
-          title: "검색 결과가 없습니다.",
-          icon: "warning"
-        }); // 없으면 알림
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "warning",
+          title: "검색 결과가 없습니다."
+        });
       }
       setBooks(fetchedBooks);  // 데이터 상태 관리
     } catch (error) {

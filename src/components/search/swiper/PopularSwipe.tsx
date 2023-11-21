@@ -109,9 +109,20 @@ export default function PopularSwipe({
                 lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status,
             });
-            Swal.fire({
-                title: "책이 등록되었습니다.📚",
-                icon: "success"
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "책이 등록되었습니다.📚"
             });
         } catch (error: any) {
             console.error('Error updating reading status:', error);
@@ -168,9 +179,20 @@ export default function PopularSwipe({
     const updateBookLike = async (bookId: number) => {
         try {
             await baseInstance.post(`/books/like/${bookId}`);
-            Swal.fire({
-                title: "찜한 책 갱신 완료!",
-                icon: "success"
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "찜한 책 갱신 완료!"
             });
         } catch (error: any) {
             console.error('Error updating book like:', error);

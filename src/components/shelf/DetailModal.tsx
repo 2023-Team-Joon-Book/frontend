@@ -57,7 +57,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
       });
     } catch (error) {
       Swal.fire({
-        title: "이미 다 읽은 책입니다. 🥺",
+        text: "이미 다 읽었거나, 작은 값을 입력하셨습니다.",
         icon: "warning"
       });
     }
@@ -107,8 +107,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
       readPercentages()
     } catch (error) {
       Swal.fire({
-        title: "이미 다 읽은 책입니다!",
-        icon: "success"
+        text: "이미 다 읽었거나, 작은 값을 입력하셨습니다.",
+        icon: "warning"
       });
     }
 
