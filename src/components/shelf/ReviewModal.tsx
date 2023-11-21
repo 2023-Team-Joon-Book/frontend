@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Writng from './Writing'
 import '../../scss/BookReview.scss'
 import axios from 'axios'
+import StarRate from './StartRate'
+import { baseInstance } from '../../api/config'
 
 interface ReviewModalProps {
   book: {
@@ -26,6 +28,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
   const [isWriting, setIsWriting] = useState(false)
   const [review, setReview] = useState('책에 대한 줄거리와 소감을 남겨보세요!')
   const [loading, setLoading] = useState(true) // 로딩 상태 추가
+  const [grade, setGrade] = useState(0) // 별점 상태 추가
 
   // 리뷰 조회 api 요청
   async function viewReview() {
@@ -37,14 +40,29 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/reviews/${book.id}`, {
+      const response = await baseInstance.get(`/reviews/${book.id}`, {
         params, // 쿼리 매개변수로 요청 데이터 전달
         headers: { Authorization: `Bearer ${access}` },
       })
-      console.log(response)
-      const content = response.data.data.content
-      setReview(content)
-      setLoading(false) // 데이터 로딩 완료 후 로딩 상태 변경
+
+      // 리뷰 데이터가 있는지 확인
+      if (response.data && response.data.data) {
+        const { content, grade } = response.data.data
+        setReview(content)
+        setGrade(grade)
+      } else {
+        setReview('책에 대한 줄거리와 소감을 남겨보세요!')
+        setGrade(0)
+      }
+
+      // console.log(response)
+      // const content = response.data.data.content
+      // const gradeFromApi = response.data.data.grade // API에서 grade 값 받아오기
+      // console.log(response.data.data.grade)
+
+      // setGrade(gradeFromApi) // 별점 상태 업데이트
+      // setReview(content)
+      setLoading(false)
     } catch (error) {
       console.error(error)
       setLoading(false) // 데이터 로딩 실패 시에도 로딩 상태 변경
@@ -56,7 +74,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
     const access = localStorage.getItem('accessToken')
 
     try {
-      const response = await axios.delete(`http://localhost:8080/api/v1/reviews/${book.id}`, {
+      const response = await baseInstance.delete(`/reviews/${book.id}`, {
         headers: { Authorization: `Bearer ${access}` },
       })
       console.log(response)
@@ -98,14 +116,27 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
               <p className="text-gray-600">저자: {book.author}</p>
             </div>
             <div className="w-8/12 p-10 flex flex-col">
+              {/* <div className="mb-10 flex flex-col">
+                <p className="flex justify-start">이 책에 대한 나의 평가</p>
+                <div className="flex justify-start">
+                  {stars.map((_, index) => (
+                    <YellowStar key={index} />
+                  ))}
+                </div>
+              </div> */}
+              <div className="mb-10 flex flex-col">
+                <p className="flex justify-start">이 책에 대한 나의 평가</p>
+                <StarRate grade={grade} setGrade={(newGrade) => setGrade(newGrade)} />
+              </div>
               <div className="flex flex-col h-2/3 border-2">
                 {isWriting ? (
                   // 리뷰를 작성중인 상태라면
                   <div className="h-full">
-                    <Writng book={book}></Writng>
+                    <Writng book={book} setReviewGrade={(newGrade) => setGrade(newGrade)} />
                   </div>
                 ) : (
                   // 초기상태
+
                   <React.Fragment>
                     <p
                       className={`flex flex-col items-center p-10 ${
@@ -137,14 +168,6 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                     </div>
                   </React.Fragment>
                 )}
-              </div>
-              <div className="mt-10 flex flex-col">
-                <p className="flex justify-end">이 책에 대한 나의 평가</p>
-                <div className="flex justify-end">
-                  {stars.map((_, index) => (
-                    <YellowStar key={index} />
-                  ))}
-                </div>
               </div>
             </div>
             <button

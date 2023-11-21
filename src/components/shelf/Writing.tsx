@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import StarRate from './StartRate'
+import { baseInstance } from '../../api/config'
 
 interface WritngProps {
   book: {
@@ -15,14 +17,22 @@ interface WritngProps {
     width: number
     status: string
   }
+  setReviewGrade: (newGrade: number) => void
 }
 
-const Writng: React.FC<WritngProps> = ({ book }) => {
+const Writng: React.FC<WritngProps> = ({ book, setReviewGrade }) => {
   const [editedLastPage, setEditedLastPage] = useState('') // 사용자가 입력한 페이지를 저장할 상태
+  const [grade, setGrade] = useState(5) // 별점 상태 추가
 
   // 사용자가 페이지 입력란을 변경할 때 호출되는 함수
   const handleLastPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedLastPage(e.target.value)
+  }
+
+  // 별점 변경 핸들러
+  const handleGradeChange = (newGrade: number) => {
+    setGrade(newGrade)
+    setReviewGrade(newGrade) // ReviewModal의 별점 상태 업데이트
   }
 
   // 리뷰 등록 api 요청
@@ -33,16 +43,18 @@ const Writng: React.FC<WritngProps> = ({ book }) => {
       // 요청 본문 데이터 (필요에 따라 변경)
       book_id: book.id,
       content: editedLastPage,
-      grade: 5,
+      grade: grade,
       title: '제목',
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/reviews', requestData, {
+      const response = await baseInstance.post('/reviews', requestData, {
         headers: { Authorization: `Bearer ${access}` },
       })
       console.log(response)
       alert('리뷰가 등록되었습니다 !')
+      // 등록 후 별점 초기화 또는 다른 로직 수행
+      setReviewGrade(5) // 예시로 5점으로 초기화
     } catch (error) {
       console.error(error)
     }
