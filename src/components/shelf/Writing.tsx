@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { setISOWeek } from 'date-fns'
 import React, { useState } from 'react'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 interface WritngProps {
   book: {
@@ -44,8 +46,11 @@ const Writng: React.FC<WritngProps> = ({ book, setIsWriting, viewReview }) => {
       const response = await axios.post('http://localhost:8080/api/v1/reviews', requestData, {
         headers: { Authorization: `Bearer ${access}` },
       })
-      console.log(response)
-      alert('리뷰가 등록되었습니다 !')
+      console.log(response);
+      Swal.fire({
+        title: "리뷰가 등록되었습니다! 🎉",
+        icon: "success"
+      });
       setIsWriting(false)
       viewReview()
     } catch (error) {

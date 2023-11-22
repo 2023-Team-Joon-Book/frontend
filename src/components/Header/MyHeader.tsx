@@ -92,8 +92,8 @@ const MyHeader: FC = () => {
           style={{
             color:
               location.pathname === '/choose' ||
-              location.pathname === '/statistics' ||
-              location.pathname === '/stack'
+                location.pathname === '/statistics' ||
+                location.pathname === '/stack'
                 ? '#BFC66A'
                 : 'black',
           }}
