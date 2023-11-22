@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import sendImg from '../../assets/images/send.png'
 import Stomp from '@stomp/stompjs'
 import { Client } from '@stomp/stompjs'
-
+import axios, { AxiosError } from 'axios'
 interface ChatProps {
   disableHandleAsk: () => void
   userName: string
@@ -25,61 +25,90 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName }) => {
   const [messages, setMessages] = useState<Content[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null)
+  const [roomId, setRoomId] = useState<string>()
   const user = userName
   const access = localStorage.getItem('accessToken') // 토큰 저장
 
-  // console.log(userName)
-  useEffect(() => {
-    // STOMP 클라이언트 초기화
-    const stomp = new Client({
-      brokerURL: 'ws://localhost:8080/chat',
-      connectHeaders: {
-        Authorization: `Bearer ${access}`,
-      },
-      debug: (str: string) => {
-        console.log(str)
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    })
-    setStompClient(stomp)
+  // 채팅방 생성 api
+  async function creatChatroom() {
+    const access = localStorage.getItem('accessToken')
 
-    // 연결 시도
-    stomp.activate()
-
-    // 특정 주제로 구독
-    stomp.onConnect = () => {
-      console.log('WebSocket 연결이 열렸습니다.')
-      stomp.subscribe('/exchange/chat.exchange/room.11', (frame) => {
-        // 서버로부터 메시지 수신
-        try {
-          // JSON.parse 호출 전에 유효성 확인
-          const parsedMessage = JSON.parse(frame.body)
-
-          console.log(parsedMessage)
-          // 받은 JSON 메시지를 파싱하여 상태 업데이트
-          setMessages((prevMessages) => [...prevMessages, parsedMessage])
-        } catch (error) {
-          console.error('오류가 발생했습니다:', error)
-          // 오류 처리를 추가하거나 무시할 수 있습니다.
-        }
-      })
-    }
-
-    // 컴포넌트가 언마운트될 때 연결 닫기
-    return () => {
-      if (stomp && stomp.connected) {
-        stomp.deactivate()
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/v1/chat/rooms',
+        {},
+        {
+          headers: { Authorization: `Bearer ${access}` },
+        },
+      )
+      console.log(response)
+      console.log(response.data.data)
+    } catch (error: unknown) {
+      // 'error' 변수의 타입을 AxiosError로 명시합니다.
+      if (axios.isAxiosError(error)) {
+        console.error('에러 메시지:', error.response?.data?.errorMessage)
+      } else {
+        console.error(error)
       }
     }
-  }, [])
+  }
+
+  // creatChatroom()
+  // console.log(userName)
+  useEffect(() => {
+    const initializeChat = async () => {
+      try {
+        await creatChatroom() // 채팅 룸이 생성될 때까지 기다립니다.
+
+        const stomp = new Client({
+          brokerURL: 'ws://localhost:8080/chat',
+          connectHeaders: {
+            Authorization: `Bearer ${access}`,
+          },
+          debug: (str: string) => {
+            console.log(str)
+          },
+          reconnectDelay: 5000,
+          heartbeatIncoming: 4000,
+          heartbeatOutgoing: 4000,
+        })
+        setStompClient(stomp)
+
+        stomp.activate()
+
+        stomp.onConnect = () => {
+          console.log('WebSocket 연결이 열렸습니다.')
+          console.log(roomId) // 이제 roomId가 정의되어 있어야 합니다.
+          stomp.subscribe(`/exchange/chat.exchange/room.${roomId}`, (frame) => {
+            try {
+              const parsedMessage = JSON.parse(frame.body)
+
+              console.log(parsedMessage)
+              setMessages((prevMessages) => [...prevMessages, parsedMessage])
+            } catch (error) {
+              console.error('오류가 발생했습니다:', error)
+            }
+          })
+        }
+      } catch (error) {
+        console.error('채팅 룸 생성 중 오류가 발생했습니다:', error)
+      }
+    }
+
+    initializeChat()
+
+    return () => {
+      if (stompClient && stompClient.connected) {
+        stompClient.deactivate()
+      }
+    }
+  }, [roomId])
 
   const sendMessage = () => {
     // 메시지 전송
     if (stompClient && stompClient.connected) {
       stompClient.publish({
-        destination: '/pub/chat.message.11',
+        destination: `/pub/chat.message.17`,
         body: JSON.stringify({
           content: inputMessage,
           sender: user,
