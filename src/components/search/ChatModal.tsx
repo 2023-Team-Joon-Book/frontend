@@ -2,16 +2,21 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import sendImg from '../../assets/images/send.png'
 import Stomp from '@stomp/stompjs'
-import { Client, Message } from '@stomp/stompjs'
+import { Client } from '@stomp/stompjs'
 
 interface ChatProps {
   disableHandleAsk: () => void
-  userName: String
+  userName: string
 }
 
 interface Content {
   content: string
-  own?: boolean
+  sender?: string // sender 추가
+}
+
+interface MessagesProps {
+  sender?: string
+  userName: string // userName 추가
 }
 
 // const sender = sunjae333
@@ -20,10 +25,10 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName }) => {
   const [messages, setMessages] = useState<Content[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null)
-
+  const user = userName
   const access = localStorage.getItem('accessToken') // 토큰 저장
 
-  // console.log(isAdmin)
+  // console.log(userName)
   useEffect(() => {
     // STOMP 클라이언트 초기화
     const stomp = new Client({
@@ -46,17 +51,19 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName }) => {
     // 특정 주제로 구독
     stomp.onConnect = () => {
       console.log('WebSocket 연결이 열렸습니다.')
-      stomp.subscribe('/exchange/chat.exchange/room.10', (frame) => {
+      stomp.subscribe('/exchange/chat.exchange/room.11', (frame) => {
         // 서버로부터 메시지 수신
+        try {
+          // JSON.parse 호출 전에 유효성 확인
+          const parsedMessage = JSON.parse(frame.body)
 
-        // 받은 JSON 메시지를 파싱합니다.
-        const parsedMessage = JSON.parse(frame.body)
-
-        console.log('frame', frame)
-        console.log('****parsedMessage*****', parsedMessage)
-
-        const newMessages = [...messages, { content: parsedMessage, own: false }]
-        setMessages(newMessages)
+          console.log(parsedMessage)
+          // 받은 JSON 메시지를 파싱하여 상태 업데이트
+          setMessages((prevMessages) => [...prevMessages, parsedMessage])
+        } catch (error) {
+          console.error('오류가 발생했습니다:', error)
+          // 오류 처리를 추가하거나 무시할 수 있습니다.
+        }
       })
     }
 
@@ -72,13 +79,15 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName }) => {
     // 메시지 전송
     if (stompClient && stompClient.connected) {
       stompClient.publish({
-        destination: '/pub/chat.message.10',
-        body: JSON.stringify({ content: inputMessage, sender: userName }),
+        destination: '/pub/chat.message.11',
+        body: JSON.stringify({
+          content: inputMessage,
+          sender: user,
+        }),
       })
 
-      // 자신이 보낸 메시지를 화면에 표시하기 위해 클래스를 추가하여 상태 업데이트
-      const newMessages = [...messages, { content: inputMessage, own: true }]
-      setMessages(newMessages)
+      // // 자신이 보낸 메시지를 화면에 표시하기 위해 클래스를 추가하여 상태 업데이트
+      // setMessages((prevMessages) => [...prevMessages, { content: inputMessage, sender: user }])
     }
 
     setInputMessage('')
@@ -116,7 +125,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName }) => {
 
       <MessageList>
         {messages.map((message, index) => (
-          <Messages key={index} className={message.own ? 'own-message' : ''}>
+          <Messages key={index} sender={message.sender} userName={user}>
             {message.content}
           </Messages>
         ))}
@@ -193,18 +202,14 @@ const MessageList = styled.div`
   flex-direction: column;
 `
 
-const Messages = styled.div`
-  background: rgba(231, 227, 227, 0.8);
+const Messages = styled.div<MessagesProps>`
+  background: ${(props) =>
+    props.sender !== props.userName ? 'rgba(231, 227, 227, 0.8)' : 'rgba(191, 198, 106, 0.8)'};
   border-radius: 16px;
   padding: 8px;
   margin: 16px;
   font-size: 26px;
-  align-self: flex-start; /* 왼쪽 정렬 */
-
-  &.own-message {
-    background: rgba(191, 198, 106, 0.8); /* 배경색 변경 */
-    align-self: flex-end; /* 오른쪽 정렬 */
-  }
+  align-self: ${(props) => (props.sender !== props.userName ? 'flex-start' : 'flex-end')};
 `
 
 const InputBox = styled.div`

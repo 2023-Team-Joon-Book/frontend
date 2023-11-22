@@ -41,7 +41,7 @@ const SearchPage = () => {
         // "sub" 속성에 접근하여 값을 추출
         const subValue = jsonObject.sub
 
-        console.log(subValue) // "sunjae333"
+        // console.log(subValue) // "sunjae333"
         setUserName(subValue)
       } catch (error) {
         console.error('Error parsing JSON:', error)
