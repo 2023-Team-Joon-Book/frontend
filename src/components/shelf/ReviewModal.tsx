@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Writng from './Writing'
 import '../../scss/BookReview.scss'
-import axios from 'axios'
 import StarRate from './StartRate'
 import { baseInstance } from '../../api/config'
 
@@ -40,10 +39,12 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
     }
 
     try {
+      console.log('Sending GET request to /reviews/', params)
       const response = await baseInstance.get(`/reviews/${book.id}`, {
         params, // 쿼리 매개변수로 요청 데이터 전달
         headers: { Authorization: `Bearer ${access}` },
       })
+      console.log('GET response:', response)
 
       // 리뷰 데이터가 있는지 확인
       if (response.data && response.data.data) {
@@ -71,13 +72,14 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
 
   // 리뷰 삭제 api 요청
   async function deleteReview() {
+    console.log('Sending DELETE request to /reviews/', book.id)
     const access = localStorage.getItem('accessToken')
 
     try {
       const response = await baseInstance.delete(`/reviews/${book.id}`, {
         headers: { Authorization: `Bearer ${access}` },
       })
-      console.log(response)
+      console.log('DELETE response:', response)
       alert('리뷰가 삭제되었습니다.')
       setReview('책에 대한 줄거리와 소감을 남겨보세요!')
     } catch (error) {
@@ -115,24 +117,20 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
               <h2 className="font-bold mb-2 justify-center items-center text-2xl">{book.title}</h2>
               <p className="text-gray-600">저자: {book.author}</p>
             </div>
-            <div className="w-8/12 p-10 flex flex-col">
-              {/* <div className="mb-10 flex flex-col">
-                <p className="flex justify-start">이 책에 대한 나의 평가</p>
-                <div className="flex justify-start">
-                  {stars.map((_, index) => (
-                    <YellowStar key={index} />
-                  ))}
+            <div className="w-9/12 p-10 flex flex-col">
+              {/* 조건적 렌더링: 리뷰 작성 중이 아닐 때만 StarRate 컴포넌트 렌더링 */}
+              {!isWriting && (
+                <div className="mb-10 ml-2 flex flex-col">
+                  <p className="flex justify-start">이 책에 대한 나의 평가</p>
+                  <StarRate grade={grade} />
                 </div>
-              </div> */}
-              <div className="mb-10 flex flex-col">
-                <p className="flex justify-start">이 책에 대한 나의 평가</p>
-                <StarRate grade={grade} setGrade={(newGrade) => setGrade(newGrade)} />
-              </div>
-              <div className="flex flex-col h-2/3 border-2">
+              )}
+
+              <div className="flex flex-col border-2">
                 {isWriting ? (
                   // 리뷰를 작성중인 상태라면
-                  <div className="h-full">
-                    <Writng book={book} setReviewGrade={(newGrade) => setGrade(newGrade)} />
+                  <div className="h-4/5">
+                    <Writng book={book} setReviewGrade={setGrade} />
                   </div>
                 ) : (
                   // 초기상태
@@ -155,14 +153,14 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                             setIsWriting(true)
                           }
                         }}
-                        className="text-lime-500 hover:text-lime-600 ml-4 mt-6 text-2xl">
+                        className="text-lime-500 hover:text-lime-600 ml-4 mb-5 text-2xl">
                         리뷰 작성하기
                       </button>
                       <button
                         onClick={() => {
                           deleteReview()
                         }}
-                        className="text-lime-500 hover:text-lime-600 ml-4 mt-6 text-2xl">
+                        className="text-lime-500 hover:text-lime-600 ml-4 mb-5 text-2xl">
                         리뷰 삭제하기
                       </button>
                     </div>
@@ -183,13 +181,3 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
 }
 
 export default ReviewModal
-
-function YellowStar() {
-  return (
-    <div className="star">
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-        <path fill="yellow" d="M12 2l2.3 7.6h7.7l-6 4.8 2.3 7.6-6-4.7-6 4.7 2.3-7.6-6-4.8h7.7z" />
-      </svg>
-    </div>
-  )
-}

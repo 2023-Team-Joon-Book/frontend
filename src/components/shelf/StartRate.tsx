@@ -3,17 +3,15 @@ import { useState, useEffect } from 'react'
 
 interface StarRateProps {
   grade: number
-  setGrade: (grade: number) => void
 }
 
-function StarRate({ grade, setGrade }: StarRateProps) {
+function StarRate({ grade }: StarRateProps) {
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last']
   const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0])
-  const [inputGrade, setInputGrade] = useState(5) // 기본 값은 5점
 
   const calcStarRates = () => {
     let tempStarRatesArr = [0, 0, 0, 0, 0]
-    let starVerScore = (inputGrade * 70) / 5
+    let starVerScore = (grade * 70) / 5
     let idx = 0
     while (starVerScore > 14) {
       tempStarRatesArr[idx] = 14
@@ -26,24 +24,12 @@ function StarRate({ grade, setGrade }: StarRateProps) {
 
   useEffect(() => {
     setRatesResArr(calcStarRates())
-    setGrade(inputGrade)
-  }, [inputGrade])
+  }, [grade])
 
   return (
     <StarRateWrap>
-      <input
-        type="number"
-        min="0"
-        max="5"
-        step="0.1"
-        value={inputGrade}
-        onChange={(e) => {
-          const newGrade = parseFloat(e.target.value)
-          setInputGrade(newGrade)
-          setGrade(newGrade) // 별점 변경 핸들러 호출
-        }}
-        className="star-input"
-      />
+      <span className="pr-5 grade-text">{grade.toFixed(1)}</span>{' '}
+      {/* 소수점 한 자리 포함한 별점 표시 */}
       {STAR_IDX_ARR.map((item, idx) => {
         return (
           <span className="star_icon" key={`${item}_${idx}`}>
@@ -76,9 +62,6 @@ const StarRateWrap = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  .star-input {
-    margin-right: 10px;
-  }
   .star_icon {
     display: inline-flex;
     margin-right: 5px;
