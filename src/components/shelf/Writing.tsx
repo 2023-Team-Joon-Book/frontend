@@ -20,10 +20,11 @@ interface WritngProps {
     status: string
   }
   setReviewGrade: (newGrade: number) => void
+  setIsWriting: (isWriting: boolean) => void
   viewReview: () => void
 }
 
-const Writng: React.FC<WritngProps> = ({ book, setReviewGrade, viewReview }) => {
+const Writng: React.FC<WritngProps> = ({ book, setReviewGrade, setIsWriting, viewReview }) => {
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last']
   const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0])
   const [inputGrade, setInputGrade] = useState(0) // 기본 값은 5점
@@ -86,6 +87,7 @@ const Writng: React.FC<WritngProps> = ({ book, setReviewGrade, viewReview }) => 
         icon: 'success',
       })
       setReviewGrade(5) // 예시로 5점으로 초기화
+      setIsWriting(false)
       viewReview()
     } catch (error) {
       console.error(error)

@@ -137,7 +137,12 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                 {isWriting ? (
                   // 리뷰를 작성중인 상태라면
                   <div className="h-4/5">
-                    <Writng book={book} setReviewGrade={setGrade} viewReview={viewReview} />
+                    <Writng
+                      book={book}
+                      setReviewGrade={setGrade}
+                      setIsWriting={setIsWriting}
+                      viewReview={viewReview}
+                    />
                   </div>
                 ) : (
                   // 초기상태
