@@ -24,6 +24,7 @@ const SearchPage = () => {
   const [books, setBooks] = useState<any[]>([]) // <--- books 상태 추가
   const [isAsk, setIsAsk] = useState(false)
   const [userName, setUserName] = useState('')
+  const [userAuth, setUserAuth] = useState('')
 
   const access = localStorage.getItem('accessToken')
 
@@ -40,9 +41,10 @@ const SearchPage = () => {
 
         // "sub" 속성에 접근하여 값을 추출
         const subValue = jsonObject.sub
-
-        // console.log(subValue) // "sunjae333"
+        const authValue = jsonObject.auth
+        // console.log(jsonObject) // "sunjae333"
         setUserName(subValue)
+        setUserAuth(authValue)
       } catch (error) {
         console.error('Error parsing JSON:', error)
       }
@@ -93,7 +95,7 @@ const SearchPage = () => {
       <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       {isAsk ? (
-        <ChatModal disableHandleAsk={disableHandleAsk} userName={userName} />
+        <ChatModal disableHandleAsk={disableHandleAsk} userName={userName} userAuth={userAuth} />
       ) : (
         <Ask handleAsk={handleAsk} />
       )}

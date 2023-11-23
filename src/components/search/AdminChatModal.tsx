@@ -80,7 +80,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
         stomp.onConnect = () => {
           console.log('WebSocket 연결이 열렸습니다.')
           console.log(roomId) // 이제 roomId가 정의되어 있어야 합니다.
-          stomp.subscribe(`/exchange/chat.exchange/room.11`, (frame) => {
+          stomp.subscribe(`/exchange/chat.exchange/room.${roomId}`, (frame) => {
             try {
               const parsedMessage = JSON.parse(frame.body)
 
@@ -109,7 +109,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
     // 메시지 전송
     if (stompClient && stompClient.connected) {
       stompClient.publish({
-        destination: `/pub/chat.message.11`,
+        destination: `/pub/chat.message.17`,
         body: JSON.stringify({
           content: inputMessage,
           sender: user,
