@@ -5,7 +5,8 @@ import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
 import LoginHeader from '../components/Header/LoginHeader'
 import { useNavigate } from 'react-router-dom'
-
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
@@ -25,14 +26,25 @@ export default function SignUpPage() {
         if (response.data.code === 'U001') {
           console.log('회원가입 잘됨')
           navigate('/login')
+          Swal.fire({
+            title: "회원가입 성공!",
+            icon: "success"
+          });
         } else {
           // 회원가입 실패 처리
           console.log(response.data.message)
-          alert(response.data.message)
+          Swal.fire({
+            title: `${response.data.message}`,
+            icon: "error"
+          });
         }
       } catch (error) {
         // 에러 처리
-        alert('회원가입 중 오류가 발생했습니다.')
+        Swal.fire({
+          title: "회원가입 실패",
+          text: '아이디나 비밀번호를 다시 한 번 확인해 보세요!',
+          icon: "error"
+        });
       }
     }
   }

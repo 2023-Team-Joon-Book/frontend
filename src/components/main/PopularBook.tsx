@@ -34,7 +34,7 @@ export default function PopularBook() {
     const fetchPopular = async () => {
       try {
         const response = await baseInstance.get('/books/like')
-        setPopular(response.data.data.content.slice(0, 7))
+        setPopular(response.data.data.content.slice(0, 6))
       } catch (error) {
         console.error('API 호출 오류: ', error)
       }

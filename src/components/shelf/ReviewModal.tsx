@@ -3,6 +3,8 @@ import Writng from './Writing'
 import '../../scss/BookReview.scss'
 import StarRate from './StartRate'
 import { baseInstance } from '../../api/config'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 interface ReviewModalProps {
   book: {
@@ -79,12 +81,17 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
       const response = await baseInstance.delete(`/reviews/${book.id}`, {
         headers: { Authorization: `Bearer ${access}` },
       })
-      console.log('DELETE response:', response)
-      alert('리뷰가 삭제되었습니다.')
+
+      console.log(response)
+      Swal.fire({
+        title: "리뷰가 삭제 되었습니다.",
+        icon: "success"
+      });
+
       setReview('책에 대한 줄거리와 소감을 남겨보세요!')
     } catch (error) {
       console.error(error)
-      console.log('에러밣생')
+      console.log('에러발생')
     }
   }
 
@@ -137,18 +144,20 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
 
                   <React.Fragment>
                     <p
-                      className={`flex flex-col items-center p-10 ${
-                        review == '책에 대한 줄거리와 소감을 남겨보세요!'
-                          ? 'text-gray-400 text-xl'
-                          : 'text-3xl '
-                      }`}>
+                      className={`flex flex-col items-center p-10 ${review == '책에 대한 줄거리와 소감을 남겨보세요!'
+                        ? 'text-gray-400 text-xl'
+                        : 'text-3xl '
+                        }`}>
                       {review}
                     </p>
                     <div className="flex flex-row mt-36">
                       <button
                         onClick={() => {
                           if (review != '책에 대한 줄거리와 소감을 남겨보세요!') {
-                            alert('기존에 작성한 리뷰를 먼저 삭제 해주세요')
+                            Swal.fire({
+                              text: "기존에 작성한 리뷰를 먼저 삭제해주세요. 🥺",
+                              icon: "warning"
+                            });
                           } else {
                             setIsWriting(true)
                           }

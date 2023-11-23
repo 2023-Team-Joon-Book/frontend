@@ -6,6 +6,8 @@ import MyHeader from '../components/Header/MyHeader';
 import ViewedBooks from '../components/search/ViewedBooks';
 import PopularBooks from '../components/search/PopularBook';
 import RecentBooks from '../components/search/RecentBooks';
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null);
@@ -27,13 +29,45 @@ const SearchPage = () => {
         params: { title: query }
       });
       const fetchedBooks = response.data;
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "검색 성공!"
+      });
       if (fetchedBooks.length === 0) {  // 데이터 없는지 체크
-        alert("검색 결과가 없습니다.");  // 없으면 알림
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "warning",
+          title: "검색 결과가 없습니다."
+        });
       }
       setBooks(fetchedBooks);  // 데이터 상태 관리
     } catch (error) {
       console.error('Failed to fetch books', error);
-      alert("서버 오류");  // 서버 오류
+      Swal.fire({
+        title: "네트워크 오류입니다!",
+        icon: "error"
+      });
     }
   };
 

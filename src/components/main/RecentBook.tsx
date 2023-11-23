@@ -34,7 +34,7 @@ export default function RecentBook() {
     const fetchRecent = async () => {
       try {
         const response = await baseInstance.get('/books/new')
-        setRecent(response.data.data.content.slice(0, 7))
+        setRecent(response.data.data.content.slice(0, 6))
       } catch (error) {
         console.error('API 호출 오류: ', error)
       }
@@ -44,7 +44,7 @@ export default function RecentBook() {
 
   return (
     <div className="py-4">
-      <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: 'bmfont' }}>
+      <h2 className="text-3xl text-center" style={{ fontFamily: 'bmfont' }}>
         최근 출시작
       </h2>
       <div className="flex justify-center space-x-8 w-full overflow-x-auto">

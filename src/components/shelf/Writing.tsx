@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { baseInstance } from '../../api/config'
 import styled from 'styled-components'
+import { setISOWeek } from 'date-fns'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 interface WritngProps {
   book: {
@@ -73,9 +76,14 @@ const Writng: React.FC<WritngProps> = ({ book, setReviewGrade }) => {
       const response = await baseInstance.post('/reviews', requestData, {
         headers: { Authorization: `Bearer ${access}` },
       })
+
       console.log('POST response:', response)
       alert('리뷰가 등록되었습니다 !')
-      // 등록 후 별점 초기화 또는 다른 로직 수행
+      console.log(response);
+      Swal.fire({
+        title: "리뷰가 등록되었습니다! 🎉",
+        icon: "success"
+      });
       setReviewGrade(5) // 예시로 5점으로 초기화
     } catch (error) {
       console.error(error)
