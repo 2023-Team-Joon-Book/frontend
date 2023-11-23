@@ -3,7 +3,7 @@ import Writng from './Writing'
 import '../../scss/BookReview.scss'
 import StarRate from './StartRate'
 import { baseInstance } from '../../api/config'
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
 interface ReviewModalProps {
@@ -24,8 +24,8 @@ interface ReviewModalProps {
 }
 
 const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
-  const numberOfStars = 5
-  const stars = Array(numberOfStars).fill(null)
+  // const numberOfStars = 5
+  // const stars = Array(numberOfStars).fill(null)
   const [isWriting, setIsWriting] = useState(false)
   const [review, setReview] = useState('책에 대한 줄거리와 소감을 남겨보세요!')
   const [loading, setLoading] = useState(true) // 로딩 상태 추가
@@ -84,9 +84,9 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
 
       console.log(response)
       Swal.fire({
-        title: "리뷰가 삭제 되었습니다.",
-        icon: "success"
-      });
+        title: '리뷰가 삭제 되었습니다.',
+        icon: 'success',
+      })
 
       setReview('책에 대한 줄거리와 소감을 남겨보세요!')
     } catch (error) {
@@ -137,17 +137,18 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                 {isWriting ? (
                   // 리뷰를 작성중인 상태라면
                   <div className="h-4/5">
-                    <Writng book={book} setReviewGrade={setGrade} />
+                    <Writng book={book} setReviewGrade={setGrade} viewReview={viewReview} />
                   </div>
                 ) : (
                   // 초기상태
 
                   <React.Fragment>
                     <p
-                      className={`flex flex-col items-center p-10 ${review == '책에 대한 줄거리와 소감을 남겨보세요!'
-                        ? 'text-gray-400 text-xl'
-                        : 'text-3xl '
-                        }`}>
+                      className={`flex flex-col items-center p-10 ${
+                        review == '책에 대한 줄거리와 소감을 남겨보세요!'
+                          ? 'text-gray-400 text-xl'
+                          : 'text-3xl '
+                      }`}>
                       {review}
                     </p>
                     <div className="flex flex-row mt-36">
@@ -155,9 +156,9 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                         onClick={() => {
                           if (review != '책에 대한 줄거리와 소감을 남겨보세요!') {
                             Swal.fire({
-                              text: "기존에 작성한 리뷰를 먼저 삭제해주세요. 🥺",
-                              icon: "warning"
-                            });
+                              text: '기존에 작성한 리뷰를 먼저 삭제해주세요. 🥺',
+                              icon: 'warning',
+                            })
                           } else {
                             setIsWriting(true)
                           }

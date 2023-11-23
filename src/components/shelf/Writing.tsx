@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { baseInstance } from '../../api/config'
 import styled from 'styled-components'
 import { setISOWeek } from 'date-fns'
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
 interface WritngProps {
@@ -20,9 +20,10 @@ interface WritngProps {
     status: string
   }
   setReviewGrade: (newGrade: number) => void
+  viewReview: () => void
 }
 
-const Writng: React.FC<WritngProps> = ({ book, setReviewGrade }) => {
+const Writng: React.FC<WritngProps> = ({ book, setReviewGrade, viewReview }) => {
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last']
   const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0])
   const [inputGrade, setInputGrade] = useState(0) // 기본 값은 5점
@@ -79,12 +80,13 @@ const Writng: React.FC<WritngProps> = ({ book, setReviewGrade }) => {
 
       console.log('POST response:', response)
       alert('리뷰가 등록되었습니다 !')
-      console.log(response);
+      console.log(response)
       Swal.fire({
-        title: "리뷰가 등록되었습니다! 🎉",
-        icon: "success"
-      });
+        title: '리뷰가 등록되었습니다! 🎉',
+        icon: 'success',
+      })
       setReviewGrade(5) // 예시로 5점으로 초기화
+      viewReview()
     } catch (error) {
       console.error(error)
     }
