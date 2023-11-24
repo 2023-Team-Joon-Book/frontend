@@ -79,8 +79,6 @@ const Writng: React.FC<WritngProps> = ({ book, setReviewGrade, setIsWriting, vie
         headers: { Authorization: `Bearer ${access}` },
       })
 
-      console.log('POST response:', response)
-      alert('리뷰가 등록되었습니다 !')
       console.log(response)
       Swal.fire({
         title: '리뷰가 등록되었습니다! 🎉',
