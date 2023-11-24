@@ -7,6 +7,8 @@ import { FreeMode, Pagination } from 'swiper/modules'
 import { useEffect, useState } from 'react'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { baseInstance } from '../../../api/config'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 interface ViewedSwipeProps {
     index: number
@@ -27,6 +29,23 @@ interface BookState {
     heartBlack: boolean
 }
 
+interface BookDetails {
+    code: string;
+    message: string;
+    data: {
+        id: number;
+        title: string;
+        author: string;
+        publisher: string;
+        cover_image_url: string;
+        height: number;
+        width: number;
+        pages: number;
+        likes: number;
+        like_status: boolean;
+    };
+}
+
 export default function Swipe({
     title,
     name,
@@ -35,8 +54,8 @@ export default function Swipe({
     pages,
     coverImageUrl,
     id,
-    onSwipeClick,
-    active,
+    // onSwipeClick,
+    // active,
     index,
 }: ViewedSwipeProps) {
     const [activeBook, setActiveBook] = useState<number | null>(null)
@@ -80,12 +99,29 @@ export default function Swipe({
                 lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status,
             });
-            alert('책 등록 성공!');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "책이 등록되었습니다.📚"
+            });
         } catch (error: any) {
             console.error('Error updating reading status:', error);
             const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`${errorMessage} 입니다.`);
+            Swal.fire({
+                title: `${errorMessage} 입니다.`,
+                icon: "error"
+            });
         }
     }
 
@@ -125,7 +161,7 @@ export default function Swipe({
 
         if (activeBook === null) return;
 
-        // 아래에서 책의 ID를 가져옵니다.
+        // 책의 ID를 가져오기
         const bookId = id[activeBook];
         if (!bookId) return;
 
@@ -133,23 +169,54 @@ export default function Swipe({
     }
 
     const updateBookLike = async (bookId: string | null) => {
+        if (bookId === null) return;
+
         try {
-            if (bookId !== null) {
-                await baseInstance.post(`/books/like/${bookId}`);
-                alert('찜한 책 갱신 성공!');
-            } else {
-                alert('책 ID가 유효하지 않습니다.');
-            }
+            await baseInstance.post(`/books/like/${bookId}`, {
+                like_status: bookDetails ? !bookDetails.data.like_status : true, // Assuming default 'like' status is false
+            });
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "찜한 책 갱신 완료!"
+            });
         } catch (error: any) {
             console.error('좋아요 업데이트 중 오류 발생:', error);
             const errorMessage = error.response?.data?.message || '알 수 없는 오류가 발생했습니다.';
             console.error('서버 오류 메시지:', errorMessage);
-            alert(`오류: ${errorMessage}`);
+            Swal.fire({
+                title: `오류: ${errorMessage}`,
+                icon: "error"
+            });
         }
-    }
+    };
 
     const toggleHeartColor = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
+
+        if (activeBook === null) return;
+
+        // 1. 책 상세 정보가 null 이 아니면  toggleHeartColor 함수 실행
+        // 2. bookDetail 상태에 like_status 정보 업데이트
+        if (bookDetails) {
+            setBookDetails({
+                ...bookDetails,
+                data: {
+                    ...bookDetails.data,
+                    like_status: !bookDetails.data.like_status,
+                }
+            });
+        }
 
         const currentBookState = booksState[activeBook!] || {
             read: false,
@@ -171,6 +238,27 @@ export default function Swipe({
         await updateBookLike(bookId);
     }
 
+
+    const [bookDetails, setBookDetails] = useState<BookDetails | null>(null);
+
+
+    useEffect(() => {
+        // activeBook 상태가 바뀔 때마다 호출되어 책 정보를 가져오는 함수
+        const fetchBookDetails = async () => {
+            if (activeBook !== null) {
+                try {
+                    const response = await baseInstance.get(`/books/${id[activeBook]}`);
+                    console.log(response); // 책 id값에 따른 한권 조회 콘솔 디버깅
+                    setBookDetails(response.data); // 책 상태 정보 업데이트
+                } catch (error) {
+                    console.error('Failed to fetch book details:', error);
+                }
+            }
+        };
+
+        fetchBookDetails();
+    }, [activeBook, id]);
+
     return (
         <Container>
 
@@ -181,9 +269,12 @@ export default function Swipe({
                 freeMode={true}
                 modules={[FreeMode, Pagination]}
             >
-                <div className="absolute inset-0 flex items-center justify-center bg-white opacity-70">
-                    <span className="text-xl font-bold">책 제목을 검색해보세요! 📚</span>
-                </div>
+                {/* 조건부 렌더링을 통해 검색 결과가 있을 경우 메시지를 숨깁니다. */}
+                {name && name.length === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white opacity-70">
+                        <span className="text-xl font-bold">책 제목을 검색해보세요! 📚</span>
+                    </div>
+                )}
                 {
                     name && name.slice(0, 30).map((bookName, index) => (
                         <SwiperSlide key={index} onClick={() => toggleAccordion(index)}>
@@ -214,14 +305,8 @@ export default function Swipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={
-                                activeBook !== null
-                                    ? coverImageUrl && coverImageUrl[activeBook].length > index
-                                        ? coverImageUrl[activeBook]
-                                        : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                                    : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"
-                            }
-                            alt={`Book ${index + 1}`}
+                            src={bookDetails ? bookDetails.data.cover_image_url : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={bookDetails ? bookDetails.data.title : `Book ${index + 1}`}
                         />
                         <BookInfo>
                             <Info>
@@ -258,7 +343,7 @@ export default function Swipe({
                                 </div>
                             </Info>
                         </BookInfo>
-                        {/* <Like> */}
+                        {/* 좋아요 누른 경우에 따른 하트 버튼 렌더링 */}
                         <HeartButton onClick={toggleHeartColor}>
                             <img
                                 style={{
@@ -267,7 +352,7 @@ export default function Swipe({
                                     marginTop: '0.5rem',
                                 }}
                                 src={
-                                    currentBookState.heartBlack
+                                    bookDetails && bookDetails.data.like_status
                                         ? 'https://i.postimg.cc/1XkRS36B/blackheart.png'
                                         : 'https://i.postimg.cc/Z5jSxYp2/heart.png'
                                 }
@@ -346,11 +431,16 @@ const BookCover = styled.div`
 `
 
 const StyledImg = styled.img<{ active: boolean }>`
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
+width: 200px;  // 고정된 너비 설정
+height: 250px; // 고정된 높이 설정
+object-fit: contain; // 이미지가 컨테이너에 맞춰져서 잘리지 않도록 조정
+background-color: white; // 빈 공간에 배경색 추가
+transition: box-shadow 0.3s ease, filter 0.3s ease;
+box-shadow: ${({ active }) => (active ? '0 6px 12px rgba(0, 0, 0, 0.3)' : 'none')};
+&:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
 `
 const StyledIcon = styled.div`
   position: absolute;

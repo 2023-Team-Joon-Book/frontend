@@ -10,6 +10,8 @@ import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
 import { baseInstance } from '../api/config'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -26,6 +28,10 @@ export default function LoginPage() {
           localStorage.setItem('refreshToken', response.data.data.refreshToken)
           console.log('로그인 잘됨')
           navigate('/booksearch')
+          Swal.fire({
+            title: "로그인 성공!",
+            icon: "success"
+          });
         } else if (response.data.businessCode === 'U002') {
           // 사용자가 없을 때
           console.log('에러 내용: ', response.data.message)
@@ -37,7 +43,10 @@ export default function LoginPage() {
         }
       } catch (error) {
         // 에러 처리
-        alert('로그인 실패')
+        Swal.fire({
+          title: "로그인 실패!",
+          icon: "error"
+        });
       }
     }
   }

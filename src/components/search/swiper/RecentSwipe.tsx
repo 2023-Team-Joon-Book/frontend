@@ -7,6 +7,8 @@ import { FreeMode, Pagination } from 'swiper/modules'
 import { useEffect, useState } from 'react'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { baseInstance } from '../../../api/config'
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss'
 
 interface RecentSwipeProps {
     index: number
@@ -25,12 +27,26 @@ interface BookState {
     heartBlack: boolean
 }
 
+// 책 한권 조회로 API 호출 타입 선언
+
+interface BookDetail {
+    id: number;
+    title: string;
+    author: string;
+    publisher: string;
+    cover_image_url: string;
+    pages: number;
+    like_status: boolean;
+    // 다른 필요한 속성들...
+}
+
+
 export default function RecentSwipe({
     title,
-    name,
-    author,
-    publisher,
-    pages,
+    // name,
+    // author,
+    // publisher,
+    // pages,
     // onSwipeClick,
     // active,
     // index,
@@ -79,6 +95,8 @@ export default function RecentSwipe({
 
     const toggleAccordion = (clickedIndex: number) => {
         setActiveBook((prev) => (prev === clickedIndex ? null : clickedIndex))
+        const bookId = booksData[clickedIndex].id;
+        fetchBookDetail(bookId);
     }
 
     const handleInnerClick = (event: React.MouseEvent) => {
@@ -93,12 +111,29 @@ export default function RecentSwipe({
                 lastPage: 0, // lastPage 값을 어떻게 설정할지에 따라서 적절한 값을 사용하세요.
                 status,
             });
-            alert('책 등록 성공!');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "책이 등록되었습니다.📚"
+            });
         } catch (error: any) {
             console.error('Error updating reading status:', error);
             const errorMessage = error.response?.data?.errorMessage || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`${errorMessage} 입니다.`);
+            Swal.fire({
+                title: `${errorMessage} 입니다.`,
+                icon: "error"
+            });
         }
     }
 
@@ -147,17 +182,42 @@ export default function RecentSwipe({
     const updateBookLike = async (bookId: number) => {
         try {
             await baseInstance.post(`/books/like/${bookId}`);
-            alert('찜한 책 갱신 성공!');
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "찜한 책 갱신 완료!"
+            });
         } catch (error: any) {
             console.error('Error updating book like:', error);
             const errorMessage = error.response?.data?.message || 'An unknown error occurred.';
             console.error('Server Error Message:', errorMessage);
-            alert(`Error: ${errorMessage}`);
+            Swal.fire({
+                title: `오류: ${errorMessage}`,
+                icon: "error"
+            });
         }
     }
-
+    // 1. 책 상세 정보가 null 이 아니면  toggleHeartColor 함수 실행
+    // 2. bookDetail 상태에 like_status 정보 업데이트
     const toggleHeartColor = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
+
+        if (selectedBookDetail) {
+            setSelectedBookDetail({
+                ...selectedBookDetail,
+                like_status: !selectedBookDetail.like_status,
+            });
+        }
 
         const currentBookState = booksState[activeBook!] || {
             read: false,
@@ -178,6 +238,22 @@ export default function RecentSwipe({
         // 좋아요 API 호출
         await updateBookLike(bookId);
     }
+
+    // 책 디테일 한권 조회 상태 선언
+    const [selectedBookDetail, setSelectedBookDetail] = useState<BookDetail | null>(null);
+
+    // 책 디테일 한권 조회 API 호출
+    const fetchBookDetail = async (bookId: number) => {
+        try {
+            const response = await baseInstance.get(`/books/${bookId}`);
+            console.log(response); // 책 id값에 따른 한권 조회 콘솔 디버깅
+            if (response.data && response.data.data) {
+                setSelectedBookDetail(response.data.data); // 책 상태 정보 업데이트
+            }
+        } catch (error) {
+            console.error('Error fetching book details:', error);
+        }
+    };
 
     return (
         <Container>
@@ -217,8 +293,8 @@ export default function RecentSwipe({
                     <BookDetails>
                         <BookImageDetail
                             // src={`path/to/book${activeBook + 1}.jpg`}
-                            src={activeBook !== null ? booksData[activeBook].cover_image_url : "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
-                            alt={`Book ${activeBook !== null ? activeBook + 1 : ""}`}
+                            src={selectedBookDetail?.cover_image_url ?? "https://i.postimg.cc/jdyPDVpc/bigbook.jpg"}
+                            alt={`Book ${selectedBookDetail?.title ?? ""}`}
                         />
                         <BookInfo>
                             <Info>
@@ -248,14 +324,13 @@ export default function RecentSwipe({
                                         style={{ marginRight: '1rem' }}>
                                         읽기
                                     </StyledButton>
-
                                     <StyledButton active={currentBookState.readComplete} onClick={toggleReadComplete}>
                                         다 읽은 책
                                     </StyledButton>
                                 </div>
                             </Info>
                         </BookInfo>
-                        {/* <Like> */}
+                        {/* 좋아요 누른 경우에 따른 하트 버튼 렌더링 */}
                         <HeartButton onClick={toggleHeartColor}>
                             <img
                                 style={{
@@ -264,7 +339,7 @@ export default function RecentSwipe({
                                     marginTop: '0.5rem',
                                 }}
                                 src={
-                                    currentBookState.heartBlack
+                                    selectedBookDetail && selectedBookDetail.like_status
                                         ? 'https://i.postimg.cc/1XkRS36B/blackheart.png'
                                         : 'https://i.postimg.cc/Z5jSxYp2/heart.png'
                                 }
@@ -343,11 +418,16 @@ const BookCover = styled.div`
 `
 
 const StyledImg = styled.img<{ active: boolean }>`
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  }
-  filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
+width: 200px;  // 고정된 너비 설정
+height: 250px; // 고정된 높이 설정
+object-fit: contain; // 이미지가 컨테이너에 맞춰져서 잘리지 않도록 조정
+background-color: white; // 빈 공간에 배경색 추가
+transition: box-shadow 0.3s ease, filter 0.3s ease;
+box-shadow: ${({ active }) => (active ? '0 6px 12px rgba(0, 0, 0, 0.3)' : 'none')};
+&:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+filter: ${({ active }) => (active ? 'brightness(80%)' : 'none')};
 `
 const StyledIcon = styled.div`
   position: absolute;
