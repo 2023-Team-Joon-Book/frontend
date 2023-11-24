@@ -3,26 +3,23 @@ import styled from 'styled-components'
 import sendImg from '../../assets/images/send.png'
 import Stomp from '@stomp/stompjs'
 import { Client } from '@stomp/stompjs'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 interface ChatProps {
   disableHandleAsk: () => void
   userName: string
-  // userAuth: string
   isAdmin: boolean
-  selectedRoomId?: string // selectedRoomId를 optional로 변경
+  selectedRoomId?: string
 }
 
 interface Content {
   content: string
-  sender?: string // sender 추가
+  sender?: string
 }
 
 interface MessagesProps {
   sender?: string
-  userName: string // userName 추가
+  userName: string
 }
-
-// const sender = sunjae333
 
 const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, selectedRoomId }) => {
   const [messages, setMessages] = useState<Content[]>([])
@@ -31,8 +28,6 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
   const [roomId, setRoomId] = useState<string>()
   const user = userName
   const access = localStorage.getItem('accessToken') // 토큰 저장
-
-  // console.log(user)
 
   // 채팅방 생성 api
   async function creatChatroom() {
@@ -46,8 +41,6 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
           headers: { Authorization: `Bearer ${access}` },
         },
       )
-      // console.log(response)
-      // console.log(response.data.data)
       setRoomId(response.data.data)
     } catch (error: unknown) {
       // 'error' 변수의 타입을 AxiosError로 명시합니다.
@@ -59,15 +52,12 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
     }
   }
 
-  // creatChatroom()
-  // console.log(userName)
   useEffect(() => {
     const initializeChat = async () => {
       try {
         if (!isAdmin) {
           await creatChatroom() // 채팅 룸이 생성될 때까지 기다립니다.
         }
-
         const stomp = new Client({
           brokerURL: 'ws://localhost:8080/chat',
           connectHeaders: {
@@ -76,7 +66,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
           debug: (str: string) => {
             console.log(str)
           },
-          reconnectDelay: 5000,
+          reconnectDelay: 5000, //자동 재 연결
           heartbeatIncoming: 4000,
           heartbeatOutgoing: 4000,
         })
@@ -86,7 +76,6 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
 
         stomp.onConnect = () => {
           console.log('WebSocket 연결이 열렸습니다.')
-          // console.log(roomId) // 이제 roomId가 정의되어 있어야 합니다.
           const subscriptionDestination = isAdmin
             ? `/exchange/chat.exchange/room.${selectedRoomId}`
             : `/exchange/chat.exchange/room.${roomId}`
@@ -131,9 +120,6 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
           sender: user,
         }),
       })
-
-      // // 자신이 보낸 메시지를 화면에 표시하기 위해 클래스를 추가하여 상태 업데이트
-      // setMessages((prevMessages) => [...prevMessages, { content: inputMessage, sender: user }])
     }
 
     setInputMessage('')
@@ -160,14 +146,6 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
         </Title>
         <CloseButton onClick={disableHandleAsk}>X</CloseButton>
       </Header>
-
-      {/* {isAdmin && (
-        <ChatRoomList>
-          <div className="chat-room-item">채팅방 1</div>
-          <div className="chat-room-item">채팅방 2</div>
-          <div className="chat-room-item">채팅방 3</div>
-        </ChatRoomList>
-      )} */}
 
       <MessageList>
         {messages.map((message, index) => (
@@ -285,28 +263,9 @@ const SendButton = styled.button`
   height: 3rem;
   margin-left: 8px;
   padding: 16px;
-  background: url(${sendImg}) center/cover no-repeat; /* 이미지 경로 설정 */
+  background: url(${sendImg}) center/cover no-repeat;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-`
-
-const ChatRoomList = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  background-color: #f2f2f2;
-  border-bottom: 1px solid #ccc;
-
-  // 채팅방 목록 아이템의 스타일
-  .chat-room-item {
-    padding: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #e0e0e0;
-    }
-  }
 `

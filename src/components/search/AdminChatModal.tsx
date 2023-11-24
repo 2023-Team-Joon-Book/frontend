@@ -7,7 +7,6 @@ import ChatModal from './ChatModal'
 interface AdminChatProps {
   disableHandleAsk: () => void
   userName: string
-  // userAuth: string
   isAdmin: boolean
 }
 
@@ -15,15 +14,12 @@ interface ChatRoom {
   chat_room_id: number
   nickname: string
 }
-// const sender = sunjae333
 
 const AdminChat: React.FC<AdminChatProps> = ({ disableHandleAsk, userName, isAdmin }) => {
   const [selectedRoomId, setSelectedRoomId] = useState<string>()
-  // const user = userName
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([])
   const [isSelect, setIsSelect] = useState<boolean>(false)
   const access = localStorage.getItem('accessToken') // 토큰 저장
-  const [isAsk, setIsAsk] = useState(false)
 
   // 채팅방 조회 api
   async function roomInfo() {
@@ -41,13 +37,6 @@ const AdminChat: React.FC<AdminChatProps> = ({ disableHandleAsk, userName, isAdm
   useEffect(() => {
     roomInfo()
   }, [])
-
-  // const handleChatRoom = () => {
-  //   setIsAsk(true)
-  // }
-  // useEffect(() => {
-  //   console.log(chatRooms)
-  // }, [chatRooms])
 
   return (
     <>
@@ -179,7 +168,7 @@ const SendButton = styled.button`
   height: 3rem;
   margin-left: 8px;
   padding: 16px;
-  background: url(${sendImg}) center/cover no-repeat; /* 이미지 경로 설정 */
+  background: url(${sendImg}) center/cover no-repeat;
   color: #fff;
   border: none;
   border-radius: 4px;
