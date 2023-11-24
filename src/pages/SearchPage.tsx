@@ -7,6 +7,7 @@ import ViewedBooks from '../components/search/ViewedBooks'
 import PopularBooks from '../components/search/PopularBook'
 import RecentBooks from '../components/search/RecentBooks'
 import ChatModal from '../components/search/ChatModal'
+import AdminChatModal from '../components/search/AdminChatModal'
 import base64 from 'base-64'
 
 // interface DecodedToken {
@@ -24,7 +25,8 @@ const SearchPage = () => {
   const [books, setBooks] = useState<any[]>([]) // <--- books 상태 추가
   const [isAsk, setIsAsk] = useState(false)
   const [userName, setUserName] = useState('')
-  const [userAuth, setUserAuth] = useState('')
+  // const [userAuth, setUserAuth] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const access = localStorage.getItem('accessToken')
 
@@ -42,9 +44,12 @@ const SearchPage = () => {
         // "sub" 속성에 접근하여 값을 추출
         const subValue = jsonObject.sub
         const authValue = jsonObject.auth
-        // console.log(jsonObject) // "sunjae333"
+        console.log(jsonObject) // "sunjae333"
         setUserName(subValue)
-        setUserAuth(authValue)
+
+        if (authValue == 'ROLE_ADMIN') {
+          setIsAdmin(true)
+        }
       } catch (error) {
         console.error('Error parsing JSON:', error)
       }
@@ -95,7 +100,15 @@ const SearchPage = () => {
       <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       {isAsk ? (
-        <ChatModal disableHandleAsk={disableHandleAsk} userName={userName} userAuth={userAuth} />
+        isAdmin ? (
+          <AdminChatModal
+            disableHandleAsk={disableHandleAsk}
+            userName={userName}
+            isAdmin={isAdmin}
+          />
+        ) : (
+          <ChatModal disableHandleAsk={disableHandleAsk} userName={userName} isAdmin={isAdmin} />
+        )
       ) : (
         <Ask handleAsk={handleAsk} />
       )}

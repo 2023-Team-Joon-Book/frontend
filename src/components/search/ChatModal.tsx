@@ -7,7 +7,9 @@ import axios, { AxiosError } from 'axios'
 interface ChatProps {
   disableHandleAsk: () => void
   userName: string
-  userAuth: string
+  // userAuth: string
+  isAdmin: boolean
+  selectedRoomId?: string // selectedRoomId를 optional로 변경
 }
 
 interface Content {
@@ -22,13 +24,15 @@ interface MessagesProps {
 
 // const sender = sunjae333
 
-const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => {
+const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, selectedRoomId }) => {
   const [messages, setMessages] = useState<Content[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null)
   const [roomId, setRoomId] = useState<string>()
   const user = userName
   const access = localStorage.getItem('accessToken') // 토큰 저장
+
+  // console.log(user)
 
   // 채팅방 생성 api
   async function creatChatroom() {
@@ -42,8 +46,9 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
           headers: { Authorization: `Bearer ${access}` },
         },
       )
-      console.log(response)
-      console.log(response.data.data)
+      // console.log(response)
+      // console.log(response.data.data)
+      setRoomId(response.data.data)
     } catch (error: unknown) {
       // 'error' 변수의 타입을 AxiosError로 명시합니다.
       if (axios.isAxiosError(error)) {
@@ -59,7 +64,9 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
   useEffect(() => {
     const initializeChat = async () => {
       try {
-        await creatChatroom() // 채팅 룸이 생성될 때까지 기다립니다.
+        if (!isAdmin) {
+          await creatChatroom() // 채팅 룸이 생성될 때까지 기다립니다.
+        }
 
         const stomp = new Client({
           brokerURL: 'ws://localhost:8080/chat',
@@ -79,8 +86,12 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
 
         stomp.onConnect = () => {
           console.log('WebSocket 연결이 열렸습니다.')
-          console.log(roomId) // 이제 roomId가 정의되어 있어야 합니다.
-          stomp.subscribe(`/exchange/chat.exchange/room.11`, (frame) => {
+          // console.log(roomId) // 이제 roomId가 정의되어 있어야 합니다.
+          const subscriptionDestination = isAdmin
+            ? `/exchange/chat.exchange/room.${selectedRoomId}`
+            : `/exchange/chat.exchange/room.${roomId}`
+
+          stomp.subscribe(subscriptionDestination, (frame) => {
             try {
               const parsedMessage = JSON.parse(frame.body)
 
@@ -96,6 +107,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
       }
     }
 
+    // 채팅 초기설정
     initializeChat()
 
     return () => {
@@ -108,8 +120,12 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
   const sendMessage = () => {
     // 메시지 전송
     if (stompClient && stompClient.connected) {
+      const destination = isAdmin
+        ? `/pub/chat.message.${selectedRoomId}`
+        : `/pub/chat.message.${roomId}`
+
       stompClient.publish({
-        destination: `/pub/chat.message.11`,
+        destination,
         body: JSON.stringify({
           content: inputMessage,
           sender: user,
@@ -155,7 +171,11 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
 
       <MessageList>
         {messages.map((message, index) => (
-          <Messages key={index} sender={message.sender} userName={user}>
+          <Messages
+            key={index}
+            sender={message.sender}
+            userName={user}
+            style={{ fontFamily: 'bmfont' }}>
             {message.content}
           </Messages>
         ))}
@@ -165,6 +185,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, userAuth }) => 
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
+          style={{ fontFamily: 'bmfont' }}
         />
         <SendButton
           // onClick={handleSendMessage}
