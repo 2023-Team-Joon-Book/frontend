@@ -24,7 +24,7 @@ const AdminChat: React.FC<AdminChatProps> = ({ disableHandleAsk, userName, isAdm
   // 채팅방 조회 api
   async function roomInfo() {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/chat/rooms/list', {
+      const response = await axios.get('http://localhost:8081/api/v1/chat/rooms/list', {
         headers: { Authorization: `Bearer ${access}` },
       })
       console.log('응답 값', response.data)

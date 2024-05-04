@@ -35,7 +35,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/api/v1/chat/rooms',
+        'http://localhost:8081/api/v1/chat/rooms',
         {},
         {
           headers: { Authorization: `Bearer ${access}` },
@@ -59,7 +59,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
           await creatChatroom() // 채팅 룸이 생성될 때까지 기다립니다.
         }
         const stomp = new Client({
-          brokerURL: 'ws://localhost:8080/chat',
+          brokerURL: 'ws://localhost:8081/chat',
           connectHeaders: {
             Authorization: `Bearer ${access}`,
           },

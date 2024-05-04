@@ -57,7 +57,7 @@ const BookShelfPage: React.FC = () => {
     try {
       const access = localStorage.getItem('accessToken')
 
-      const response_1 = await axios.get('http://localhost:8080/api/v1/readings?status=LIKE', {
+      const response_1 = await axios.get('http://localhost:8081/api/v1/readings?status=LIKE', {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingData_1 = response_1.data.bookInfos
@@ -81,7 +81,7 @@ const BookShelfPage: React.FC = () => {
     try {
       const access = localStorage.getItem('accessToken')
 
-      const response_2 = await axios.get('http://localhost:8080/api/v1/readings?status=READING', {
+      const response_2 = await axios.get('http://localhost:8081/api/v1/readings?status=READING', {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingData_2 = response_2.data.bookInfos
@@ -105,7 +105,7 @@ const BookShelfPage: React.FC = () => {
     try {
       const access = localStorage.getItem('accessToken')
 
-      const response_3 = await axios.get('http://localhost:8080/api/v1/readings?status=READ', {
+      const response_3 = await axios.get('http://localhost:8081/api/v1/readings?status=READ', {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingData_3 = response_3.data.bookInfos

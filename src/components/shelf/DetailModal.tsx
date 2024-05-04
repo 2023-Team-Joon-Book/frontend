@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
 interface DetailModalProps {
@@ -45,21 +45,21 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
 
     try {
       const response = await axios.put(
-        'http://localhost:8080/api/v1/readings/status?status=READING',
+        'http://localhost:8081/api/v1/readings/status?status=READING',
         requestData,
         {
           headers: { Authorization: `Bearer ${access}` },
         },
       )
       Swal.fire({
-        title: "책 저장 완료! 🎉",
-        icon: "success"
-      });
+        title: '책 저장 완료! 🎉',
+        icon: 'success',
+      })
     } catch (error) {
       Swal.fire({
-        text: "이미 다 읽었거나, 작은 값을 입력하셨습니다.",
-        icon: "warning"
-      });
+        text: '이미 다 읽었거나, 작은 값을 입력하셨습니다.',
+        icon: 'warning',
+      })
     }
   }
 
@@ -69,7 +69,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/readings/percentages?bid=${id}`,
+        `http://localhost:8081/api/v1/readings/percentages?bid=${id}`,
         {
           headers: { Authorization: `Bearer ${access}` },
         },
@@ -95,23 +95,22 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
     }
 
     try {
-      const response = await axios.put('http://localhost:8080/api/v1/readings', requestData, {
+      const response = await axios.put('http://localhost:8081/api/v1/readings', requestData, {
         headers: { Authorization: `Bearer ${access}` },
       })
       console.log(response)
       Swal.fire({
-        title: "페이지가 갱신 되었습니다!",
-        icon: "success"
-      });
+        title: '페이지가 갱신 되었습니다!',
+        icon: 'success',
+      })
       // 변경후 조회를 바로 하도록 수정
       readPercentages()
     } catch (error) {
       Swal.fire({
-        text: "이미 다 읽었거나, 작은 값을 입력하셨습니다.",
-        icon: "warning"
-      });
+        text: '이미 다 읽었거나, 작은 값을 입력하셨습니다.',
+        icon: 'warning',
+      })
     }
-
   }
 
   useEffect(() => {
