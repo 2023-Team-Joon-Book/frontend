@@ -122,7 +122,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
       {loading ? (
         <div
           className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
-          style={{ fontFamily: 'bmfont' }}>
+          style={{ fontFamily: 'Noto Sans KR' }}>
           <div className="bg-white w-2/3 h-2/3 rounded-lg p-4 flex justify-center">
             <h1 className="text-7xl grid place-items-center">로딩 중...</h1>
           </div>
@@ -130,7 +130,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
       ) : (
         <div
           className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
-          style={{ fontFamily: 'bmfont' }}>
+          style={{ fontFamily: 'Noto Sans KR' }}>
           <div className="bg-white w-2/3 h-2/3 rounded-lg p-4 flex">
             <div className="w-1/3 p-4 flex flex-col justify-center items-center  ml-20">
               <img

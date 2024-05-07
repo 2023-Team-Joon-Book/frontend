@@ -44,7 +44,7 @@ export default function PopularBook() {
 
   return (
     <div className="py-4">
-      <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: 'bmfont' }}>
+      <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: 'Noto Sans KR' }}>
         인기있는 도서
       </h2>
       <div className="flex justify-center space-x-8 w-full overflow-x-auto">

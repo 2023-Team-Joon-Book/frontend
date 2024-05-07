@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['bemin', ...defaultTheme.fontFamily.sans], // 'custom'은 원하는 이름으로 변경 가능
+        sans: ['bemin', ...defaultTheme.fontFamily.sans],
+        notosans:[]// 'custom'은 원하는 이름으로 변경 가능
       },
       colors: {
         bfc66a: '#BFC66A',

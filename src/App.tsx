@@ -11,6 +11,7 @@ import SearchPage from './pages/SearchPage'
 import BookStackPage from './pages/BookStackPage'
 import ChoosePage from './pages/ChoosePage'
 import BookShelfPage from './pages/BookShelfPage'
+import MyPage from './pages/MyPage'
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
         <Route path="/BookStack" element={<BookStackPage />} /> */}
         <Route path="/choose" element={<ChoosePage />} />
         {/* <Route path="/stack" element={< />} /> */}
-        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </Router>
   )

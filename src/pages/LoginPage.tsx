@@ -10,7 +10,7 @@ import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
 import { baseInstance } from '../api/config'
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
 export default function LoginPage() {
@@ -29,9 +29,9 @@ export default function LoginPage() {
           console.log('로그인 잘됨')
           navigate('/booksearch')
           Swal.fire({
-            title: "로그인 성공!",
-            icon: "success"
-          });
+            title: '로그인 성공!',
+            icon: 'success',
+          })
         } else if (response.data.businessCode === 'U002') {
           // 사용자가 없을 때
           console.log('에러 내용: ', response.data.message)
@@ -44,9 +44,9 @@ export default function LoginPage() {
       } catch (error) {
         // 에러 처리
         Swal.fire({
-          title: "로그인 실패!",
-          icon: "error"
-        });
+          title: '로그인 실패!',
+          icon: 'error',
+        })
       }
     }
   }
@@ -142,7 +142,7 @@ const Title = styled.h1`
   color: #000;
   text-align: center;
   /* font-family: BM Jua; */
-  font-family: bmfont;
+  font-family: Noto Sans KR;
   font-size: 7.3rem;
   font-style: normal;
   font-weight: 400;
@@ -150,7 +150,7 @@ const Title = styled.h1`
 `
 const Text = styled.h2`
   color: #000;
-  font-family: bmfont;
+  font-family: Noto Sans KR;
 
   font-style: normal;
   font-weight: 400;

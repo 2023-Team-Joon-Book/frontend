@@ -177,7 +177,7 @@ const LineChart: React.FC<LineChartProps> = ({
           },
           ticks: {
             font: {
-              family: 'bmfont',
+              family: 'Noto Sans KR',
               size: 20,
               weight: 'bold',
             },
@@ -191,7 +191,7 @@ const LineChart: React.FC<LineChartProps> = ({
           ticks: {
             stepSize: 5,
             font: {
-              family: 'bmfont',
+              family: 'Noto Sans KR',
               size: 25,
               weight: 'bold',
             },
@@ -204,7 +204,7 @@ const LineChart: React.FC<LineChartProps> = ({
   return (
     <div
       className="absolute inset-0 flex flex-col items-center justify-center bg-white mb-20 h-3/4 "
-      style={{ fontFamily: 'bmfont' }}>
+      style={{ fontFamily: 'Noto Sans KR' }}>
       <div className="w-10/12 sm:w-8/12 lg:w-9/12 h-3/4">
         <div className="flex z-10 items-center justify-between mb-4 border border-green-700 rounded-full p-2 absolute top-1 left-1/2 transform -translate-x-1/2">
           <button

@@ -13,7 +13,9 @@ const Toolbar: React.FC<ToolbarProps> = ({ onTabToggle }) => {
   }
 
   return (
-    <div className="flex items-center justify-center py-4 px-8" style={{ fontFamily: 'bmfont' }}>
+    <div
+      className="flex items-center justify-center py-4 px-8"
+      style={{ fontFamily: 'Noto Sans KR' }}>
       <div className="flex w-80 rounded-full overflow-hidden">
         <button
           className={`${

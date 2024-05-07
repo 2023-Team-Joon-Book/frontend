@@ -153,7 +153,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
             key={index}
             sender={message.sender}
             userName={user}
-            style={{ fontFamily: 'bmfont' }}>
+            style={{ fontFamily: 'Noto Sans KR' }}>
             {message.content}
           </Messages>
         ))}
@@ -163,7 +163,7 @@ const Chat: React.FC<ChatProps> = ({ disableHandleAsk, userName, isAdmin, select
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
-          style={{ fontFamily: 'bmfont' }}
+          style={{ fontFamily: 'Noto Sans KR' }}
         />
         <SendButton
           // onClick={handleSendMessage}
@@ -202,7 +202,7 @@ const Header = styled.div`
   background: rgba(51, 109, 26, 0.9);
   align-items: center;
   padding: 16px;
-  font-family: 'bmfont';
+  font-family: 'Noto Sans KR';
 `
 
 const Title = styled.h3`
