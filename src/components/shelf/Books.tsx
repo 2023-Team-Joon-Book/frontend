@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 // import { motion, AnimatePresence } from 'framer-motion'
 // import DetailModal from './DetailModal'
 // import ReviewModal from './ReviewModal'
@@ -33,14 +34,32 @@ interface BookProps {
 }
 
 const Books: React.FC<BookProps> = ({ book, openModal }) => {
+  const location = useLocation()
+  const isMyPage = location.pathname === '/mypage'
   return (
-    <div className="bg-white p-2 drop-shadow-xl z-0">
-      <img
-        src={book.cover_image_url}
-        onClick={() => {
-          openModal(book)
-        }}
-      />
+    <div className="flex justify-items-center">
+      <div className=" p-1 drop-shadow-xl w-[9.5rem] h-[16rem]">
+        <img
+          className="shadow-custom"
+          src={book.cover_image_url}
+          onClick={() => {
+            openModal(book)
+          }}
+        />
+
+        {isMyPage ? (
+          <div className="mt-1">
+            <p className="text-center text-sm font-bold max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
+              {'다정하지만 만만하지 않습니다'}
+            </p>
+            <p className="text-center text-sm max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
+              {'홍길동'}
+            </p>
+          </div>
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   )
 }

@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
 import LoginHeader from '../components/Header/LoginHeader'
 import { useNavigate } from 'react-router-dom'
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
@@ -27,24 +27,24 @@ export default function SignUpPage() {
           console.log('회원가입 잘됨')
           navigate('/login')
           Swal.fire({
-            title: "회원가입 성공!",
-            icon: "success"
-          });
+            title: '회원가입 성공!',
+            icon: 'success',
+          })
         } else {
           // 회원가입 실패 처리
           console.log(response.data.message)
           Swal.fire({
             title: `${response.data.message}`,
-            icon: "error"
-          });
+            icon: 'error',
+          })
         }
       } catch (error) {
         // 에러 처리
         Swal.fire({
-          title: "회원가입 실패",
+          title: '회원가입 실패',
           text: '아이디나 비밀번호를 다시 한 번 확인해 보세요!',
-          icon: "error"
-        });
+          icon: 'error',
+        })
       }
     }
   }
@@ -228,7 +228,7 @@ const Title = styled.h1`
   color: #000;
   text-align: center;
   /* font-family: BM Jua; */
-  font-family: bmfont;
+  font-family: Noto Sans KR;
   font-size: 7.3rem;
   font-style: normal;
   font-weight: 400;
@@ -236,7 +236,7 @@ const Title = styled.h1`
 `
 const Text = styled.h2`
   color: #000;
-  font-family: bmfont;
+  font-family: Noto Sans KR;
 
   font-style: normal;
   font-weight: 400;

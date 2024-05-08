@@ -83,7 +83,7 @@ const MyHeader: FC = () => {
         onClick={goToMain}
       />
 
-      <div className="flex items-center space-x-4" style={{ fontFamily: 'bmfont' }}>
+      <div className="flex items-center space-x-4" style={{ fontFamily: 'Noto Sans KR' }}>
         <button className="text-black  text-2xl px-4 py-2 mb-8 rounded-md" onClick={goToWish}>
           내 서재
         </button>
@@ -92,8 +92,8 @@ const MyHeader: FC = () => {
           style={{
             color:
               location.pathname === '/choose' ||
-                location.pathname === '/statistics' ||
-                location.pathname === '/stack'
+              location.pathname === '/statistics' ||
+              location.pathname === '/stack'
                 ? '#BFC66A'
                 : 'black',
           }}

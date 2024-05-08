@@ -36,7 +36,7 @@ const MainSecond: FC = () => {
 
   return (
     <div className="text-5xl indent-1 mt-60 text-center" style={headerStyle} ref={ref}>
-      <div style={{ fontFamily: 'bmfont' }}>
+      <div style={{ fontFamily: 'Noto Sans KR' }}>
         <p className={`text-5xl ${visible ? 'animate-slideUpFade' : ''}`}>매일 신작 도서를</p>
         <p className={`text-5xl ${visible ? 'animate-slideUpFade' : ''}`}>구경하세요</p>
         <div className="mt-8">

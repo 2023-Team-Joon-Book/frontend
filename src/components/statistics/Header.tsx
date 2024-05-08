@@ -36,7 +36,7 @@ const Header: FC = () => {
 
       <img src={logo} alt="Header Image" className="w-full mx-auto" style={imageStyle} />
 
-      <div className="flex items-center space-x-4" style={{ fontFamily: 'bmfont' }}>
+      <div className="flex items-center space-x-4" style={{ fontFamily: 'Noto Sans KR' }}>
         <button className="text-black  text-2xl px-4 py-2 mb-8 rounded-md" onClick={goToLogin}>
           내 서재
         </button>

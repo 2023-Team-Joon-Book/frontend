@@ -10,7 +10,7 @@ const ChangeShelf: React.FC<ChangeShelfProps> = ({ onShelfChange, selectedShelf 
 
   return (
     <div className="mb-4">
-      <div className="flex space-x-2" style={{ fontFamily: 'bmfont' }}>
+      <div className="flex space-x-2" style={{ fontFamily: 'Noto Sans KR' }}>
         <button
           onClick={() => onShelfChange('shelf1')}
           className={`${selectedShelf === 'shelf1' ? 'text-5xl' : 'text-xl'}  font`}>

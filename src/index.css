@@ -3,18 +3,14 @@
 @import 'tailwindcss/utilities';
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
-@font-face {
-  font-family: 'bmfont';
-  src: url('src/assets/fonts/bmfont.ttf') format('truetype');
-}
-
-body {
-  font-family: "GowunDodum-Regular";
-}
+/* notosans 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 body {
   margin: 0;
   font-family:
+    'Noto Sans KR',
+    sans-serif,
     -apple-system,
     BlinkMacSystemFont,
     ‘Segoe UI’,

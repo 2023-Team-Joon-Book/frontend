@@ -27,16 +27,17 @@ function StarRate({ grade }: StarRateProps) {
   }, [grade])
 
   return (
-    <StarRateWrap>
-      <span className="pr-5 grade-text">{grade.toFixed(1)}</span>{' '}
+    <div className="flex items-center w-full content-center">
+      {/* 숫자 부분 일단 주석 */}
+      <span className="pr-3 text-neutral-700">{grade.toFixed(1)}</span>
       {/* 소수점 한 자리 포함한 별점 표시 */}
       {STAR_IDX_ARR.map((item, idx) => {
         return (
-          <span className="star_icon" key={`${item}_${idx}`}>
+          <span className="inline-flex mr-1.5" key={`${item}_${idx}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="33"
-              height="32"
+              width="17"
+              height="17"
               viewBox="0 0 14 13"
               fill="#cacaca">
               <clipPath id={`${item}StarClip`}>
@@ -52,18 +53,18 @@ function StarRate({ grade }: StarRateProps) {
           </span>
         )
       })}
-    </StarRateWrap>
+    </div>
   )
 }
 
 export default StarRate
 
-const StarRateWrap = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  .star_icon {
-    display: inline-flex;
-    margin-right: 5px;
-  }
-`
+// const StarRateWrap = styled.div`
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   .star_icon {
+//     display: inline-flex;
+//     margin-right: 5px;
+//   }
+// `
