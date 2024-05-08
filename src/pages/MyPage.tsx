@@ -1,8 +1,9 @@
-import MyHeader from '../components/Header/MyHeader'
+import TabLayout from '../components/Tab/TabLayout'
+
 export default function MyPage() {
   return (
     <>
-      <MyHeader></MyHeader>
+      <TabLayout />
     </>
   )
 }

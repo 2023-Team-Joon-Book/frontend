@@ -27,16 +27,17 @@ function StarRate({ grade }: StarRateProps) {
   }, [grade])
 
   return (
-    <StarRateWrap>
-      <span className="pr-5 grade-text">{grade.toFixed(1)}</span>{' '}
+    <StarRateWrap className="mt-[2.5rem]">
+      {/* 숫자 부분 일단 주석 */}
+      <span className="pr-3 text-neutral-700">{grade.toFixed(1)}</span>
       {/* 소수점 한 자리 포함한 별점 표시 */}
       {STAR_IDX_ARR.map((item, idx) => {
         return (
           <span className="star_icon" key={`${item}_${idx}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="33"
-              height="32"
+              width="17"
+              height="17"
               viewBox="0 0 14 13"
               fill="#cacaca">
               <clipPath id={`${item}StarClip`}>

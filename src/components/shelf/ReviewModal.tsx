@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Writng from './Writing'
 import '../../scss/BookReview.scss'
-import StarRate from './StartRate'
+import StarRate from './StarRate'
 import { baseInstance } from '../../api/config'
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -107,7 +107,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
           className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
           style={{ fontFamily: 'Noto Sans KR' }}>
           <div className="bg-white w-2/3 h-2/3 rounded-lg p-4 flex justify-center">
-            <h1 className="text-7xl grid place-items-center">로딩 중...</h1>
+            <h1 className="text-xl grid place-items-center">로딩 중...</h1>
           </div>
         </div>
       ) : (
@@ -133,7 +133,8 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
                 </div>
               )}
 
-              <div className="flex flex-col border-2">
+                <div className="flex flex-col border-2">
+                  
                 {isWriting ? (
                   // 리뷰를 작성중인 상태라면
                   <div className="h-4/5">
