@@ -1,7 +1,7 @@
 const PageRecord = () => {
   return (
     <>
-      <div className="w-full bg-neutral-200 rounded-3xl mt-[3rem]">
+      <div className="w-36 bg-neutral-200 rounded-3xl mt-[3rem]">
         <div className="h-2 bg-bar rounded-xl" style={{ width: `${50}%` }}></div>
       </div>
       <div className="flex justify-between ">

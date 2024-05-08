@@ -22,10 +22,10 @@ const BookBox = ({ img, title, writer, children }: BookBoxType) => {
           <p className="text-sm font-black max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
             {title}
           </p>
-          <p className="text-xs font-black max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
+          <p className="text-xs font-normal max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
             {writer}
           </p>
-          <div>{children}</div>
+          <div className="mt-[2.5rem]">{children}</div>
         </div>
       </div>
     </>

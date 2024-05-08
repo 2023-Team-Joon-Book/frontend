@@ -14,25 +14,31 @@ const ReadBook = () => {
         img={'https://image.yes24.com/goods/126344176/XL'}
         title="다정하지만 만만하지 않습니다"
         writer="정문정"
-        children={<button className="mt-12 font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
+        children={<StarRate grade={3} />}
       />
       <BookBox
         img={'https://image.yes24.com/goods/126344176/XL'}
         title="다정하지만 만만하지 않습니다"
         writer="정문정"
-        children={<button className="mt-12 font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
+        children={<button className="font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
       />
       <BookBox
         img={'https://image.yes24.com/goods/126344176/XL'}
         title="다정하지만 만만하지 않습니다"
         writer="정문정"
-        children={<button className="mt-12 font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
+        children={<button className="font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
       />
       <BookBox
         img={'https://image.yes24.com/goods/126344176/XL'}
         title="다정하지만 만만하지 않습니다"
         writer="정문정"
-        children={<button className="mt-12 font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
+        children={<button className="font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
+      />
+      <BookBox
+        img={'https://image.yes24.com/goods/126344176/XL'}
+        title="다정하지만 만만하지 않습니다"
+        writer="정문정"
+        children={<button className="font-sm text-neutral-500">책 리뷰 남기기 {'>'}</button>}
       />
     </div>
   )

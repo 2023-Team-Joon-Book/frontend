@@ -14,7 +14,11 @@ module.exports = {
       },
       colors: {
         bfc66a: '#BFC66A',
-        bar:'#90C66A',
+        bar: '#90C66A',
+        btn: '#77AE51',
+        toggle: '#DAEFCC',
+        inactive: '#E4E4E4',
+        text: '#888888',
       },
       keyframes: {
         slideUpFade: {

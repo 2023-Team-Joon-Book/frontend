@@ -104,7 +104,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ book, setIsModalOpen }) => {
     <div>
       {loading ? (
         <div
-          className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
+          className="z-50 fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-50"
           style={{ fontFamily: 'Noto Sans KR' }}>
           <div className="bg-white w-2/3 h-2/3 rounded-lg p-4 flex justify-center">
             <h1 className="text-xl grid place-items-center">로딩 중...</h1>
