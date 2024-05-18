@@ -1,0 +1,11 @@
+.formInput {
+  width: 24rem;
+  border: 2px solid #d7dad6; /* 기본 테두리 색상 */
+  padding: 10px;
+  border-radius: 9999px; /* 둥근 테두리 */
+}
+
+.formInput:focus {
+  border-color: #336d1a; /* 포커스 시 테두리 색상 변경 */
+  outline: none;
+}

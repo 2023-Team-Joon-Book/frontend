@@ -1,5 +1,9 @@
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import { KeyboardEventHandler, forwardRef } from 'react'
+import { KeyboardEventHandler, forwardRef, useState } from 'react'
+import styles from './SearchBar.module.css'
+import search from '../../../public/search.png'
+import searchfocus from '../../../public/searchfocus.png'
+import searchremove from '../../../public/searchremove.png'
 
 type SearchBarProps = {
   onKeyPress?: KeyboardEventHandler<HTMLInputElement>
@@ -9,12 +13,25 @@ type SearchBarProps = {
 
 const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   ({ onKeyPress, onSearch, onInputChange }, ref) => {
+    const [isFocused, setIsFocused] = useState(false)
+    const [inputValue, setInputValue] = useState('')
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value)
+      onInputChange(e.target.value)
+    }
+
+    const clearInput = () => {
+      setInputValue('') // 상태를 사용하여 입력 필드 클리어
+      onInputChange('') // 필요한 경우 외부 이벤트 핸들러 호출
+    }
+
     return (
-      <div style={{ paddingTop: '9rem' }} className="w-full max-w-sm mx-auto">
+      <div className="w-full max-w-sm mx-auto">
         <div className="relative">
           <input
             type="text"
-            className="form-input w-full rounded-3xl border-2 border-inherit px-10 py-2"
+            className={styles.formInput}
             placeholder="책 제목을 검색해주세요."
             ref={ref}
             onChange={(e) => onInputChange(e.target.value)}
@@ -24,10 +41,24 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
                 onSearch()
               }
             }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
 
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-            <SearchRoundedIcon style={{ color: 'gray' }} />
+          {isFocused && (
+            <img
+              src={searchremove}
+              className="absolute right-12 top-1/2 transform -translate-y-1/2 w-auto h-4 cursor-pointer"
+              onClick={clearInput}
+            />
+          )}
+
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+            <img
+              src={isFocused ? searchfocus : search}
+              className="w-auto h-8 cursor-pointer"
+              onClick={onSearch}
+            />
           </div>
         </div>
       </div>
