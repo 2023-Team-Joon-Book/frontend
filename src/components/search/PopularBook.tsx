@@ -41,7 +41,7 @@ const PopularBooks: React.FC<PopularBooksProps> = ({ onSwipeClick, active }) => 
       index={0}
       onSwipeClick={onSwipeClick}
       active={active}
-      title="인기 있는 도서"
+      title="Best 10"
       name={books.map((book) => book.title)}
       author={books.map((book) => book.author)}
       publisher={books.map((book) => book.publisher)}
