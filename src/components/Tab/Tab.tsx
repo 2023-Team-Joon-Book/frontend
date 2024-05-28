@@ -18,7 +18,7 @@ const Tab = ({ label, id }: TabProps) => {
   }, [id, selectedId, setSelectedId])
 
   return (
-    <div className={`text-lg cursor-pointer ${tabStyle} mx-[1rem]`} onClick={handleClickTab}>
+    <div className={`ml-24 text-lg cursor-pointer ${tabStyle} mx-[1rem]`} onClick={handleClickTab}>
       {label}
     </div>
   )

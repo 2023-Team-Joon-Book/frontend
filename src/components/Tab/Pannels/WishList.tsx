@@ -1,20 +1,40 @@
-import Books from '../../shelf/Books'
+import BookBox from '../../shelf/BookBox'
+import PageRecord from '../../shelf/PageRecord'
 
 const WishList = () => {
   return (
     <>
-      <div className="grid grid-cols-8 gap-y-8 gap-x-4 mt-8">
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
-        <Books book={{ cover_image_url: 'https://image.yes24.com/goods/12332164/XL' }} />
+      <div className="grid grid-cols-4 gap-y-14 gap-x-8 mt-16">
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<div />}
+        />
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<div />}
+        />
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<div />}
+        />
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<div />}
+        />
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<div />}
+        />
       </div>
     </>
   )

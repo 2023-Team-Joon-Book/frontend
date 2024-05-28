@@ -9,8 +9,8 @@ import StateBtn from '../components/Modal/ModalAtom/StateBtn'
 import Bar from '../components/Modal/ModalAtom/Bar'
 
 export default function MyPage() {
-  const [isModalOpen, setIsModalOpen] = useState(true)
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(true)
 
   const handleCloseModal = () => {
     setIsModalOpen(false)

@@ -28,6 +28,60 @@ const ReadingBook = () => {
           title="원씽"
           writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
           children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
+        />{' '}
+        <BookBox
+          img="https://image.yes24.com/goods/12332164/XL"
+          title="원씽"
+          writer="게리 켈러,제이 파파산게리 켈러,제이 파파산"
+          children={<PageRecord />}
         />
         <BookBox
           img="https://image.yes24.com/goods/12332164/XL"
