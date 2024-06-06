@@ -1,29 +1,53 @@
 import BookBox from '../../shelf/BookBox'
 import PageRecord from '../../shelf/PageRecord'
 import { useMyContext } from '../../Context/MyContext'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+
+type BookType = {
+  cover_image_url: string
+  title: string
+  author: string
+}
 
 const ReadingBook = () => {
+  const [books, setBooks] = useState<BookType[]>([])
+
+  // 읽고 있는 책 api 요청
+  useEffect(() => {
+    getReadingBooks()
+  }, [])
+
+  const getReadingBooks = async () => {
+    try {
+      const access = localStorage.getItem('accessToken')
+      const response = await axios.get('http://localhost:8081/api/v1/readings?status=READING', {
+        headers: { Authorization: `Bearer ${access}` },
+      })
+      const readingBooks = response.data.bookInfos
+      setBooks(readingBooks)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const { setIsModalOpen, setSelectedBook } = useMyContext()
 
   const handleBookClick = (book: any) => {
     setSelectedBook(book)
     setIsModalOpen(true)
   }
-  // 더미 값
-  const books = Array(16).fill({
-    img: 'https://image.yes24.com/goods/12332164/XL',
-    title: '원씽',
-    writer: '게리 켈러, 제이 파파산',
-  })
+
   return (
     <>
       <div className="grid grid-cols-4 gap-y-14 gap-x-8 mt-16">
         {books.map((book, index) => (
           <BookBox
             key={index}
-            img={book.img}
+            img={book.cover_image_url}
             title={book.title}
-            writer={book.writer}
+            writer={book.author}
             onClick={() => handleBookClick(book)}>
             <PageRecord />
           </BookBox>
