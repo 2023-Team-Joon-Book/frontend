@@ -1,65 +1,30 @@
+import { useState } from 'react'
+import StarIcon from '../../../assets/svgs/star.svg?react'
 
-
-import React, { useState } from 'react'
-import { useDrag, useDrop, DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-
-const Star: React.FC<{ filled: boolean }> = ({ filled }) => {
+const StarRating = () => {
+  const initialStarRate = 3
+  const [rating, setRating] = useState(initialStarRate)
+  const starHandle = (star: number) => {
+    setRating(star)
+  }
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill={filled ? 'gold' : 'none'}
-      stroke="gold"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="feather feather-star">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  )
-}
-
-const StarRating: React.FC = () => {
-  const [rating, setRating] = useState(3.5)
-
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: 'star',
-    item: { rating },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }))
-
-  const [, dropRef] = useDrop(() => ({
-    accept: 'star',
-    drop: (item: { rating: number }, monitor) => {
-      if (monitor.didDrop()) return
-      const delta = monitor.getDifferenceFromInitialOffset()
-      if (!delta) return
-      const newRating = Math.min(5, Math.max(0, item.rating + delta.x / 20))
-      setRating(newRating)
-    },
-  }))
-
-  const stars = Array.from({ length: 5 }, (_, i) => (
-    <div key={i} className="inline-block cursor-pointer">
-      <Star filled={i < Math.round(rating)} />
-    </div>
-  ))
-
-  return (
-    <div
-      className="flex items-center space-x-2"
-      ref={dropRef}
-      style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <p className="font-bold">평점</p>
-      <p className="text-xl">{rating.toFixed(1)}/5</p>
-      <div ref={dragRef} className="flex space-x-1">
-        {stars}
+    <div className="w-[30rem] flex justify-between mt-7">
+      <div className="space-x-1">
+        <span className="font-bold text-xl mr-2">평점</span>
+        <span className="font-bold text-xl">{rating}</span>
+        <span className="text-gray-500">/5</span>
+      </div>
+      <div className="flex space-x-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <StarIcon
+            className="w-6 h-6 cursor-pointer"
+            key={star}
+            fill={star <= rating ? '#f6ce0b' : '#e4e4e4'}
+            onClick={() => starHandle(star)}></StarIcon>
+        ))}
       </div>
     </div>
   )
 }
 
+export default StarRating

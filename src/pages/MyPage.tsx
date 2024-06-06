@@ -13,7 +13,6 @@ const MyPageContent = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false)
   }
-  console.log(activeTab)
 
   return (
     <>
