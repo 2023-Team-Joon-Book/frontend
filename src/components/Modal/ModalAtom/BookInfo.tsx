@@ -4,7 +4,7 @@ const BookInfo = () => {
       <img
         src={'https://image.yes24.com/goods/12332164/XL'}
         alt={'title'}
-        className="w-[10rem] h-[13rem]"
+        className="w-[9rem] h-[12rem]"
       />
       <h2 className="text-lg font-black mt-2 max-w-[12rem] overflow-hidden truncate whitespace-nowrap">
         {'홍길동전'}

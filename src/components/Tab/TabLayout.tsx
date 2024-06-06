@@ -1,4 +1,3 @@
-import { createContext, useState } from 'react'
 import ReadBook from './Pannels/ReadBooks'
 import ReadingBook from './Pannels/ReadingBooks'
 import WishList from './Pannels/WishList'
@@ -13,16 +12,6 @@ const mapTabIdToComponent: Record<TabId, () => JSX.Element> = {
   read: () => <ReadBook />,
 }
 
-interface TabContextType {
-  selectedId: TabId | ''
-  setSelectedId: (id: TabId) => void
-}
-
-export const TabContext = createContext<TabContextType>({
-  selectedId: '',
-  setSelectedId: () => {},
-})
-
 interface TabMenu {
   label: string
   id: TabId
@@ -35,27 +24,18 @@ const tabMenus: TabMenu[] = [
 ]
 
 const TabLayout = () => {
-  const [selectedId, setSelectedId] = useState<TabId | ''>(tabMenus[0].id)
-
-  const contextValue = {
-    selectedId,
-    setSelectedId,
-  }
-
   return (
     <>
-      <TabContext.Provider value={contextValue}>
-        <div className="flex items-center w-screen h-[4rem] border border-x-gray-500">
-          {tabMenus.map((tabProps, index) => (
-            <Tab key={`tab-${index}`} {...tabProps} />
-          ))}
-        </div>
-        {tabMenus.map(({ id }, index) => (
-          <TabPannel key={`tabpannel-${index}`} id={id}>
-            {mapTabIdToComponent[id]()}
-          </TabPannel>
+      <div className="flex items-center w-screen h-[4rem] border border-x-gray-500">
+        {tabMenus.map((tabProps, index) => (
+          <Tab key={`tab-${index}`} {...tabProps} />
         ))}
-      </TabContext.Provider>
+      </div>
+      {tabMenus.map(({ id }, index) => (
+        <TabPannel key={`tabpannel-${index}`} id={id}>
+          {mapTabIdToComponent[id]()}
+        </TabPannel>
+      ))}
     </>
   )
 }

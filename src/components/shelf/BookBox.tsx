@@ -3,13 +3,16 @@ type BookBoxType = {
   img: string
   title: string
   writer: string
-  children: ReactNode
+  children?: ReactNode
+  onClick?: () => void
 }
 
-const BookBox = ({ img, title, writer, children }: BookBoxType) => {
+const BookBox = ({ img, title, writer, children, onClick }: BookBoxType) => {
   return (
     <>
-      <div className="flex w-[19.1875rem] h-[10.25rem] rounded-[2.0625rem] border border-[#C4C4C4] bg-white">
+      <div
+        onClick={onClick}
+        className="cursor-pointer flex w-[19.1875rem] h-[10.25rem] rounded-[2.0625rem] border border-[#C4C4C4] bg-white">
         <div className=" ml-[1rem] mb-[10.37rem] relative w-[8rem] h-[11rem]">
           <img
             className="absolute bottom-[2rem] shadow-custom w-[8rem] h-[11rem]"
