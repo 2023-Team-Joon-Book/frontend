@@ -6,12 +6,11 @@ import SearchBar from '../search/SearchBar'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const MyHeader: FC = () => {
+const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const [isLogoutClicked, setIsLogoutClicked] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [books, setBooks] = useState<any[]>([])
 
   const handleLogout = async () => {
     setIsLogoutClicked(true)
@@ -57,57 +56,7 @@ const MyHeader: FC = () => {
   }
 
   const handleSearch = async () => {
-    await fetchBooks(searchQuery)
-  }
-
-  // 책 정보를 가져오는 함수
-  const fetchBooks = async (query: string) => {
-    try {
-      const response = await axios.get('http://localhost:8081/api/v1/books/search', {
-        params: { title: query },
-      })
-      const fetchedBooks = response.data
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer
-          toast.onmouseleave = Swal.resumeTimer
-        },
-      })
-      Toast.fire({
-        icon: 'success',
-        title: '검색 성공!',
-      })
-      if (fetchedBooks.length === 0) {
-        // 데이터 없는지 체크
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer
-            toast.onmouseleave = Swal.resumeTimer
-          },
-        })
-        Toast.fire({
-          icon: 'warning',
-          title: '검색 결과가 없습니다.',
-        })
-      }
-      setBooks(fetchedBooks)
-    } catch (error) {
-      console.error('Failed to fetch books', error)
-      Swal.fire({
-        title: '네트워크 오류입니다!',
-        icon: 'error',
-      })
-    }
+    onSearch(searchQuery)
   }
 
   const headerStyle = {
