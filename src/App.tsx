@@ -12,6 +12,7 @@ import BookStackPage from './pages/BookStackPage'
 import ChoosePage from './pages/ChoosePage'
 import BookShelfPage from './pages/BookShelfPage'
 import MyPage from './pages/MyPage'
+import BookInfoPage from './pages/BookInfoPage'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/stack" element={<BookStackPage />} />
         {/* 우희 */}
         <Route path="/booksearch" element={<SearchPage />} />
+        <Route path="/book/:id" element={<BookInfoPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         {/* 선재 */}
