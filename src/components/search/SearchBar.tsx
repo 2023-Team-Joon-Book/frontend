@@ -22,8 +22,20 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
     }
 
     const clearInput = () => {
-      setInputValue('') // 상태를 사용하여 입력 필드 클리어
-      onInputChange('') // 필요한 경우 외부 이벤트 핸들러 호출
+      setInputValue('')
+      onInputChange('')
+    }
+
+    const handleSearch = () => {
+      onSearch()
+      saveSearch(inputValue)
+    }
+
+    // 검색어를 로컬 스토리지에 저장하는 함수
+    const saveSearch = (query: string) => {
+      const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]')
+      const updatedSearches = [query, ...recentSearches.filter((item: string) => item !== query)]
+      localStorage.setItem('recentSearches', JSON.stringify(updatedSearches.slice(0, 15)))
     }
 
     return (
@@ -34,11 +46,11 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
             className={styles.formInput}
             placeholder="책 제목을 검색해주세요."
             ref={ref}
-            onChange={(e) => onInputChange(e.target.value)}
-            onKeyPress={(e) => {
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                e.preventDefault()
-                onSearch()
+                handleSearch() // Enter 키를 눌렀을 때 검색을 수행합니다.
               }
             }}
             onFocus={() => setIsFocused(true)}
