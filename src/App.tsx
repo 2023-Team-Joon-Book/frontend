@@ -34,6 +34,7 @@ function App() {
         <Route path="/BookStack" element={<BookStackPage />} /> */}
         <Route path="/choose" element={<ChoosePage />} />
         {/* <Route path="/stack" element={< />} /> */}
+
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </Router>
