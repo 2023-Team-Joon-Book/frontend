@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Ask from '../components/search/Ask'
-import SearchBar from '../components/search/SearchBar'
 import MyHeader from '../components/Header/MyHeader'
 import ViewedBooks from '../components/search/ViewedBooks'
 import PopularBooks from '../components/search/PopularBook'
@@ -11,21 +10,21 @@ import 'sweetalert2/src/sweetalert2.scss'
 import ChatModal from '../components/search/ChatModal'
 import AdminChatModal from '../components/search/AdminChatModal'
 import base64 from 'base-64'
+import SearchHistorySwipe from '../components/search/swiper/SearchHistory/SearchHistorySwipe'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
-  const [searchQuery, setSearchQuery] = useState<string>('')
   const [books, setBooks] = useState<any[]>([])
   const [isAsk, setIsAsk] = useState(false)
   const [userName, setUserName] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
+  const [recentSearches, setRecentSearches] = useState<string[]>([])
 
   const access = localStorage.getItem('accessToken')
 
   useEffect(() => {
     if (access) {
       let payload = access.substring(access.indexOf('.') + 1, access.lastIndexOf('.'))
-
       let dec = base64.decode(payload)
 
       try {
@@ -45,14 +44,17 @@ const SearchPage = () => {
         console.error('Error parsing JSON:', error)
       }
     }
+  }, [access])
+
+  useEffect(() => {
+    const storedSearches = localStorage.getItem('recentSearches')
+    if (storedSearches) {
+      setRecentSearches(JSON.parse(storedSearches))
+    }
   }, [])
 
   const handleSwipeClick = (index: number) => {
     setActiveSwipe((prev) => (prev === index ? null : index))
-  }
-
-  const handleSearch = async () => {
-    await fetchBooks(searchQuery)
   }
 
   const handleAsk = () => {
@@ -113,15 +115,22 @@ const SearchPage = () => {
     }
   }
 
+  const handleSearch = (query: string) => {
+    // 검색을 수행하는 로직을 구현합니다.
+    fetchBooks(query)
+    const storedSearches = localStorage.getItem('recentSearches')
+    if (storedSearches) {
+      setRecentSearches(JSON.parse(storedSearches))
+    }
+  }
+
   return (
     <>
-      <MyHeader />
-      <form>
-        <SearchBar onSearch={handleSearch} onInputChange={setSearchQuery} />
-      </form>
-      <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} />
-      <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
+      <MyHeader onSearch={handleSearch} />
+      <SearchHistorySwipe recentSearches={recentSearches} onSearch={handleSearch} />
+      {/* <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} /> */}
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
+      <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
       {isAsk ? (
         isAdmin ? (
           <AdminChatModal
