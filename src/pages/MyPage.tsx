@@ -23,7 +23,7 @@ const MyPageContent = () => {
           {activeTab === 'reading' && (
             <>
               <StateBtn />
-              <Bar percentages={50} />
+              <Bar book={selectedBook} />
             </>
           )}
 

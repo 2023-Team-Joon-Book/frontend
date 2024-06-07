@@ -1,16 +1,26 @@
-const BookInfo = () => {
+type BookType = {
+  cover_image_url: string
+  title: string
+  author: string
+}
+
+type BookInfoProps = {
+  book: BookType
+}
+
+const BookInfo: React.FC<BookInfoProps> = ({ book }) => {
   return (
     <>
       <img
-        src={'https://image.yes24.com/goods/12332164/XL'}
-        alt={'title'}
-        className="w-[9rem] h-[12rem]"
+        src={book.cover_image_url}
+        alt={book.title}
+        className="shadow-custom w-[9rem] h-[12rem]"
       />
       <h2 className="text-lg font-black mt-2 max-w-[12rem] overflow-hidden truncate whitespace-nowrap">
-        {'홍길동전'}
+        {book.title}
       </h2>
       <p className="mt-2 text-base font-medium max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
-        {'김아무개'}
+        {book.author}
       </p>
     </>
   )

@@ -33,17 +33,11 @@ const ReadBook = () => {
       const readBooks = response.data.bookInfos
       setBooks(readBooks)
 
-      console.log('응답 값', response.data)
     } catch (error) {
       console.log(error)
     }
   }
-  // 더미 값
-  // const books = Array(16).fill({
-  //   img: 'https://image.yes24.com/goods/126344176/XL',
-  //   title: '다정하지만 만만하지 않습니다',
-  //   writer: '정문정',
-  // })
+
   return (
     <div className="grid grid-cols-4 gap-y-14 gap-x-8 mt-16">
       {books.map((book, index) => (

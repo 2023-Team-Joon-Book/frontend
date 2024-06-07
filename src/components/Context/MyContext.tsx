@@ -7,14 +7,17 @@ interface AppContextType {
   setIsModalOpen: (open: boolean) => void
   selectedBook: any
   setSelectedBook: (book: any) => void
+  review: any
+  setReview: (review: any) => void
 }
 
 const MyContext = createContext<AppContextType | undefined>(undefined)
 
 export const MyProvider = ({ children }: { children: ReactNode }) => {
-  const [activeTab, setActiveTab] = useState('reading' )
+  const [activeTab, setActiveTab] = useState('reading')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedBook, setSelectedBook] = useState(null)
+  const [review, setReview] = useState(null)
 
   return (
     <MyContext.Provider
@@ -25,6 +28,8 @@ export const MyProvider = ({ children }: { children: ReactNode }) => {
         setIsModalOpen,
         selectedBook,
         setSelectedBook,
+        review,
+        setReview,
       }}>
       {children}
     </MyContext.Provider>

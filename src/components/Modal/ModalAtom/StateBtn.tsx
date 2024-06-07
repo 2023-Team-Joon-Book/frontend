@@ -5,7 +5,7 @@ const StateBtn = () => {
   const [isActive, setIsActive] = useState(true)
 
   return (
-    <div className="flex space-x-2 w-[30rem] mt-8">
+    <div className="flex space-x-2 w-[30rem] mt-12">
       <button
         onClick={() => setIsActive(true)} // 첫 번째 버튼을 활성화
         className={`flex items-center justify-center w-[7rem] h-[3rem] px-4 py-2 rounded  ${

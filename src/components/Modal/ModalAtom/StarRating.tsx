@@ -1,11 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import StarIcon from '../../../assets/svgs/star.svg?react'
-
+import { useMyContext } from '../../Context/MyContext'
+import { baseInstance } from '../../../api/config'
 const StarRating = () => {
-  const initialStarRate = 3
-  const [rating, setRating] = useState(initialStarRate)
+  const { selectedBook, review, setReview } = useMyContext()
+  const selectedBookId = selectedBook.id
+
+  const [isWriting, setIsWriting] = useState(false)
+  const [loading, setLoading] = useState(true) // 로딩 상태 추가
+  const [grade, setGrade] = useState(0) // 별점 상태 추가
+
+  // 리뷰 조회 api 요청
+  useEffect(() => {
+    viewReview()
+  }, [])
+
+  const viewReview = async () => {
+    const access = localStorage.getItem('accessToken')
+
+    try {
+      const response = await baseInstance.get(`/reviews/${selectedBookId}`, {
+        headers: { Authorization: `Bearer ${access}` },
+      })
+      console.log('GET response:', response.data)
+
+      const { content, grade } = response.data.data
+      setReview(content)
+      setGrade(grade)
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+      setLoading(false) // 데이터 로딩 실패 시에도 로딩 상태 변경
+    }
+  }
+
+  // const initialStarRate = 3
+  const [rating, setRating] = useState(grade || null)
   const starHandle = (star: number) => {
-    setRating(star)
+    !review && setRating(star)
   }
   return (
     <div className="w-[30rem] flex justify-between mt-7">
