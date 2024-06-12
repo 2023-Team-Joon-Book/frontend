@@ -43,12 +43,12 @@ interface BookDetail {
 export default function RecentSwipe({
   title, // name,
   // publisher,
-} // author,
-// pages,
-// onSwipeClick,
-// active,
-// index,
-: RecentSwipeProps) {
+  // author,
+  // pages,
+  // onSwipeClick,
+  // active,
+  // index,
+}: RecentSwipeProps) {
   const [activeBook, setActiveBook] = useState<number | null>(null)
   const [booksState, setBooksState] = useState<Record<number, BookState>>({})
   const [booksData, setBooksData] = useState<any[]>([]) // 추가: API로부터 불러온 책 데이터를 저장할 상태
@@ -243,13 +243,7 @@ export default function RecentSwipe({
   // 책 디테일 한권 조회 API 호출
   const fetchBookDetail = async (bookId: number) => {
     try {
-      const accessToken = localStorage.getItem('accessToken')
-
-      const response = await baseInstance.get(`/books/${bookId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+      const response = await baseInstance.get(`/books/${bookId}`)
       console.log(response) // 책 id값에 따른 한권 조회 콘솔 디버깅
       if (response.data && response.data.data) {
         setSelectedBookDetail(response.data.data) // 책 상태 정보 업데이트
@@ -263,7 +257,7 @@ export default function RecentSwipe({
     <Container>
       {title && <SwiperTitle>{title}</SwiperTitle>}
       <StyledSwiper
-        slidesPerView={7}
+        slidesPerView={6}
         spaceBetween={30}
         freeMode={true}
         pagination={{ clickable: false }}
@@ -351,8 +345,6 @@ export default function RecentSwipe({
                 alt="heart"
               />
             </HeartButton>
-            {/* <p>명이 좋아합니다.</p> */}
-            {/* </Like> */}
           </BookDetails>
         </AccordionContent>
       )}
@@ -362,6 +354,8 @@ export default function RecentSwipe({
 
 const Container = styled.div`
   padding: 2rem;
+  display: flex;
+  justify-content: center;
 `
 
 const SwiperTitle = styled.h1`
@@ -426,7 +420,7 @@ const StyledImg = styled.img<{ active: boolean }>`
   width: 200px; // 고정된 너비 설정
   height: 250px; // 고정된 높이 설정
   object-fit: contain; // 이미지가 컨테이너에 맞춰져서 잘리지 않도록 조정
-  background-color: white; // 빈 공간에 배경색 추가
+  background-color: none; // 빈 공간에 배경색 추가
   transition:
     box-shadow 0.3s ease,
     filter 0.3s ease;
@@ -453,6 +447,7 @@ const BookTextContainer = styled.div`
 const BookName = styled.h1`
   font-size: 1.25rem;
   font-weight: bold;
+  color: black;
 `
 
 const BookAuthor = styled.h2`
