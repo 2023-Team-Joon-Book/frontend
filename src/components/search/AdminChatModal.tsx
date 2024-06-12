@@ -110,7 +110,7 @@ const ChatContainer = styled.div`
 
   position: fixed;
   bottom: 20px;
-  right: 50px;
+  right: 30px;
   z-index: 1000;
 `
 
