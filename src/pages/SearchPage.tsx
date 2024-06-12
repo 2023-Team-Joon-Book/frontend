@@ -11,6 +11,7 @@ import ChatModal from '../components/search/ChatModal'
 import AdminChatModal from '../components/search/AdminChatModal'
 import base64 from 'base-64'
 import SearchHistorySwipe from '../components/search/swiper/SearchHistory/SearchHistorySwipe'
+import beforearrow from '../../public/beforearrow.png'
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
@@ -19,6 +20,8 @@ const SearchPage = () => {
   const [userName, setUserName] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
   const [recentSearches, setRecentSearches] = useState<string[]>([])
+  const [step, setStep] = useState('검색 메인')
+  const [currentQuery, setCurrentQuery] = useState<string>('')
 
   const access = localStorage.getItem('accessToken')
 
@@ -104,8 +107,11 @@ const SearchPage = () => {
           icon: 'warning',
           title: '검색 결과가 없습니다.',
         })
+      } else {
+        setStep('검색 결과')
       }
       setBooks(fetchedBooks)
+      setCurrentQuery(query)
     } catch (error) {
       console.error('Failed to fetch books', error)
       Swal.fire({
@@ -124,13 +130,65 @@ const SearchPage = () => {
     }
   }
 
+  const handleBackToMain = () => {
+    setStep('검색 메인')
+  }
+
+  const truncateText = (text: string, length: number) => {
+    if (text.length > length) {
+      return text.substring(0, length) + '...'
+    }
+    return text
+  }
+
   return (
-    <>
+    <div className="max-w-[1324px] mx-auto">
       <MyHeader onSearch={handleSearch} />
-      <SearchHistorySwipe recentSearches={recentSearches} onSearch={handleSearch} />
-      {/* <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} /> */}
-      <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
-      <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
+      {step === '검색 메인' ? (
+        <>
+          <SearchHistorySwipe recentSearches={recentSearches} onSearch={handleSearch} />
+          {/* <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} /> */}
+          <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
+          <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
+        </>
+      ) : (
+        <>
+          {/* 검색 결과 표시 */}
+          <div className="p-8 pt-[150px]">
+            <h2 className="text-xl font-bold pb-8">
+              <span className="text-[#90C66A]">'{currentQuery}'</span>에 대한 검색 결과입니다.
+            </h2>
+            <button
+              onClick={handleBackToMain}
+              className="z-50 fixed bottom-5 left-10 py-2 bg-[rgba(51,109,26,0.9)] w-16 h-16 rounded-full mb-2 transition-transform duration-300 hover:scale-110 hover:bg-[rgba(51,109,26,1)]">
+              <img src={beforearrow} className="w-auto h-9 inline-block mr-2" />
+            </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+              {books.map((book, index) => (
+                <div key={index} className=" ">
+                  {/* <div className="w-[185px] h-[250px]">
+                    <img
+                      src={book.cover_image_url}
+                      className="w-auto h-auto max-h-full max-w-full mx-auto my-auto shadow-sm"
+                    />
+                  </div> */}
+                  <button
+                    key={index}
+                    className="cursor-pointer focus:outline-none"
+                    onClick={() => console.log('Button clicked', book)}>
+                    <img
+                      src={book.cover_image_url}
+                      className="w-[185px] h-[250px] shadow-sm transition-transform duration-300 hover:shadow-lg hover:shadow-black/50"
+                    />
+                  </button>
+                  <h3 className="text-lg font-bold pt-2">{book.title}</h3>
+                  <p className="text-base text-gray-500">{truncateText(book.author, 10)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
       {isAsk ? (
         isAdmin ? (
           <AdminChatModal
@@ -144,7 +202,7 @@ const SearchPage = () => {
       ) : (
         <Ask handleAsk={handleAsk} />
       )}
-    </>
+    </div>
   )
 }
 
