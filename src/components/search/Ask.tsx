@@ -12,8 +12,8 @@ const Ask: React.FC<AskProps> = ({ handleAsk }) => {
       <AskContainer onClick={handleAsk}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="35"
+          width="35"
+          height="30"
           viewBox="0 0 54 47"
           fill="none">
           <path
@@ -30,8 +30,8 @@ const Ask: React.FC<AskProps> = ({ handleAsk }) => {
 export default Ask
 
 const AskContainer = styled.button`
-  width: 12rem;
-  height: 4.5rem;
+  width: 10.5rem;
+  height: 3.5rem;
   border-radius: 2.5rem;
   background: rgba(51, 109, 26, 0.9);
   display: flex;
@@ -40,14 +40,19 @@ const AskContainer = styled.button`
 
   position: fixed;
   bottom: 20px;
-  right: 50px;
+  right: 30px;
   z-index: 1000;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+    background: rgba(51, 109, 26, 1);
+  }
 `
 
 const Text = styled.h1`
   color: #fff;
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-family: BM Jua;
   font-style: normal;
   font-weight: 400;
