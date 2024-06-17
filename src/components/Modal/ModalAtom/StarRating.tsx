@@ -5,6 +5,7 @@ import { baseInstance } from '../../../api/config'
 const StarRating = () => {
   const { selectedBook, review, setReview } = useMyContext()
   const selectedBookId = selectedBook.id
+console.log("리뷰에서 보는",selectedBook);
 
   const [isWriting, setIsWriting] = useState(false)
   const [loading, setLoading] = useState(true) // 로딩 상태 추가

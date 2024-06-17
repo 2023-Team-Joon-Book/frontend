@@ -22,7 +22,7 @@ const MyPageContent = () => {
 
           {activeTab === 'reading' && (
             <>
-              <StateBtn />
+              <StateBtn modalHandle={handleCloseModal} />
               <Bar book={selectedBook} />
             </>
           )}

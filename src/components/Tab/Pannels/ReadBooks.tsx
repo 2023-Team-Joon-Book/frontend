@@ -15,7 +15,7 @@ const ReadBook = () => {
   const { setIsModalOpen, setSelectedBook } = useMyContext()
 
   const handleBookClick = (book: any) => {
-    setSelectedBook(book)
+    setSelectedBook({ ...book, status: 'Read' })
     setIsModalOpen(true)
   }
   // 읽은 책 api 요청
@@ -30,8 +30,9 @@ const ReadBook = () => {
       const response = await axios.get('http://localhost:8081/api/v1/readings?status=READ', {
         headers: { Authorization: `Bearer ${access}` },
       })
-      const readBooks = response.data.bookInfos
+      const readBooks = response.data.bookInfos.content
       setBooks(readBooks)
+console.log('책 목록',readBooks);
 
     } catch (error) {
       console.log(error)
