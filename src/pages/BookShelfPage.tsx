@@ -5,7 +5,7 @@ import Header from '../components/Header/ShelfHeader.tsx'
 import DetailModal from '../components/shelf/DetailModal.tsx'
 import ReviewModal from '../components/shelf/ReviewModal.tsx'
 import axios from 'axios'
-import BookInfo from '../components/Modal/ModalAtom/BookInfo';
+import BookInfo from '../components/Modal/ModalAtom/BookInfo'
 
 const BookShelfPage: React.FC = () => {
   // 3개의 책장 구성
@@ -41,7 +41,7 @@ const BookShelfPage: React.FC = () => {
     // 이펙트 함수 내에서 API 요청 실행
     async function fetchData() {
       if (selectedShelf === 'shelf2') {
-        // await bookInfo2()
+        await bookInfo2()
       } else if (selectedShelf === 'shelf3') {
         await bookInfo3()
       } else if (selectedShelf === 'shelf1') {
@@ -85,7 +85,7 @@ const BookShelfPage: React.FC = () => {
       const response_2 = await axios.get('http://localhost:8081/api/v1/readings?status=READING', {
         headers: { Authorization: `Bearer ${access}` },
       })
-      const readingData_2 = response_2.data.bookInfos
+      const readingData_2 = response_2.data.bookInfos.content
       const statusData = response_2.data.status
 
       console.log('응답 값', response_2.data.bookInfos.content)
@@ -93,7 +93,10 @@ const BookShelfPage: React.FC = () => {
       setShelves((prevShelves) => {
         return {
           ...prevShelves,
-          shelf2: readingData_2.data.bookInfos.content?.map((book: any) => ({ ...book, status: statusData })),
+          shelf2: readingData_2.map((book: any) => ({
+            ...book,
+            status: statusData,
+          })),
         }
       })
     } catch (error) {

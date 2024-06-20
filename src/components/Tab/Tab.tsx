@@ -8,11 +8,15 @@ interface TabProps {
 const Tab = ({ label, id }: TabProps) => {
   const { activeTab, setActiveTab } = useMyContext()
   const tabStyle = activeTab === id ? 'font-bold' : ''
+  const active = localStorage.getItem('activeTab')
 
   return (
     <div
       className={`ml-24 text-lg cursor-pointer ${tabStyle} mx-[1rem]`}
-      onClick={() => setActiveTab(id)}>
+      onClick={() => {
+        setActiveTab(id)
+        localStorage.setItem('activeTab', id)
+      }}>
       {label}
     </div>
   )

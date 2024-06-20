@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react'
 import ReturnIcon from '../../../assets/svgs/reset.svg?react'
-import axios from 'axios'
+import { baseInstance } from '../../../api/config'
+import { useMyContext } from '../../Context/MyContext'
 
 const Bar = ({ book }) => {
   const [initialPercentages, setInitialPercentages] = useState(0)
   const [lastPage, setLastPage] = useState(0)
-  const [percentages, setPercentages] = useState(0)
-  const [newLastPage, setNewLastPage] = useState(0)
-  const [isEditing, setIsEditing] = useState(false)
-  const [loading, setLoading] = useState(true) // 로딩 상태 추가
+  // const [newLastPage, setNewLastPage] = useState(0)
+  const {
+    newLastPage,
+    setNewLastPage,
+    isEditing,
+    setIsEditing,
+    setIsActive,
+    percentages,
+    setPercentages,
+  } = useMyContext()
 
   // 읽은 퍼센트, 읽은 페이지 요청 api
   useEffect(() => {
@@ -18,22 +25,17 @@ const Bar = ({ book }) => {
     const access = localStorage.getItem('accessToken')
 
     try {
-      const response = await axios.get(
-        `http://localhost:8081/api/v1/readings/percentages?bid=${book.id}`,
-        {
-          headers: { Authorization: `Bearer ${access}` },
-        },
-      )
+      const response = await baseInstance.get(`/readings/percentages?bid=${book.id}`, {
+        headers: { Authorization: `Bearer ${access}` },
+      })
 
       setLastPage(response.data.data.lastPage) // 읽은 페이지
+      localStorage.setItem('lastPage', response.data.data.lastPage)
       setPercentages(response.data.data.percentage) // 읽은 퍼센트
       setInitialPercentages(response.data.data.percentage) //초기 퍼센트 저장
-      setLoading(false) // 데이터 로딩 완료 후 로딩 상태 변경
+      localStorage.setItem('percentage', response.data.data.percentage)
       setNewLastPage(response.data.data.lastPage) // 초기 페이지 설정
-    } catch (error) {
-      console.log(error)
-      setLoading(false) // 데이터 로딩 실패 시에도 로딩 상태 변경
-    }
+    } catch (error) {}
   }
 
   //인풋 입력
@@ -50,6 +52,7 @@ const Bar = ({ book }) => {
   //되돌리기 버튼 핸들러
   const resetHandle = () => {
     setIsEditing(false)
+    setIsActive(true)
     setLastPage(lastPage) //초기 페이지
     setPercentages(initialPercentages) //초기 퍼센트
     setNewLastPage(lastPage)
@@ -60,9 +63,9 @@ const Bar = ({ book }) => {
   }, [newLastPage, isEditing])
 
   return (
-    <div className="flex flex-col mb-5">
+    <div className="flex flex-col mb-3">
       <div className="flex justify-between mr-4 mb-2 mt-10">
-        <p className="text-2xl  ">독서량</p>
+        <p className="text-xl  ">독서량</p>
         {isEditing && (
           <button onClick={resetHandle}>
             <ReturnIcon />

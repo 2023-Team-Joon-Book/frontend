@@ -8,11 +8,12 @@ type BookType = {
   cover_image_url: string
   title: string
   author: string
+  grade: number
 }
 
 const ReadBook = () => {
   const [books, setBooks] = useState<BookType[]>([])
-  const { setIsModalOpen, setSelectedBook } = useMyContext()
+  const { isModalOpen, setIsModalOpen, setSelectedBook } = useMyContext()
 
   const handleBookClick = (book: any) => {
     setSelectedBook({ ...book, status: 'Read' })
@@ -21,7 +22,7 @@ const ReadBook = () => {
   // 읽은 책 api 요청
   useEffect(() => {
     getReadBooks()
-  }, [])
+  }, [isModalOpen])
 
   const getReadBooks = async () => {
     try {
@@ -32,11 +33,7 @@ const ReadBook = () => {
       })
       const readBooks = response.data.bookInfos.content
       setBooks(readBooks)
-console.log('책 목록',readBooks);
-
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
 
   return (
@@ -48,7 +45,11 @@ console.log('책 목록',readBooks);
           title={book.title}
           writer={book.author}
           onClick={() => handleBookClick(book)}>
-          <StarRate grade={3} />
+          {book.grade === 0 ? (
+            <button className="text-gray-600 pl-6  pt-2">책 리뷰 남기기 {' >'}</button>
+          ) : (
+            <StarRate grade={book.grade} />
+          )}
         </BookBox>
       ))}
     </div>
