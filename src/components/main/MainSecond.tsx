@@ -1,30 +1,5 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import useOnScreen from '../../hooks/useOnScreen'
 import RecentBook from './RecentBook'
-
-function useOnScreen(
-  options: IntersectionObserverInit,
-): [MutableRefObject<HTMLDivElement | null>, boolean] {
-  const ref = useRef<HTMLDivElement | null>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setVisible(entry.isIntersecting)
-    }, options)
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current)
-      }
-    }
-  }, [ref, options])
-
-  return [ref, visible]
-}
 
 export default function MainSecond() {
   const [ref, visible] = useOnScreen({ threshold: 0.1 })
