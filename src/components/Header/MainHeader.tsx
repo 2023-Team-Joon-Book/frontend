@@ -1,12 +1,11 @@
-import React, { FC, useEffect, useState } from 'react'
-import logo from '../../../public/logo.png'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import logo from '../../../public/logo.png'
 
-const Header: FC = () => {
+function Header() {
   const navigate = useNavigate()
   const [isLoginClicked, setIsLoginClicked] = useState(false)
   const [isSignUpClicked, setIsSignUpClicked] = useState(false)
-
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -15,14 +14,14 @@ const Header: FC = () => {
   }, [])
 
   const goToLogin = () => {
-    setIsLoginClicked(true) // 로그인 버튼 클릭 상태를 true로 설정
-    setIsSignUpClicked(false) // 회원가입 버튼 클릭 상태를 false로 설정
+    setIsLoginClicked(true)
+    setIsSignUpClicked(false)
     navigate('/login')
   }
 
   const goToSignUp = () => {
-    setIsSignUpClicked(true) // 회원가입 버튼 클릭 상태를 true로 설정
-    setIsLoginClicked(false) // 로그인 버튼 클릭 상태를 false로 설정
+    setIsSignUpClicked(true)
+    setIsLoginClicked(false)
     navigate('/signup')
   }
 

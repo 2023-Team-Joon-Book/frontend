@@ -1,4 +1,4 @@
-import React, { FC, MutableRefObject, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import RecentBook from './RecentBook'
 
 function useOnScreen(
@@ -26,7 +26,7 @@ function useOnScreen(
   return [ref, visible]
 }
 
-const MainSecond: FC = () => {
+export default function MainSecond() {
   const [ref, visible] = useOnScreen({ threshold: 0.1 })
 
   const headerStyle = {
@@ -52,5 +52,3 @@ const MainSecond: FC = () => {
     </div>
   )
 }
-
-export default MainSecond

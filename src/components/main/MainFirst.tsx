@@ -1,11 +1,10 @@
-import React, { FC } from 'react'
 import MainSlider from './MainSlider'
 import ReverseSlider from './ReverseSlider'
 
-const MainFirst: FC = () => {
+export default function MainFirst() {
   const headerStyle = {
-    width: '100%', // 요소의 너비를 100%로 설정
-    backgroundColor: 'white', // 배경색을 하얀색으로 설정
+    width: '100%',
+    backgroundColor: 'white',
   }
 
   return (
@@ -27,5 +26,3 @@ const MainFirst: FC = () => {
     </div>
   )
 }
-
-export default MainFirst

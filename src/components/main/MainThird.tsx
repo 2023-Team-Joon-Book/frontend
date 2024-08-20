@@ -1,4 +1,4 @@
-import React, { FC, MutableRefObject, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import PopularBook from './PopularBook'
 
 function useOnScreen(
@@ -26,12 +26,12 @@ function useOnScreen(
   return [ref, visible]
 }
 
-const MainThird: FC = () => {
+export default function MainThird() {
   const [ref, visible] = useOnScreen({ threshold: 0.1 })
 
   const headerStyle = {
-    width: '100%', // 요소의 너비를 100%로 설정
-    backgroundColor: 'white', // 배경색을 하얀색으로 설정
+    width: '100%',
+    backgroundColor: 'white',
   }
 
   return (
@@ -54,5 +54,3 @@ const MainThird: FC = () => {
     </div>
   )
 }
-
-export default MainThird
