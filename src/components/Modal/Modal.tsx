@@ -1,7 +1,10 @@
-import { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
+import ReactDOM from 'react-dom'
 import { useMyContext } from '../Context/MyContext'
 import { baseInstance } from '../../api/config'
 import Swal from 'sweetalert2'
+import Lottie from 'lottie-react'
+import congratulations from '../../assets/lotties/Animation - 1718918787029.json'
 
 type ReadingModalProps = {
   isOpen?: boolean
@@ -22,8 +25,8 @@ const Modal = ({ onClose, children }: ReadingModalProps) => {
     setIsActive,
   } = useMyContext()
   const access = localStorage.getItem('accessToken')
+  const [congrats, setCongrats] = useState(false)
 
-  // 책 페이지 변경 api 요청
   const onHandlePages = async () => {
     const requestData = {
       bookId: selectedBook.id,
@@ -51,7 +54,6 @@ const Modal = ({ onClose, children }: ReadingModalProps) => {
     }
   }
 
-  // 리뷰 등록 api 요청
   const onHandleReview = async () => {
     const requestData = {
       book_id: selectedBook.id,
@@ -83,8 +85,7 @@ const Modal = ({ onClose, children }: ReadingModalProps) => {
       })
     }
   }
-  // 완독 api 요청
-  // 다 읽은 책 상태 업데이트
+
   const changeStatus = async () => {
     const requestData = {
       bookId: selectedBook.id,
@@ -100,21 +101,42 @@ const Modal = ({ onClose, children }: ReadingModalProps) => {
 
       if (response.data.code === 'R003') {
         Swal.fire({
-          text: '완독을 축하해요!🎉',
+          title: '완독을 축하해요!🎉',
           icon: 'success',
           width: '20rem',
+          html: '<div id="lottie-container""></div>',
+          didOpen: () => {
+            const container = document.getElementById('lottie-container')
+            if (container) {
+              ReactDOM.render(
+                <Lottie
+                  animationData={congratulations}
+                  style={{
+                    width: '1320px',
+                    height: '980px',
+                    position: 'absolute',
+                    top: '20%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                />,
+                container,
+              )
+            }
+          },
         })
+        setCongrats(true)
         onClose()
         setIsActive(true)
       }
     } catch (error) {
-      // Swal.fire({
-      //   text: '이미 다 읽었거나, 작은 값을 입력하셨습니다.',
-      //   icon: 'warning',
-      //   width: '20rem',
-      // })
+      Swal.fire({
+        text: '이미 다 읽었거나, 작은 값을 입력하셨습니다.',
+        icon: 'warning',
+      })
     }
   }
+
   const clickHandler = () => {
     if (activeTab === 'reading') {
       if (selectedBook.pages === newLastPage) changeStatus()
@@ -127,9 +149,9 @@ const Modal = ({ onClose, children }: ReadingModalProps) => {
   return (
     <>
       <div className="z-40 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className=" flex flex-col  items-center bg-white  rounded-lg w-[34rem] h-[40rem]">
+        <div className="flex flex-col items-center bg-white rounded-lg w-[34rem] h-[40rem]">
           <div className="flex w-full justify-end pr-3 mb-5">
-            <button onClick={onClose} className="  p-2 z-50">
+            <button onClick={onClose} className="p-2 z-50">
               ✕
             </button>
           </div>

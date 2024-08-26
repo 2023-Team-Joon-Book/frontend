@@ -26,6 +26,7 @@ export default function LoginPage() {
         if (response.data.code === 'U004') {
           localStorage.setItem('accessToken', response.data.data.accessToken)
           localStorage.setItem('refreshToken', response.data.data.refreshToken)
+          localStorage.setItem('userName', response.data.data.username)
           console.log('로그인 잘됨')
           navigate('/booksearch')
           Swal.fire({
