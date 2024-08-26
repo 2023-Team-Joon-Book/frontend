@@ -94,7 +94,7 @@ const WishList = () => {
 
   return (
     <div className="w-full">
-      {books.length === 0 && !isLoading ? (
+      {books.length === 0 && isLoading ? (
         <div className="w-full mt-10 flex flex-col justify-center items-center h-dvh">
           <Lottie
             animationData={Empty}
