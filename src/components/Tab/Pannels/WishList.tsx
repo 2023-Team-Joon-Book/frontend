@@ -6,8 +6,8 @@ import { useMyContext } from '../../Context/MyContext'
 import Swal from 'sweetalert2'
 import Empty from '../../../assets/lotties/Animation - 1724653336505.json'
 import Lottie from 'lottie-react'
-import useInfiniteScroll from '../../../hooks/useInfiniteScroll' 
-
+import useInfiniteScroll from '../../../hooks/useInfiniteScroll'
+import { useNavigate } from 'react-router-dom'
 type BookType = {
   cover_image_url: string
   title: string
@@ -23,7 +23,8 @@ const WishList = () => {
   const access = localStorage.getItem('accessToken')
   const { selectedBook, setSelectedBook } = useMyContext()
   const [isLoading, setIsLoading] = useState(true)
-  
+  const navigate = useNavigate()
+
   const Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -92,6 +93,8 @@ const WishList = () => {
     }
   }
 
+  const goBookSearch = () => navigate('/booksearch')
+
   return (
     <div className="w-full">
       {books.length === 0 && isLoading ? (
@@ -103,7 +106,9 @@ const WishList = () => {
             }}
           />
           <p className="text-xl font-semibold text-gray-700">찜한 목록이 없습니다</p>
-          <button className="text-lg mt-4 px-4 py-2 text-btn underline underline-offset-4">
+          <button
+            className="text-lg mt-4 px-4 py-2 text-btn underline underline-offset-4"
+            onClick={() => goBookSearch()}>
             책 찜하러 가기
           </button>
         </div>
