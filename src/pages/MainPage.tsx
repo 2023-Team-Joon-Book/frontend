@@ -1,13 +1,12 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import MainHeader from '../components/Header/MainHeader'
 import MainFirst from '../components/main/MainFirst'
 import MainSecond from '../components/main/MainSecond'
 import MainThird from '../components/main/MainThird'
 import StartNavigator from '../components/main/StartNavigator'
-import { useNavigate } from 'react-router-dom'
 
-const MainPage: React.FC = () => {
-  const navigate = useNavigate() // <-- 이 부분을 수정합니다.
+function MainPage() {
+  const navigate = useNavigate()
 
   const handleStart = () => {
     const token = localStorage.getItem('accessToken')
