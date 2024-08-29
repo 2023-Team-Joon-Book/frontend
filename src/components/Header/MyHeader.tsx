@@ -11,7 +11,7 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   const location = useLocation()
   const [isLogoutClicked, setIsLogoutClicked] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
-
+  const userName = localStorage.getItem('userName')
   const handleLogout = async () => {
     setIsLogoutClicked(true)
 
@@ -84,6 +84,8 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
       <div
         className="flex items-center justify-end space-x-4"
         style={{ fontFamily: 'Noto Sans KR' }}>
+        <p className="text-sm py-2 mb-8 rounded-md">{userName}</p>
+        <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
         <button className="text-black  text-sm py-2 mb-8 rounded-md" onClick={goToWish}>
           내 서재
         </button>

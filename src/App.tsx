@@ -13,33 +13,40 @@ import ChoosePage from './pages/ChoosePage'
 import BookShelfPage from './pages/BookShelfPage'
 import MyPage from './pages/MyPage'
 import BookInfoPage from './pages/BookInfoPage'
+import Layout from './components/Layout'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 function App() {
+  const queryClient = new QueryClient()
   return (
-    <Router>
-      <Routes>
-        {/* 원준 */}
-        <Route path="/" element={<MainPage />} />
-        <Route path="/stack" element={<BookStackPage />} />
-        {/* 우희 */}
-        <Route path="/booksearch" element={<SearchPage />} />
-        <Route path="/book/:id" element={<BookInfoPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        {/* 선재 */}
-        {/* <Route path="/wish" element={<WishShelf />} />
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Layout>
+          <Routes>
+            {/* 원준 */}
+            <Route path="/" element={<MainPage />} />
+            <Route path="/stack" element={<BookStackPage />} />
+            {/* 우희 */}
+            <Route path="/booksearch" element={<SearchPage />} />
+            <Route path="/book/:id" element={<BookInfoPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            {/* 선재 */}
+            {/* <Route path="/wish" element={<WishShelf />} />
         <Route path="/reading" element={<ReadingShelf />} />
         <Route path="/finish" element={<EndShelf />} /> */}
-        <Route path="/shelf" element={<BookShelfPage />} />
-        {/* 추후 담당자 */}
-        {/* <Route path="/activity" element={<Statistics />} />
+            <Route path="/shelf" element={<BookShelfPage />} />
+            {/* 추후 담당자 */}
+            {/* <Route path="/activity" element={<Statistics />} />
         <Route path="/BookStack" element={<BookStackPage />} /> */}
-        <Route path="/choose" element={<ChoosePage />} />
-        {/* <Route path="/stack" element={< />} /> */}
+            <Route path="/choose" element={<ChoosePage />} />
+            {/* <Route path="/stack" element={< />} /> */}
 
-        <Route path="/mypage" element={<MyPage />} />
-      </Routes>
-    </Router>
+            <Route path="/mypage" element={<MyPage />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </QueryClientProvider>
   )
 }
 
