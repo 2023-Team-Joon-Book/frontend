@@ -1,24 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useQuery } from 'react-query'
 import { getNewBooksAPI } from '../../api/main'
 import '../../scss/Slider.scss'
 import { BookImg } from '../../types'
 
 export default function MainSlider() {
   const [animate, setAnimate] = useState(true)
-  const [bookCovers, setBookCovers] = useState<BookImg[]>([])
 
-  useEffect(() => {
-    const fetchBooksData = async () => {
-      try {
-        const newBooks = await getNewBooksAPI()
-        setBookCovers(newBooks)
-      } catch (error) {
-        console.error('Error fetching books data:', error)
-      }
-    }
+  const {
+    data: bookCovers = [],
+    isLoading,
+    error,
+  } = useQuery<BookImg[]>(['newBooks'], getNewBooksAPI)
 
-    fetchBooksData()
-  }, [])
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error fetching books data</div>
+  }
 
   const onStop = () => setAnimate(false)
   const onRun = () => setAnimate(true)

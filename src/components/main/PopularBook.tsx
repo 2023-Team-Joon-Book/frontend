@@ -1,26 +1,28 @@
-import { useEffect, useState } from 'react'
-import { baseInstance } from '../../api/config'
+import { useQuery } from 'react-query'
+import { getPopularBooksAPI } from '../../api/main'
 import { BookCover } from '../../types'
 import Book from './Book'
 
 export default function PopularBook() {
-  const [popular, setPopular] = useState<BookCover[]>([])
+  const {
+    data: popular = [],
+    isLoading,
+    error,
+  } = useQuery<BookCover[]>(['popularBooks'], getPopularBooksAPI)
 
-  useEffect(() => {
-    const fetchPopular = async () => {
-      try {
-        const response = await baseInstance.get('/books/like')
-        setPopular(response.data.data.content.slice(0, 6))
-      } catch (error) {
-        console.error('API 호출 오류: ', error)
-      }
-    }
-    fetchPopular()
-  }, [])
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error fetching popular books</div>
+  }
 
   return (
     <div className="py-4">
-      <h2 className="text-3xl mb-8 text-center" style={{ fontFamily: 'Noto Sans KR' }}>
+      <h2
+        className="text-3xl mb-8 text-center font-semibold"
+        style={{ fontFamily: 'Noto Sans KR' }}>
         인기있는 도서
       </h2>
       <div className="flex justify-center space-x-8 w-full overflow-x-auto">
