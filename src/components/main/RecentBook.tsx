@@ -1,46 +1,21 @@
 import { useEffect, useState } from 'react'
-import { baseInstance } from '../../api/config'
-
-interface BookData {
-  title: string
-  author: string
-  cover_image_url: string
-}
-
-interface BookProps {
-  title: string
-  author: string
-  imgSrc: string
-}
-
-function Book({ title, author, imgSrc }: BookProps) {
-  return (
-    <div className="w-44">
-      <img
-        className="h-64 bg-gray-200 rounded-lg flex flex-col justify-center"
-        alt="책 표지"
-        src={imgSrc}
-      />
-      <div className="mt-2 text-left">
-        <div className="font-bold text-xl mb-1 truncate">{title}</div>
-        <div className="text-base text-gray-500 truncate">{author}</div>
-      </div>
-    </div>
-  )
-}
+import { getRecentBooksAPI } from '../../api/main'
+import { BookCover } from '../../types'
+import Book from './Book'
 
 export default function RecentBook() {
-  const [recent, setRecent] = useState<BookData[]>([])
+  const [recent, setRecent] = useState<BookCover[]>([])
 
   useEffect(() => {
     const fetchRecent = async () => {
       try {
-        const response = await baseInstance.get('/books/new')
-        setRecent(response.data.data.content.slice(0, 6))
+        const recentBooks = await getRecentBooksAPI()
+        setRecent(recentBooks)
       } catch (error) {
         console.error('API 호출 오류: ', error)
       }
     }
+
     fetchRecent()
   }, [])
 

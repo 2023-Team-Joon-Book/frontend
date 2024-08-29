@@ -1,36 +1,10 @@
 import { useEffect, useState } from 'react'
 import { baseInstance } from '../../api/config'
-
-interface BookData {
-  title: string
-  author: string
-  cover_image_url: string
-}
-
-interface BookProps {
-  title: string
-  author: string
-  imgSrc: string
-}
-
-function Book({ title, author, imgSrc }: BookProps) {
-  return (
-    <div className="w-44">
-      <img
-        className="h-64 bg-gray-200 rounded-lg flex flex-col justify-center"
-        alt="도서 표지"
-        src={imgSrc}
-      />
-      <div className="mt-2 text-left">
-        <div className="font-bold text-xl mb-1 truncate">{title}</div>
-        <div className="text-base text-gray-500 truncate">{author}</div>
-      </div>
-    </div>
-  )
-}
+import { BookCover } from '../../types'
+import Book from './Book'
 
 export default function PopularBook() {
-  const [popular, setPopular] = useState<BookData[]>([])
+  const [popular, setPopular] = useState<BookCover[]>([])
 
   useEffect(() => {
     const fetchPopular = async () => {
