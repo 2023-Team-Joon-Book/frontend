@@ -12,8 +12,12 @@ export default function MainThird() {
   return (
     <div className="text-5xl indent-1 mt-60 text-center" style={headerStyle} ref={ref}>
       <div style={{ fontFamily: 'Noto Sans KR' }}>
-        <p className={`text-5xl ${visible ? 'animate-slideUpFade' : ''}`}>인기있는 도서들을 </p>
-        <p className={`text-5xl ${visible ? 'animate-slideUpFade' : ''}`}>한 눈에 볼 수 있습니다</p>
+        <p className={`text-5xl font-semibold ${visible ? 'animate-slideUpFade' : ''}`}>
+          인기있는 도서들을{' '}
+        </p>
+        <p className={`text-5xl font-semibold ${visible ? 'animate-slideUpFade' : ''}`}>
+          한 눈에 볼 수 있습니다
+        </p>
         <div className="mt-8">
           <p className={`text-2xl ${visible ? 'animate-slideUpFade' : ''}`}>
             검색어 순위를 통해 뽑은
