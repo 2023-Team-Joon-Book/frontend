@@ -1,50 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { baseInstance } from '../../api/config'
-
-interface BookData {
-  title: string
-  author: string
-  cover_image_url: string
-}
-
-interface BookProps {
-  title: string
-  author: string
-  imgSrc: string
-}
-
-const Book: React.FC<BookProps> = ({ title, author, imgSrc }) => (
-  <div className="w-44">
-    <img
-      className="h-64 bg-gray-200 rounded-lg flex flex-col justify-center"
-      alt="책 표지"
-      src={imgSrc}
-    />
-    <div className="mt-2 text-left">
-      <div className="font-bold text-xl mb-1 truncate">{title}</div>
-      <div className="text-base text-gray-500 truncate">{author}</div>
-    </div>
-  </div>
-)
+import { useQuery } from 'react-query'
+import { getRecentBooksAPI } from '../../api/main'
+import { BookCover } from '../../types'
+import Book from './Book'
 
 export default function RecentBook() {
-  const [recent, setRecent] = useState<BookData[]>([])
+  const {
+    data: recent = [],
+    isLoading,
+    error,
+  } = useQuery<BookCover[]>(['recentBooks'], getRecentBooksAPI)
 
-  useEffect(() => {
-    const fetchRecent = async () => {
-      try {
-        const response = await baseInstance.get('/books/new')
-        setRecent(response.data.data.content.slice(0, 6))
-      } catch (error) {
-        console.error('API 호출 오류: ', error)
-      }
-    }
-    fetchRecent()
-  }, [])
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error fetching recent books</div>
+  }
 
   return (
     <div className="py-4">
-      <h2 className="text-3xl text-center" style={{ fontFamily: 'Noto Sans KR' }}>
+      <h2
+        className="text-3xl mb-8 text-center font-semibold"
+        style={{ fontFamily: 'Noto Sans KR' }}>
         최근 출시작
       </h2>
       <div className="flex justify-center space-x-8 w-full overflow-x-auto">
