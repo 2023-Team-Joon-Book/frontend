@@ -27,7 +27,7 @@ const MainPage: React.FC = () => {
       <MainFirst />
       <MainSecond />
       <MainThird />
-      <StartNavigator onClick={handleStart} />
+      <StartNavigator text={'시작하기'} onClick={handleStart} />
     </div>
   )
 }

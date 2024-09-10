@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Ask from '../components/search/Ask'
-import MyHeader from '../components/Header/MyHeader'
 import ViewedBooks from '../components/search/ViewedBooks'
 import PopularBooks from '../components/search/PopularBook'
 import RecentBooks from '../components/search/RecentBooks'
@@ -126,7 +125,6 @@ const SearchPage = () => {
 
   return (
     <>
-      <MyHeader onSearch={handleSearch} />
       <SearchHistorySwipe recentSearches={recentSearches} onSearch={handleSearch} />
       {/* <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} /> */}
       <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />

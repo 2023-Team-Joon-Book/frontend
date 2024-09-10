@@ -1,7 +1,7 @@
 import BookBox from '../../shelf/BookBox'
 import StarRate from '../../shelf/StarRate'
 import { useMyContext } from '../../Context/MyContext'
-import axios from 'axios'
+import { baseInstance } from '../../../api/config'
 import { useEffect, useState } from 'react'
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll'
 
@@ -29,8 +29,8 @@ const ReadBook = () => {
       setIsLoading(true)
       const access = localStorage.getItem('accessToken')
 
-      const response = await axios.get(
-        `http://localhost:8081/api/v1/readings?status=READ&page=${page}`,
+      const response = await baseInstance.get(
+        `/readings?status=READ&page=${page}`,
         {
           headers: { Authorization: `Bearer ${access}` },
         },

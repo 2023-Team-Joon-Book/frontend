@@ -3,8 +3,6 @@ import logo from '../../../public/logo.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { baseInstance } from '../../api/config'
 import SearchBar from '../search/SearchBar'
-import axios from 'axios'
-import Swal from 'sweetalert2'
 
 const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   const navigate = useNavigate()
@@ -12,6 +10,7 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   const [isLogoutClicked, setIsLogoutClicked] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const userName = localStorage.getItem('userName')
+
   const handleLogout = async () => {
     setIsLogoutClicked(true)
 
@@ -43,8 +42,8 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
     }
   }
 
-  const goToWish = () => {
-    navigate('/shelf')
+  const goToMyPage = () => {
+    navigate('/mypage')
   }
 
   const goToStatistic = () => {
@@ -67,9 +66,7 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   }
 
   return (
-    <div
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between w-full px-4"
-      style={headerStyle}>
+    <div className="flex items-center justify-between w-full px-4" style={headerStyle}>
       <div className="flex justify-start items-center">
         <img
           src={logo}
@@ -86,7 +83,7 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
         style={{ fontFamily: 'Noto Sans KR' }}>
         <p className="text-sm py-2 mb-8 rounded-md">{userName}</p>
         <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
-        <button className="text-black  text-sm py-2 mb-8 rounded-md" onClick={goToWish}>
+        <button className="text-black  text-sm py-2 mb-8 rounded-md" onClick={goToMyPage}>
           내 서재
         </button>
         <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
