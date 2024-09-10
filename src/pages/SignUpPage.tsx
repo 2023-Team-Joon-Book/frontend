@@ -4,13 +4,14 @@ import LoginInput from '../components/Input/LoginInput'
 import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
 import LoginHeader from '../components/Header/LoginHeader'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
 import { baseInstance } from '../api/config'
+import { SignUp, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 export default function SignUpPage() {
   const navigate = useNavigate()
@@ -76,6 +77,8 @@ export default function SignUpPage() {
       handleSignUp()
     }
   }
+  // 탭
+  const [activeTab, setActiveTab] = useState('regular')
 
   // 아이디, 비밀번호, 비밀번호 확인
   const [id, setId] = useState<string>('')
@@ -140,157 +143,133 @@ export default function SignUpPage() {
   )
 
   return (
-    <LoginContainer>
+    <div className=" max-h-screen">
       <LoginHeader />
-      <div style={{ display: 'flex' }}>
-        <Container>
-          <TitleContainer>
-            <Title>책 잇</Title>
-            <TextContainer>
-              <Text style={{ fontSize: '1.45rem' }}>당신의 책을 함께 기억해요</Text>
-              <Text style={{ fontSize: '1.13rem' }}>remember your book together</Text>
-            </TextContainer>
-          </TitleContainer>
+      <div className="flex justify-center">
+        <div className="">
+          <div className="flex items-center mb-9">
+            <h1 className="text-black text-center font-notosans font-normal text-7xl leading-normal">
+              책 잇
+            </h1>
+            <div className="flex flex-col mt-14 ml-4">
+              <h2 className="text-black font-notosans font-normal text-[1.45rem]">
+                당신의 책을 함께 기억해요
+              </h2>
+              <h2 className="text-black font-notosans font-normal text-[1.13rem]">
+                remember your book together
+              </h2>
+            </div>
+          </div>
 
-          <FormBox>
-            <LoginInput
-              title="Username"
-              placeholder="영문 + 4자리 이상"
-              value={id}
-              type="id"
-              onChange={onChangeId}
-              onKeyPress={handleIdKeyPress}
-              ref={idInputRef} // 아이디 입력 필드에 대한 ref를 전달합니다.
-            />
-            {id.length > 0 && (
-              <span className={`message ${isId ? 'success' : 'error'}`}>{idMessage}</span>
-            )}
-          </FormBox>
-          <FormBox>
-            <LoginInput
-              title="Password"
-              placeholder="영문 + 숫자 + 6자리 이상"
-              value={pw}
-              type="password"
-              onChange={onChangePassword}
-              onKeyPress={handlePwKeyPress}
-              ref={pwInputRef} // 비밀번호 입력 필드에 대한 ref를 전달합니다.
-            />
-            {pw.length > 0 && (
-              <span className={`message ${isPassword ? 'success' : 'error'}`}>
-                {passwordMessage}
-              </span>
-            )}
-          </FormBox>
-          <FormBox>
-            <LoginInput
-              title="Re-enter Password"
-              placeholder=""
-              value={passwordConfirm}
-              type="password"
-              onChange={onChangePasswordConfirm}
-              onKeyPress={handleConfirmKeyPress}
-              ref={confirmInputRef}
-            />
-            {passwordConfirm.length > 0 && (
-              <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>
-                {passwordConfirmMessage}
-              </span>
-            )}
-          </FormBox>
-        </Container>
-        <ImgContainer>
-          <Bar1Image src={Bar1} alt="Bar1" />
-          <Bar2Image src={Bar2} alt="Bar2" />
-          <Bar3Image src={Bar3} alt="Bar3" />
-        </ImgContainer>
+          {/* 탭 내비게이션 */}
+          <div className="flex mb-6">
+            <button
+              className={`px-4 py-2 ${
+                activeTab === 'regular' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
+              }`}
+              onClick={() => setActiveTab('regular')}>
+              일반 회원가입
+            </button>
+            <button
+              className={`px-4 py-2 ml-4 ${
+                activeTab === 'social' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
+              }`}
+              onClick={() => setActiveTab('social')}>
+              소셜 회원가입
+            </button>
+          </div>
+
+          {/* 탭  */}
+          {activeTab === 'regular' && (
+            <div>
+              <div className="relative mb-5">
+                <LoginInput
+                  title="Username"
+                  placeholder="영문 + 4자리 이상"
+                  value={id}
+                  type="id"
+                  onChange={onChangeId}
+                  onKeyPress={handleIdKeyPress}
+                  ref={idInputRef}
+                />
+                {id.length > 0 && (
+                  <span
+                    className={`absolute top-20 left-4 text-sm font-medium ${
+                      isId ? 'text-gray-400' : 'text-red-400'
+                    }`}>
+                    {idMessage}
+                  </span>
+                )}
+              </div>
+              <div className="relative mb-5">
+                <LoginInput
+                  title="Password"
+                  placeholder="영문 + 숫자 + 6자리 이상"
+                  value={pw}
+                  type="password"
+                  onChange={onChangePassword}
+                  onKeyPress={handlePwKeyPress}
+                  ref={pwInputRef}
+                />
+                {pw.length > 0 && (
+                  <span
+                    className={`absolute top-20 left-4 text-sm font-medium ${
+                      isPassword ? 'text-gray-400' : 'text-red-400'
+                    }`}>
+                    {passwordMessage}
+                  </span>
+                )}
+              </div>
+              <div className="relative mb-5">
+                <LoginInput
+                  title="Re-enter Password"
+                  placeholder=""
+                  value={passwordConfirm}
+                  type="password"
+                  onChange={onChangePasswordConfirm}
+                  onKeyPress={handleConfirmKeyPress}
+                  ref={confirmInputRef}
+                />
+                {passwordConfirm.length > 0 && (
+                  <span
+                    className={`absolute top-20 left-4 text-sm font-medium ${
+                      isPasswordConfirm ? 'text-gray-400' : 'text-red-400'
+                    }`}>
+                    {passwordConfirmMessage}
+                  </span>
+                )}
+              </div>
+              <SignUpBtn
+                onClick={handleSignUp}
+                disabled={!(isId && isPassword && isPasswordConfirm)}
+              />
+            </div>
+          )}
+          {activeTab === 'social' && (
+            <div className="">
+              <SignUp />
+            </div>
+          )}
+          <div className="flex items-center ml-24">
+            <h2 className="text-[1.05rem] text-black font-notosans my-8">계정이 있으신가요?</h2>
+            <Link to="/login">
+              <button className="my-8 ml-4 text-[1.05rem] text-gray-400 font-notosans underline">
+                로그인
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-end mt-64 ml-96 relative">
+          <img
+            src={Bar1}
+            alt="Bar1"
+            className="w-[22rem] h-[32rem] absolute right-[calc(100%-89px)] z-10"
+          />
+          <img src={Bar2} alt="Bar2" className="w-[17rem] h-[33.3rem]" />
+          <img src={Bar3} alt="Bar3" className="w-[10.3rem] h-[36rem]" />
+        </div>
       </div>
-
-      <SignUpBtn onClick={handleSignUp} disabled={!(isId && isPassword && isPasswordConfirm)} />
-    </LoginContainer>
+    </div>
   )
 }
-
-const LoginContainer = styled.div`
-  overflow: hidden;
-  max-height: 100vh;
-`
-const Container = styled.div`
-  margin-left: 14rem;
-  margin-top: 8.23rem;
-`
-
-const TitleContainer = styled.div`
-  display: flex;
-  margin-bottom: 2.2rem;
-`
-const Title = styled.h1`
-  color: #000;
-  text-align: center;
-  /* font-family: BM Jua; */
-  font-family: Noto Sans KR;
-  font-size: 7.3rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`
-const Text = styled.h2`
-  color: #000;
-  font-family: Noto Sans KR;
-
-  font-style: normal;
-  font-weight: 400;
-  /* line-height: 3.75rem; */
-`
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 3.5rem;
-  margin-left: 1.1rem;
-`
-
-const ImgContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-top: 17rem;
-  margin-left: 21.5rem;
-  position: relative;
-`
-
-const Bar1Image = styled.img`
-  width: 22rem;
-  height: 32rem;
-  position: absolute;
-  right: calc(100% - 89px);
-  z-index: 1;
-`
-
-const Bar2Image = styled.img`
-  width: 17rem;
-  height: 33.3rem;
-`
-
-const Bar3Image = styled.img`
-  width: 10.3rem;
-  height: 36rem;
-`
-
-const FormBox = styled.div`
-  position: relative;
-  margin-bottom: 1.25rem;
-  .message {
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    letter-spacing: -0.0625rem;
-    position: absolute;
-    top: 5rem;
-    left: 1rem;
-    &.success {
-      color: #b2b2b2;
-    }
-    &.error {
-      color: #b2b2b2;
-    }
-  }
-`

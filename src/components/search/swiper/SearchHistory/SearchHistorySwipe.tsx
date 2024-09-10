@@ -19,8 +19,8 @@ const SearchHistorySwipe = ({ recentSearches, onSearch }: SearchHistorySwipeProp
   }
 
   return (
-    <div className="p-8 pt-[120px]">
-      <p className="text-xl font-bold pt-8 pb-4">최근 히스토리</p>
+    <div className="p-8 ">
+      <p className="text-xl font-bold pb-4">최근 히스토리</p>
       <StyledSwiper
         slidesPerView={5}
         spaceBetween={10}

@@ -12,7 +12,7 @@ const LoginHeader: FC = () => {
 
   const imageStyle = {
     width: 'auto',
-    height: '144px',
+    height: '80px',
   }
 
   const goToMain = () => {
@@ -20,9 +20,7 @@ const LoginHeader: FC = () => {
   }
 
   return (
-    <div
-      className="fixed top-0 left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-between w-full px-4"
-      style={headerStyle}>
+    <div className="flex items-center justify-between w-full p-4" style={headerStyle}>
       {/* <div className="opacity-0 invisible">
         <button className="text-black font-bold text-2xl px-4 py-2 mb-8 rounded-md">로그인</button>
         <button className="text-black font-bold px-4 text-2xl py-2 mb-8 rounded-md">

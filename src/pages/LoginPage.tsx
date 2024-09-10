@@ -1,7 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
 import LoginInput from '../components/Input/LoginInput'
-import { useState } from 'react'
 import StartNavigator from '../components/main/StartNavigator'
 import LoginHeader from '../components/Header/LoginHeader'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,10 +10,11 @@ import Bar3 from '../../public/img/Bar3.png'
 import { baseInstance } from '../api/config'
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import { SignIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/clerk-react'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-
+  const { isLoaded, isSignedIn, user } = useUser()
   const handleLogin = async () => {
     if (id && pw) {
       try {
@@ -34,16 +33,13 @@ export default function LoginPage() {
             icon: 'success',
           })
         } else if (response.data.businessCode === 'U002') {
-          // 사용자가 없을 때
           console.log('에러 내용: ', response.data.message)
           alert(response.data.message)
         } else if (response.data.code === 'U001') {
-          // 비밀번호가 틀렸을 때
           console.log('에러 내용: ', response.data.message)
           alert('비밀번호가 틀렸습니다.')
         }
       } catch (error) {
-        // 에러 처리
         Swal.fire({
           title: '로그인 실패!',
           icon: 'error',
@@ -51,8 +47,9 @@ export default function LoginPage() {
       }
     }
   }
+  // 탭
+  const [activeTab, setActiveTab] = useState('regular')
 
-  // 아이디, 비밀번호
   const [id, setId] = useState<string>('')
   const [pw, setPw] = useState<string>('')
 
@@ -62,7 +59,6 @@ export default function LoginPage() {
   const handleIdKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      // 여기에 다음 input의 ref를 사용하여 포커스 이동
       pwInputRef.current?.focus()
     }
   }
@@ -70,148 +66,89 @@ export default function LoginPage() {
   const handlePwKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      // 모든 입력이 완료되면 '시작하기' 버튼의 동작을 수행
       handleLogin()
     }
   }
 
   return (
-    <LoginContainer>
+    <div className=" max-h-screen">
       <LoginHeader />
-      <div style={{ display: 'flex' }}>
-        <Container>
-          <TitleContainer>
-            <Title>책 잇</Title>
-            <TextContainer>
-              <Text style={{ fontSize: '1.45rem' }}>당신의 책을 함께 기억해요</Text>
-              <Text style={{ fontSize: '1.13rem' }}>remember your book together</Text>
-            </TextContainer>
-          </TitleContainer>
+      <div className="flex justify-center">
+        <div className="">
+          <div className="flex items-center mb-9">
+            <h1 className="text-black text-center font-notosans font-normal text-7xl leading-normal">
+              책 잇
+            </h1>
+            <div className="flex flex-col mt-14 ml-4">
+              <h2 className="text-black font-notosans font-normal text-[1.45rem]">
+                당신의 책을 함께 기억해요
+              </h2>
+              <h2 className="text-black font-notosans font-normal text-[1.13rem]">
+                remember your book together
+              </h2>
+            </div>
+          </div>
+          {/* 탭 내비게이션 */}
+          <div className="flex mb-6">
+            <button
+              className={`px-4 py-2 ${
+                activeTab === 'regular' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
+              }`}
+              onClick={() => setActiveTab('regular')}>
+              일반 로그인
+            </button>
+            <button
+              className={`px-4 py-2 ml-4 ${
+                activeTab === 'social' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
+              }`}
+              onClick={() => setActiveTab('social')}>
+              소셜 로그인
+            </button>
+          </div>
 
-          <form>
-            <LoginInput
-              title="Username"
-              placeholder=""
-              value={id}
-              type="id"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
-              onKeyPress={handleIdKeyPress}
-              ref={idInputRef} // 아이디 입력 필드에 대한 ref를 전달합니다.
-            />
-            <LoginInput
-              title="Password"
-              placeholder=""
-              value={pw}
-              type="password"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
-              onKeyPress={handlePwKeyPress}
-              ref={pwInputRef} // 비밀번호 입력 필드에 대한 ref를 전달합니다.
-            />
-          </form>
-          <SignupLayout>
-            <SignupText>계정이 없으신가요?</SignupText>
+          {activeTab === 'regular' && (
+            <form>
+              <LoginInput
+                title="Username"
+                placeholder=""
+                value={id}
+                type="id"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)}
+                onKeyPress={handleIdKeyPress}
+                ref={idInputRef}
+              />
+              <LoginInput
+                title="Password"
+                placeholder=""
+                value={pw}
+                type="password"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPw(e.target.value)}
+                onKeyPress={handlePwKeyPress}
+                ref={pwInputRef}
+              />
+              <StartNavigator text={'로그인하기'} onClick={handleLogin} disabled={!id || !pw} />
+            </form>
+          )}
+          {activeTab === 'social' && <SignIn />}
+          <div className="flex items-center ml-24 pt-9">
+            <h2 className="text-[1.05rem] text-black font-notosans">계정이 없으신가요?</h2>
             <Link to="/signup">
-              <StyledButton>회원가입</StyledButton>
+              <button className="ml-4 text-[1.05rem] text-gray-400 font-notosans underline">
+                회원가입
+              </button>
             </Link>
-          </SignupLayout>
-        </Container>
-        <ImgContainer>
-          <Bar1Image src={Bar1} alt="Bar1" />
-          <Bar2Image src={Bar2} alt="Bar2" />
-          <Bar3Image src={Bar3} alt="Bar3" />
-        </ImgContainer>
+          </div>
+        </div>
+        <div className="flex items-end mt-64 ml-96 relative">
+          <img
+            src={Bar1}
+            alt="Bar1"
+            className="w-[22rem] h-[32rem] absolute right-[calc(100%-89px)] z-10"
+          />
+          <img src={Bar2} alt="Bar2" className="w-[17rem] h-[33.3rem]" />
+          <img src={Bar3} alt="Bar3" className="w-[10.3rem] h-[36rem]" />
+        </div>
       </div>
-
-      <StartNavigator onClick={handleLogin} disabled={!id || !pw} />
-    </LoginContainer>
+    </div>
   )
 }
-const LoginContainer = styled.div`
-  overflow: hidden;
-  max-height: 100vh;
-`
-const Container = styled.div`
-  margin-left: 14rem;
-  margin-top: 8.23rem;
-`
-
-const TitleContainer = styled.div`
-  display: flex;
-  margin-bottom: 2.2rem;
-`
-const Title = styled.h1`
-  color: #000;
-  text-align: center;
-  /* font-family: BM Jua; */
-  font-family: Noto Sans KR;
-  font-size: 7.3rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`
-const Text = styled.h2`
-  color: #000;
-  font-family: Noto Sans KR;
-
-  font-style: normal;
-  font-weight: 400;
-  /* line-height: 3.75rem; */
-`
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 3.5rem;
-  margin-left: 1.1rem;
-`
-
-const SignupLayout = styled.div`
-  display: flex;
-  margin-left: 6.5rem;
-  align-items: center;
-`
-
-const SignupText = styled.h2`
-  color: #000;
-  text-align: center;
-  font-family: Noto Sans;
-  font-size: 1.05rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  padding-right: 1rem;
-`
-const StyledButton = styled.button`
-  color: #b2b2b2;
-  font-family: Noto Sans;
-  font-size: 1.05rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-decoration-line: underline;
-`
-
-const ImgContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-top: 17rem;
-  margin-left: 21.5rem;
-  position: relative;
-`
-
-const Bar1Image = styled.img`
-  width: 22rem;
-  height: 32rem;
-  position: absolute;
-  right: calc(100% - 89px);
-  z-index: 1;
-`
-
-const Bar2Image = styled.img`
-  width: 17rem;
-  height: 33.3rem;
-`
-
-const Bar3Image = styled.img`
-  width: 10.3rem;
-  height: 36rem;
-`
