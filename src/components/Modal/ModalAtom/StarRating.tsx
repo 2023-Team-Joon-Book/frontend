@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import StarIcon from '../../../assets/svgs/star.svg?react'
+import { TiStarFullOutline } from 'react-icons/ti'
+
 import { useMyContext } from '../../Context/MyContext'
 import { baseInstance } from '../../../api/config'
 const StarRating = () => {
@@ -41,11 +42,13 @@ const StarRating = () => {
       </div>
       <div className="flex space-x-1">
         {[1, 2, 3, 4, 5].map((star) => (
-          <StarIcon
-            className="w-6 h-6 cursor-pointer"
+          <TiStarFullOutline
             key={star}
-            fill={star <= (grading === 0 ? rating : grading) ? '#f6ce0b' : '#e4e4e4'}
-            onClick={() => starHandle(star)}></StarIcon>
+            size={24}
+            color={star <= (grading === 0 ? rating : grading) ? '#f6ce0b' : '#e4e4e4'} // 색상 설정
+            className="cursor-pointer"
+            onClick={() => starHandle(star)}
+          />
         ))}
       </div>
     </div>

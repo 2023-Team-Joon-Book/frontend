@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
-import ReturnIcon from '../../../assets/svgs/reset.svg?react'
+import { BsArrowCounterclockwise } from 'react-icons/bs'
 import { baseInstance } from '../../../api/config'
 import { useMyContext } from '../../Context/MyContext'
 
-const Bar = ({ book }) => {
+type Book = {
+  id: number
+  title: string
+  pages: number
+}
+
+const Bar = ({ book }: { book: Book }) => {
   const [initialPercentages, setInitialPercentages] = useState(0)
   const [lastPage, setLastPage] = useState(0)
   // const [newLastPage, setNewLastPage] = useState(0)
@@ -28,10 +34,13 @@ const Bar = ({ book }) => {
       const response = await baseInstance.get(`/readings/percentages?bid=${book.id}`, {
         headers: { Authorization: `Bearer ${access}` },
       })
-
+      if (response.data.data.percentage >= 100) {
+        setPercentages(100)
+      } else {
+        setPercentages(response.data.data.percentage) // 읽은 퍼센트
+      }
       setLastPage(response.data.data.lastPage) // 읽은 페이지
       localStorage.setItem('lastPage', response.data.data.lastPage)
-      setPercentages(response.data.data.percentage) // 읽은 퍼센트
       setInitialPercentages(response.data.data.percentage) //초기 퍼센트 저장
       localStorage.setItem('percentage', response.data.data.percentage)
       setNewLastPage(response.data.data.lastPage) // 초기 페이지 설정
@@ -64,11 +73,11 @@ const Bar = ({ book }) => {
 
   return (
     <div className="flex flex-col mb-3">
-      <div className="flex justify-between mr-4 mb-2 mt-10">
+      <div className="flex justify-between mr-1 mb-2 mt-10">
         <p className="text-xl  ">독서량</p>
         {isEditing && (
           <button onClick={resetHandle}>
-            <ReturnIcon />
+            <BsArrowCounterclockwise size={20} />
           </button>
         )}
       </div>

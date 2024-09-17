@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import LoginInput from '../components/Input/LoginInput'
 import { useCallback, useState } from 'react'
 import SignUpBtn from '../components/Btn/SignUpBtn'
@@ -11,7 +10,7 @@ import Bar1 from '../../public/img/Bar1.png'
 import Bar2 from '../../public/img/Bar2.png'
 import Bar3 from '../../public/img/Bar3.png'
 import { baseInstance } from '../api/config'
-import { SignUp, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+// import { SignUp, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 export default function SignUpPage() {
   const navigate = useNavigate()
@@ -247,7 +246,7 @@ export default function SignUpPage() {
           )}
           {activeTab === 'social' && (
             <div className="">
-              <SignUp />
+              {/* <SignUp /> */}
             </div>
           )}
           <div className="flex items-center ml-24">

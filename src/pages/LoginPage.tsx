@@ -10,11 +10,11 @@ import Bar3 from '../../public/img/Bar3.png'
 import { baseInstance } from '../api/config'
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
-import { SignIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/clerk-react'
+// import { SignIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/clerk-react'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { isLoaded, isSignedIn, user } = useUser()
+  // const { isLoaded, isSignedIn, user } = useUser()
   const handleLogin = async () => {
     if (id && pw) {
       try {
@@ -129,7 +129,7 @@ export default function LoginPage() {
               <StartNavigator text={'로그인하기'} onClick={handleLogin} disabled={!id || !pw} />
             </form>
           )}
-          {activeTab === 'social' && <SignIn />}
+          {/* {activeTab === 'social' && <SignIn />} */}
           <div className="flex items-center ml-24 pt-9">
             <h2 className="text-[1.05rem] text-black font-notosans">계정이 없으신가요?</h2>
             <Link to="/signup">

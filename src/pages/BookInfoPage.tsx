@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import { baseInstance } from '../api/config'
 import { useParams } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 interface BookData {
   author: string
@@ -15,11 +15,12 @@ interface BookData {
   publisher: string
   title: string
   width: number
+  description: string
 }
 
 export default function BookInfoPage() {
   const { id } = useParams<{ id: string }>()
-  const [bookData, setBookData] = useState(null)
+  const [bookData, setBookData] = useState<BookData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [likeStatus, setLikeStatus] = useState(false)
@@ -29,13 +30,23 @@ export default function BookInfoPage() {
   useEffect(() => {
     const fetchBookData = async () => {
       try {
-        const response = await baseInstance.get(`/books/${id}`)
-        setBookData(response.data.bookInfos[0]) // API 응답에서 책 정보를 가져옵니다.
+        const accessToken = localStorage.getItem('accessToken')
+
+        const response = await baseInstance.get(`/books/${id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        console.log(response)
+
+        setBookData(response.data.data) // API 응답에서 책 정보를 가져옵니다.
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          setError('Unauthorized')
-        } else {
-          setError('An error occurred while fetching book data.')
+        if (error instanceof AxiosError) {
+          if (error.response && error.response.status === 401) {
+            setError('Unauthorized')
+          } else {
+            setError('An error occurred while fetching book data.')
+          }
         }
       } finally {
         setLoading(false)
@@ -92,7 +103,7 @@ export default function BookInfoPage() {
     try {
       await baseInstance.post(`/readings`, {
         bookId: id,
-        lastPage: bookData.pages, // 다 읽은 책이므로 마지막 페이지를 설정합니다.
+        lastPage: bookData?.pages, // 다 읽은 책이므로 마지막 페이지를 설정합니다.
         status: readComplete ? 'reading' : 'read',
       })
       setReadComplete(!readComplete)
@@ -113,8 +124,8 @@ export default function BookInfoPage() {
       {/* Book data rendering */}
       {bookData && (
         <div>
-          <h1>{bookData.title}</h1>
-          <p>{bookData.description}</p>
+          <h1>{bookData?.title}</h1>
+          <p>{bookData?.description}</p>
           {/* 다른 필요한 책 정보 렌더링 */}
 
           {/* 찜하기 버튼 */}

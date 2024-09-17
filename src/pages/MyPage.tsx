@@ -8,7 +8,7 @@ import ReviewInput from '../components/Modal/ModalAtom/ReviewInput'
 import StarRating from '../components/Modal/ModalAtom/StarRating'
 
 const MyPageContent = () => {
-  const { activeTab, isModalOpen, selectedBook, setIsModalOpen, setGrading, setText,setIsActive } =
+  const { activeTab, isModalOpen, selectedBook, setIsModalOpen, setGrading, setText, setIsActive } =
     useMyContext()
 
   const handleCloseModal = () => {
@@ -26,7 +26,7 @@ const MyPageContent = () => {
 
           {activeTab === 'reading' && (
             <>
-              <StateBtn modalHandle={handleCloseModal} />
+              <StateBtn />
               <Bar book={selectedBook} />
             </>
           )}

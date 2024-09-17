@@ -5,7 +5,7 @@ import Header from '../components/Header/ShelfHeader.tsx'
 import DetailModal from '../components/shelf/DetailModal.tsx'
 import ReviewModal from '../components/shelf/ReviewModal.tsx'
 import axios from 'axios'
-import BookInfo from '../components/Modal/ModalAtom/BookInfo'
+// import BookInfo from '../components/Modal/ModalAtom/BookInfo'
 
 const BookShelfPage: React.FC = () => {
   // 3개의 책장 구성
