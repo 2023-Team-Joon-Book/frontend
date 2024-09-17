@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import sendImg from '../../assets/images/send.png'
-import axios, { AxiosError } from 'axios'
 import ChatModal from './ChatModal'
+import { baseInstance } from '../../api/config'
 
 interface AdminChatProps {
   disableHandleAsk: () => void
@@ -24,7 +24,7 @@ const AdminChat: React.FC<AdminChatProps> = ({ disableHandleAsk, userName, isAdm
   // 채팅방 조회 api
   async function roomInfo() {
     try {
-      const response = await axios.get('http://localhost:8081/api/v1/chat/rooms/list', {
+      const response = await baseInstance.get('chat/rooms/list', {
         headers: { Authorization: `Bearer ${access}` },
       })
       console.log('응답 값', response.data)

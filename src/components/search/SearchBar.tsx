@@ -1,4 +1,3 @@
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { KeyboardEventHandler, forwardRef, useState } from 'react'
 import styles from './SearchBar.module.css'
 import search from '../../../public/search.png'
@@ -12,7 +11,7 @@ type SearchBarProps = {
 }
 
 const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
-  ({ onKeyPress, onSearch, onInputChange }, ref) => {
+  ({ onSearch, onInputChange }, ref) => {
     const [isFocused, setIsFocused] = useState(false)
     const [inputValue, setInputValue] = useState('')
 

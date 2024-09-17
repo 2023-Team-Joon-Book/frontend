@@ -1,5 +1,5 @@
 import BookBox from '../../shelf/BookBox'
-import HeartIcon from '../../../assets/svgs/heart.svg?react'
+import { GoHeartFill } from 'react-icons/go'
 import { useEffect, useState } from 'react'
 import { baseInstance } from '../../../api/config'
 import { useMyContext } from '../../Context/MyContext'
@@ -21,8 +21,8 @@ const WishList = () => {
   const [page, setPage] = useState<number>(1)
   const [hasMore, setHasMore] = useState<boolean>(true)
   const access = localStorage.getItem('accessToken')
-  const { selectedBook, setSelectedBook } = useMyContext()
-  const [isLoading, setIsLoading] = useState(true)
+  const { setSelectedBook } = useMyContext()
+  const [isLoading, _] = useState(true)
   const navigate = useNavigate()
 
   const Toast = Swal.mixin({
@@ -109,7 +109,7 @@ const WishList = () => {
           <button
             className="text-lg mt-4 px-4 py-2 text-btn underline underline-offset-4"
             onClick={() => goBookSearch()}>
-            책 찜하러 가기
+            찜할 책 찾으러 가기
           </button>
         </div>
       ) : (
@@ -127,10 +127,11 @@ const WishList = () => {
                   img={book.cover_image_url}
                   title={book.title}
                   writer={book.author}>
-                  <div className="flex flex-row-reverse pr-3 pt-3 h-[3rem]">
-                    <HeartIcon
-                      fill={book.isLiked ? '#4ebb00' : 'none'}
+                  <div className="flex flex-row-reverse pt-3 h-[3rem]">
+                    <GoHeartFill
                       onClick={() => toggleWhishList(book)}
+                      size={20}
+                      style={{ color: book.isLiked ? '#4ebb00' : 'gray' }}
                     />
                   </div>
                 </BookBox>

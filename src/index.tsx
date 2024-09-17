@@ -3,13 +3,13 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
 import 'tailwindcss/tailwind.css'
-import { ClerkProvider } from '@clerk/clerk-react'
+// import { ClerkProvider } from '@clerk/clerk-react'
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+// const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
-if (!PUBLISHABLE_KEY) {
-  throw new Error('Missing Clerk Publishable Key')
-}
+// if (!PUBLISHABLE_KEY) {
+//   throw new Error('Missing Clerk Publishable Key')
+// }
 
 const domNode = document.getElementById('root')
 if (!domNode) {
@@ -19,9 +19,9 @@ if (!domNode) {
 const root = createRoot(domNode)
 
 root.render(
-  <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+  // <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
     <App />
-  </ClerkProvider>,
+  // </ClerkProvider>,
 )
 
 reportWebVitals()

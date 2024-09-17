@@ -2,11 +2,10 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
 import * as THREE from 'three'
-import { Html, Text } from '@react-three/drei'
+import { Html } from '@react-three/drei'
 import { Group, Object3D } from 'three'
 import { baseInstance } from '../../api/config'
 import BookInfoModal from './BookModal'
-import BookInfo from '../Modal/ModalAtom/BookInfo';
 
 interface BookProps {
   model: Object3D

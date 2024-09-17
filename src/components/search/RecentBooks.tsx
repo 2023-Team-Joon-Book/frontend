@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import RecentSwipe from './swiper/RecentSwipe'
 
 interface RecentBooksProps {
@@ -16,7 +15,7 @@ interface Book {
 }
 
 const RecentBooks: React.FC<RecentBooksProps> = ({ onSwipeClick, active }) => {
-  const [books, setBooks] = useState<Book[]>([])
+  const [books, _] = useState<Book[]>([])
 
   // useEffect(() => {
   //     // Define an async function

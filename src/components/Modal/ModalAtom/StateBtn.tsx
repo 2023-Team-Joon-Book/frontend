@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import FinishIcon from '../../../assets/svgs/finish.svg?react'
-import BookIcon from '../../../assets/svgs/book.svg?react'
 import { useMyContext } from '../../Context/MyContext'
+import { RiBook3Line } from 'react-icons/ri'
+import { LuFlagTriangleRight } from 'react-icons/lu'
 
-const StateBtn = (modalHandle: () => {}) => {
+
+
+const StateBtn = () => {
   const {
-    newLastPage,
+    // newLastPage,
     setNewLastPage,
     selectedBook,
     setIsEditing,
@@ -28,7 +29,7 @@ const StateBtn = (modalHandle: () => {}) => {
         className={`flex items-center justify-center w-[7rem] h-[2.785rem] px-4 py-2 rounded  ${
           isActive ? 'bg-toggle' : 'bg-inactive'
         }`}>
-        <BookIcon fill={isActive ? '#4ECB71' : '#888888'} />
+        <RiBook3Line size={20} color={isActive ? '#4ECB71' : '#888888'} />
         도서 중
       </button>
 
@@ -41,7 +42,7 @@ const StateBtn = (modalHandle: () => {}) => {
         className={`flex w-[7rem] h-[2.785rem] items-center justify-center px-4 py-2 rounded   ${
           !isActive ? 'bg-toggle' : 'bg-inactive'
         }`}>
-        <FinishIcon stroke={isActive ? '#888888' : '#4ECB71'} />
+        <LuFlagTriangleRight size={22} color={isActive ? '#888888' : '#4ECB71'} />
         완독!
       </button>
     </div>

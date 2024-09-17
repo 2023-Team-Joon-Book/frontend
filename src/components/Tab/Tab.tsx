@@ -8,7 +8,6 @@ interface TabProps {
 const Tab = ({ label, id }: TabProps) => {
   const { activeTab, setActiveTab } = useMyContext()
   const tabStyle = activeTab === id ? 'font-bold' : ''
-  const active = localStorage.getItem('activeTab')
 
   return (
     <div

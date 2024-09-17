@@ -4,6 +4,9 @@ import { useMyContext } from '../../Context/MyContext'
 import { baseInstance } from '../../../api/config'
 import { useEffect, useState } from 'react'
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll'
+import Lottie from 'lottie-react'
+import Empty from '../../../assets/lotties/Animation - 1724653336505.json'
+import { useNavigate } from 'react-router-dom'
 
 type BookType = {
   cover_image_url: string
@@ -20,6 +23,7 @@ const ReadingBook = () => {
   const [page, setPage] = useState<number>(1)
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const navigate = useNavigate()
 
   const getReadingBooks = async () => {
     try {
@@ -57,11 +61,27 @@ const ReadingBook = () => {
     setSelectedBook({ ...book, status: 'Reading' })
     setIsModalOpen(true)
   }
+  const goBookSearch = () => navigate('/booksearch')
 
   return (
     <>
       {books.length === 0 && !isLoading ? (
-        <div className="text-center text-2xl mt-16">읽고 있는 책이 없습니다.</div>
+        <div className="w-full mt-10 flex flex-col justify-center items-center h-dvh">
+          <Lottie
+            animationData={Empty}
+            style={{
+              width: '280px',
+            }}
+          />
+          <p className="text-xl font-semibold text-gray-700">독서 중인 책이 없습니다</p>
+          <button
+            className="text-lg mt-4 px-4 py-2 text-btn underline underline-offset-4"
+            onClick={() => {
+              goBookSearch()
+            }}>
+            읽을 책 찾으러 가기
+          </button>
+        </div>
       ) : (
         <div>
           <div className="grid grid-cols-4 gap-y-14 gap-x-8 mt-16">

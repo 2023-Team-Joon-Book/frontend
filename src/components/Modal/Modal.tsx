@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useMyContext } from '../Context/MyContext'
 import { baseInstance } from '../../api/config'
@@ -25,7 +25,7 @@ const Modal = ({ onClose, children }: ReadingModalProps) => {
     setIsActive,
   } = useMyContext()
   const access = localStorage.getItem('accessToken')
-  const [congrats, setCongrats] = useState(false)
+  const [_, setCongrats] = useState(false)
 
   const onHandlePages = async () => {
     const requestData = {

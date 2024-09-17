@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import logo from '../../../public/logo.png'
 import { useNavigate } from 'react-router-dom'
 

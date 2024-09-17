@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Ask from '../components/search/Ask'
-import ViewedBooks from '../components/search/ViewedBooks'
 import PopularBooks from '../components/search/PopularBook'
 import RecentBooks from '../components/search/RecentBooks'
 import Swal from 'sweetalert2'
@@ -13,7 +12,7 @@ import SearchHistorySwipe from '../components/search/swiper/SearchHistory/Search
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
-  const [books, setBooks] = useState<any[]>([])
+  const [_, setBooks] = useState<any[]>([])
   const [isAsk, setIsAsk] = useState(false)
   const [userName, setUserName] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)

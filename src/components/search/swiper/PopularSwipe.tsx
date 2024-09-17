@@ -11,10 +11,26 @@ import { useNavigate } from 'react-router-dom'
 
 interface PopularSwipeProps {
   title?: string
+  index: number
+  onSwipeClick: (index: number) => void
+  active: boolean
+  name: string[]
+  author: string[]
+  publisher: string[]
+  pages: string[]
+}
+interface Book {
+  id: number
+  title: string
+  author: string
+  publisher: string
+  cover_image_url: string
+  pages: number
 }
 
 export default function PopularSwipe({ title }: PopularSwipeProps) {
-  const [booksData, setBooksData] = useState<any[]>([])
+  const [booksData, setBooksData] = useState<Book[]>([])
+
   const navigate = useNavigate()
 
   useEffect(() => {
