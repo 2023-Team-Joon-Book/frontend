@@ -66,8 +66,14 @@ export default function BookInfoPage() {
 
   // 찜하기 상태 업데이트
   const handleLikeToggle = async () => {
+    const accessToken = localStorage.getItem('accessToken')
+
     try {
-      await baseInstance.post(`/books/like/${id}`)
+      await baseInstance.post(`/books/like/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       setLikeStatus(!likeStatus)
       // 토스트 알림 표시
       Swal.fire({
