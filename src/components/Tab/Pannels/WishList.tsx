@@ -22,7 +22,7 @@ const WishList = () => {
   const [hasMore, setHasMore] = useState<boolean>(true)
   const access = localStorage.getItem('accessToken')
   const { setSelectedBook } = useMyContext()
-  const [isLoading, _] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
   const Toast = Swal.mixin({
@@ -37,23 +37,22 @@ const WishList = () => {
     },
   })
 
-  // 찜한 책 api 요청
-  useEffect(() => {
-    getWishList()
-  }, [])
-
+  // 책 목록 가져오기
   const getWishList = async () => {
     try {
       const response = await baseInstance.get(`/readings?pageNumber=${page}&status=LIKE`, {
         headers: { Authorization: `Bearer ${access}` },
       })
       const wishBooks = response.data.bookInfos.content
-      if (response.data.bookInfos.empty) {
+      // console.log(wishBooks);
+
+      if (response.data.bookInfos.last) {
         setHasMore(false)
-      } else {
-        const newBooks = wishBooks.map((book: any) => ({ ...book, isLiked: true }))
-        setBooks((prevBooks) => [...prevBooks, ...newBooks])
+        setIsLoading(false)
       }
+      const newBooks = wishBooks.map((book: any) => ({ ...book, isLiked: true }))
+      setBooks((prevBooks) => [...prevBooks, ...newBooks])
+      console.log(books)
     } catch (error) {
       console.log(error)
     }
@@ -66,6 +65,7 @@ const WishList = () => {
 
   const setTarget = useInfiniteScroll({ hasMore, onLoadMore: loadMore })
 
+  // 좋아요 토글
   const toggleWhishList = async (book: BookType) => {
     setSelectedBook(book)
 
@@ -97,7 +97,7 @@ const WishList = () => {
 
   return (
     <div className="w-full">
-      {books.length === 0 && isLoading ? (
+      {books.length === 0 ? (
         <div className="w-full mt-10 flex flex-col justify-center items-center h-dvh">
           <Lottie
             animationData={Empty}
