@@ -1,6 +1,6 @@
 import BookBox from '../../shelf/BookBox'
 import { GoHeartFill } from 'react-icons/go'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { baseInstance } from '../../../api/config'
 import { useMyContext } from '../../Context/MyContext'
 import Swal from 'sweetalert2'
