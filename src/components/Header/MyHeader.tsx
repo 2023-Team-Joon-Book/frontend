@@ -29,6 +29,7 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
           // 서버에서 로그아웃이 성공하면 로컬 스토리지에서 토큰을 삭제하고 홈페이지로 이동
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
+          localStorage.removeItem('userName')
           navigate('/')
         } else {
           // 서버에서 로그아웃이 실패하면 에러 처리
