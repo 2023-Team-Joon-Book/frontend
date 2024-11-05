@@ -1,6 +1,5 @@
 // ResentBooks.tsx
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import PopularSwipe from './swiper/PopularSwipe' // 추후 PopularSwipe 추가
 
 interface PopularBooksProps {
@@ -9,6 +8,7 @@ interface PopularBooksProps {
 }
 
 interface Book {
+  index: number
   title: string
   author: string
   publisher: string
@@ -18,7 +18,7 @@ interface Book {
 }
 
 const PopularBooks: React.FC<PopularBooksProps> = ({ onSwipeClick, active }) => {
-  const [books, setBooks] = useState<Book[]>([])
+  const [books, _] = useState<Book[]>([])
 
   // useEffect(() => {
   //     // Define an async function

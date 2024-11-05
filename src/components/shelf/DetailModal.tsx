@@ -51,10 +51,12 @@ const DetailModal: React.FC<DetailModalProps> = ({ book, setIsModalOpen }) => {
           headers: { Authorization: `Bearer ${access}` },
         },
       )
-      Swal.fire({
-        title: '책 저장 완료! 🎉',
-        icon: 'success',
-      })
+      if (response.status === 200) {
+        Swal.fire({
+          title: '책 저장 완료! 🎉',
+          icon: 'success',
+        })
+      }
     } catch (error) {
       Swal.fire({
         text: '이미 다 읽었거나, 작은 값을 입력하셨습니다.',

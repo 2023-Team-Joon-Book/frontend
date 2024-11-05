@@ -26,11 +26,12 @@ const tabMenus: TabMenu[] = [
 const TabLayout = () => {
   return (
     <>
-      <div className="flex items-center w-screen h-[4rem] border border-x-gray-500">
+      <div className="flex items-center max-w-[1324px] h-[4rem] border-y border-y-gray-300">
         {tabMenus.map((tabProps, index) => (
           <Tab key={`tab-${index}`} {...tabProps} />
         ))}
       </div>
+      
       {tabMenus.map(({ id }, index) => (
         <TabPannel key={`tabpannel-${index}`} id={id}>
           {mapTabIdToComponent[id]()}

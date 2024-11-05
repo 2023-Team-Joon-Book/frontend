@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
 import * as THREE from 'three'
-import { Html, Text } from '@react-three/drei'
+import { Html } from '@react-three/drei'
 import { Group, Object3D } from 'three'
 import { baseInstance } from '../../api/config'
 import BookInfoModal from './BookModal'
@@ -85,8 +85,7 @@ const Stack: React.FC = () => {
           },
         })
         .then((response) => {
-          // 'response.data' 대신 'response.data.bookInfos'를 사용합니다.
-          const fetchedBooks = response.data.bookInfos.map((bookData: BookData) => {
+          const fetchedBooks = response.data.bookInfos.content?.map((bookData: BookData) => {
             return {
               model: model.clone(),
               thickness: bookData.pages / 2000,

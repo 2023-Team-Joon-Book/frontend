@@ -3,14 +3,13 @@ import logo from '../../../public/logo.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { baseInstance } from '../../api/config'
 import SearchBar from '../search/SearchBar'
-import axios from 'axios'
-import Swal from 'sweetalert2'
 
 const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const [isLogoutClicked, setIsLogoutClicked] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const userName = localStorage.getItem('userName')
 
   const handleLogout = async () => {
     setIsLogoutClicked(true)
@@ -28,6 +27,7 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
         if (response.status === 200) {
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
+          localStorage.removeItem('userName')
           navigate('/')
         } else {
           console.error('로그아웃 실패')
@@ -40,8 +40,8 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
     }
   }
 
-  const goToWish = () => {
-    navigate('/shelf')
+  const goToMyPage = () => {
+    navigate('/mypage')
   }
 
   const goToStatistic = () => {
@@ -83,7 +83,9 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
       <div
         className="flex items-center justify-end space-x-4"
         style={{ fontFamily: 'Noto Sans KR' }}>
-        <button className="py-2 mb-8 text-sm text-black rounded-md" onClick={goToWish}>
+        <p className="text-sm py-2 mb-8 rounded-md">{userName}</p>
+        <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
+        <button className="text-black  text-sm py-2 mb-8 rounded-md" onClick={goToMyPage}>
           내 서재
         </button>
         <p className="px-2 py-2 mb-8 text-sm text-black rounded-md">|</p>

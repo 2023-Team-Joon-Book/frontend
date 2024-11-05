@@ -1,4 +1,3 @@
-import MyHeader from '../components/Header/MyHeader'
 import { styled } from 'styled-components'
 import books from '../../public/img/books.png'
 import statistics from '../../public/img/statistics.png'
@@ -7,7 +6,6 @@ import { Link } from 'react-router-dom'
 const ChoosePage = () => {
   return (
     <>
-      <MyHeader />
       <Container>
         <Link to="/stack">
           <Layout style={{ marginRight: '9rem' }}>
@@ -22,7 +20,7 @@ const ChoosePage = () => {
             </div>
           </Layout>
         </Link>
-        <Link to="/statistics">
+        <Link to="/activity">
           <Layout>
             <div style={{ flexDirection: 'column' }}>
               <TextLayout>

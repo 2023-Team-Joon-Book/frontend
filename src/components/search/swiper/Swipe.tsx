@@ -24,16 +24,7 @@ interface BookState {
   heartBlack: boolean
 }
 
-export default function Swipe({
-  title,
-  name,
-  author,
-  publisher,
-  pages,
-  onSwipeClick,
-  active,
-  index,
-}: SwipeProps) {
+export default function Swipe({ title, name, author, publisher, pages }: SwipeProps) {
   const [activeBook, setActiveBook] = useState<number | null>(null)
   const [booksState, setBooksState] = useState<Record<number, BookState>>({})
 

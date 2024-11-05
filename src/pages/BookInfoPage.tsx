@@ -127,6 +127,8 @@ export default function BookInfoPage() {
   }, [id])
 
   const handleLikeToggle = async () => {
+    const accessToken = localStorage.getItem('accessToken')
+
     try {
       await baseInstance.post(`/books/like/${id}`)
       if (bookData) {

@@ -3,7 +3,6 @@ import '../scss/MyShelf.scss'
 import Toolbar from '../components/statistics/Toolbar'
 import BarChart from '../components/statistics/BarChart'
 import LineChart from '../components/statistics/LineChart'
-import MyHeader from '../components/Header/MyHeader'
 import { addWeeks, endOfWeek, startOfWeek, subWeeks } from 'date-fns'
 
 export default function Statistics() {
@@ -33,9 +32,6 @@ export default function Statistics() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div>
-        <MyHeader />
-      </div>
       <div className="mt-32">
         <Toolbar onTabToggle={handleTabToggle} />
       </div>

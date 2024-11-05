@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { baseInstance } from '../../api/config'
 import styled from 'styled-components'
-import { setISOWeek } from 'date-fns'
+// import { setISOWeek } from 'date-fns'
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -55,11 +55,11 @@ const Writng: React.FC<WritngProps> = ({ book, setReviewGrade, setIsWriting, vie
     setEditedLastPage(e.target.value)
   }
 
-  // 별점 변경 핸들러
-  const handleGradeChange = (newGrade: number) => {
-    setGrade(newGrade)
-    setReviewGrade(newGrade) // ReviewModal의 별점 상태 업데이트
-  }
+  // // 별점 변경 핸들러
+  // const handleGradeChange = (newGrade: number) => {
+  //   setGrade(newGrade)
+  //   setReviewGrade(newGrade) // ReviewModal의 별점 상태 업데이트
+  // }
 
   // 리뷰 등록 api 요청
   async function registering() {

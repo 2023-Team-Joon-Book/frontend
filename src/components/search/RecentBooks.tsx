@@ -26,7 +26,7 @@ interface Book {
 // }
 
 const RecentBooks: React.FC<RecentBooksProps> = ({ onSwipeClick, active }) => {
-  const [books, setBooks] = useState<Book[]>([])
+  const [books, _] = useState<Book[]>([])
 
   return (
     <RecentSwipe

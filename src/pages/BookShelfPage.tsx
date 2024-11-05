@@ -5,6 +5,7 @@ import Header from '../components/Header/ShelfHeader.tsx'
 import DetailModal from '../components/shelf/DetailModal.tsx'
 import ReviewModal from '../components/shelf/ReviewModal.tsx'
 import axios from 'axios'
+// import BookInfo from '../components/Modal/ModalAtom/BookInfo'
 
 const BookShelfPage: React.FC = () => {
   // 3개의 책장 구성
@@ -18,7 +19,7 @@ const BookShelfPage: React.FC = () => {
   })
 
   // 페이지네이션
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(3)
   const booksPerPage = 10 // 한 페이지에 보여줄 책의 수
   const startIndex = (currentPage - 1) * booksPerPage // 현재 페이지의 시작 인덱스
 
@@ -84,15 +85,18 @@ const BookShelfPage: React.FC = () => {
       const response_2 = await axios.get('http://localhost:8081/api/v1/readings?status=READING', {
         headers: { Authorization: `Bearer ${access}` },
       })
-      const readingData_2 = response_2.data.bookInfos
+      const readingData_2 = response_2.data.bookInfos.content
       const statusData = response_2.data.status
 
-      console.log('응답 값', response_2.data)
+      console.log('응답 값', response_2.data.bookInfos.content)
       // 책장 데이터를 업데이트하고 "status"를 추가합니다.
       setShelves((prevShelves) => {
         return {
           ...prevShelves,
-          shelf2: readingData_2.map((book: any) => ({ ...book, status: statusData })),
+          shelf2: readingData_2.map((book: any) => ({
+            ...book,
+            status: statusData,
+          })),
         }
       })
     } catch (error) {
@@ -108,7 +112,7 @@ const BookShelfPage: React.FC = () => {
       const response_3 = await axios.get('http://localhost:8081/api/v1/readings?status=READ', {
         headers: { Authorization: `Bearer ${access}` },
       })
-      const readingData_3 = response_3.data.bookInfos
+      const readingData_3 = response_3.data.bookInfos.content
       const statusData = response_3.data.status
 
       console.log('응답 값', response_3.data)
