@@ -19,20 +19,17 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
       const refreshToken = localStorage.getItem('refreshToken')
 
       if (accessToken && refreshToken) {
-        // 로그아웃 API를 호출하여 서버에서 로그아웃 처리
         const response = await baseInstance.post('/users/logout', {
           accessToken,
           refreshToken,
         })
 
         if (response.status === 200) {
-          // 서버에서 로그아웃이 성공하면 로컬 스토리지에서 토큰을 삭제하고 홈페이지로 이동
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
           localStorage.removeItem('userName')
           navigate('/')
         } else {
-          // 서버에서 로그아웃이 실패하면 에러 처리
           console.error('로그아웃 실패')
         }
       } else {
@@ -56,7 +53,9 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   }
 
   const handleSearch = async () => {
-    onSearch(searchQuery)
+    if (searchQuery.trim()) {
+      navigate(`/booksearch?query=${encodeURIComponent(searchQuery)}`)
+    }
   }
 
   const headerStyle = {
@@ -68,11 +67,11 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
 
   return (
     <div className="flex items-center justify-between w-full px-4" style={headerStyle}>
-      <div className="flex justify-start items-center">
+      <div className="flex items-center justify-start">
         <img
           src={logo}
           alt="Header Image"
-          className="cursor-pointer m-6"
+          className="m-6 cursor-pointer"
           style={{ width: 'auto', height: '100px' }}
           onClick={goToMain}
         />
@@ -82,14 +81,14 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
       <div
         className="flex items-center justify-end space-x-4"
         style={{ fontFamily: 'Noto Sans KR' }}>
-        <p className="text-sm py-2 mb-8 rounded-md">{userName}</p>
-        <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
-        <button className="text-black  text-sm py-2 mb-8 rounded-md" onClick={goToMyPage}>
+        <p className="py-2 mb-8 text-sm rounded-md">{userName}</p>
+        <p className="px-2 py-2 mb-8 text-sm text-black rounded-md">|</p>
+        <button className="py-2 mb-8 text-sm text-black rounded-md" onClick={goToMyPage}>
           내 서재
         </button>
-        <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
+        <p className="px-2 py-2 mb-8 text-sm text-black rounded-md">|</p>
         <button
-          className="text-black text-sm py-2 mb-8 rounded-md"
+          className="py-2 mb-8 text-sm text-black rounded-md"
           style={{
             color:
               location.pathname === '/choose' ||
@@ -101,11 +100,11 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
           onClick={goToStatistic}>
           독서 통계
         </button>
-        <p className="text-black text-sm px-2 py-2 mb-8 rounded-md">|</p>
+        <p className="px-2 py-2 mb-8 text-sm text-black rounded-md">|</p>
         <button
-          className="text-black text-sm pr-2 py-2 mb-8 rounded-md"
+          className="py-2 pr-2 mb-8 text-sm text-black rounded-md"
           style={{
-            color: isLogoutClicked ? '#BFC66A' : 'black', // 클릭 상태에 따라 색상 변경
+            color: isLogoutClicked ? '#BFC66A' : 'black',
           }}
           onClick={handleLogout}>
           로그아웃

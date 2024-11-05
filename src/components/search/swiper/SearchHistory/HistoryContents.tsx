@@ -7,9 +7,9 @@ interface HistoryContentsProps {
 const HistoryContents = ({ content }: HistoryContentsProps) => {
   return (
     <>
-      <div className="flex justify-center max-w-[9rem] h-[9.25rem] rounded-[2.0625rem] border border-[#C4C4C4] bg-white">
-        <div className="">
-          <img src={searchhistory} />
+      <div className="flex flex-col justify-center items-center w-[9rem] h-[9rem] rounded-[2.0625rem] border border-[#C4C4C4] bg-white hover:scale-105 duration-300 ease-in-out">
+        <div className="pt-6">
+          <img src={searchhistory} className="pb-8" />
           <p className="text-sm font-black max-w-[9rem] overflow-hidden truncate whitespace-nowrap">
             {content}
           </p>

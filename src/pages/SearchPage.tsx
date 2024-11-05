@@ -10,17 +10,33 @@ import AdminChatModal from '../components/search/AdminChatModal'
 import base64 from 'base-64'
 import SearchHistorySwipe from '../components/search/swiper/SearchHistory/SearchHistorySwipe'
 import beforearrow from '../../public/beforearrow.png'
+import { baseInstance } from '../api/config'
+import { useLocation } from 'react-router-dom'
+
+interface Book {
+  title: string
+  author: string
+  cover_image_url: string
+  publisher?: string
+  pages?: number
+  id: number
+}
+
+interface SearchHistory {
+  query: string
+  books: Book[]
+}
 
 const SearchPage = () => {
   const [activeSwipe, setActiveSwipe] = useState<number | null>(null)
-  const [_, setBooks] = useState<any[]>([])
+  const [books, setBooks] = useState<Book[]>([])
   const [isAsk, setIsAsk] = useState(false)
   const [userName, setUserName] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
-  const [recentSearches, setRecentSearches] = useState<string[]>([])
+  const [recentSearches, setRecentSearches] = useState<SearchHistory[]>([])
   const [step, setStep] = useState('검색 메인')
   const [currentQuery, setCurrentQuery] = useState<string>('')
-
+  const location = useLocation()
   const access = localStorage.getItem('accessToken')
 
   useEffect(() => {
@@ -29,10 +45,8 @@ const SearchPage = () => {
       let dec = base64.decode(payload)
 
       try {
-        // JSON 문자열을 JavaScript 객체로 파싱
         const jsonObject = JSON.parse(dec)
 
-        // "sub" 속성에 접근하여 값을 추출
         const subValue = jsonObject.sub
         const authValue = jsonObject.auth
 
@@ -46,6 +60,14 @@ const SearchPage = () => {
       }
     }
   }, [access])
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
+    const query = queryParams.get('query')
+    if (query) {
+      handleSearch(query)
+    }
+  }, [location.search])
 
   useEffect(() => {
     const storedSearches = localStorage.getItem('recentSearches')
@@ -66,48 +88,36 @@ const SearchPage = () => {
     setIsAsk(false)
   }
 
-  // 책 정보를 가져오는 함수
   const fetchBooks = async (query: string) => {
     try {
-      const response = await axios.get('http://localhost:8081/api/v1/books/search', {
+      const response = await baseInstance.get('/books/search', {
         params: { title: query },
       })
       const fetchedBooks = response.data
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer
-          toast.onmouseleave = Swal.resumeTimer
-        },
-      })
-      Toast.fire({
+
+      Swal.fire({
         icon: 'success',
         title: '검색 성공!',
+        timer: 3000,
       })
+
       if (fetchedBooks.length === 0) {
-        // 데이터 없는지 체크
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer
-            toast.onmouseleave = Swal.resumeTimer
-          },
-        })
-        Toast.fire({
+        Swal.fire({
           icon: 'warning',
           title: '검색 결과가 없습니다.',
+          timer: 3000,
         })
       } else {
         setStep('검색 결과')
       }
+
+      const updatedSearches = [...recentSearches]
+      if (!updatedSearches.find((search) => search.query === query)) {
+        updatedSearches.unshift({ query, books: [] })
+        setRecentSearches(updatedSearches)
+        localStorage.setItem('recentSearches', JSON.stringify(updatedSearches))
+      }
+
       setBooks(fetchedBooks)
       setCurrentQuery(query)
     } catch (error) {
@@ -120,12 +130,32 @@ const SearchPage = () => {
   }
 
   const handleSearch = (query: string) => {
-    // 검색을 수행하는 로직을 구현합니다.
     fetchBooks(query)
-    const storedSearches = localStorage.getItem('recentSearches')
-    if (storedSearches) {
-      setRecentSearches(JSON.parse(storedSearches))
+    setStep('검색 결과')
+    const storedSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]')
+    const newSearch = {
+      query: query,
+      books: [],
     }
+    const updatedSearches = storedSearches.filter((search: any) => search.query !== query)
+    updatedSearches.unshift(newSearch)
+    localStorage.setItem('recentSearches', JSON.stringify(updatedSearches))
+    setRecentSearches(updatedSearches)
+  }
+
+  const handleBookClick = (book: Book) => {
+    const updatedSearches = recentSearches.map((search) => {
+      if (search.query === currentQuery) {
+        return {
+          ...search,
+          books: [book, ...search.books.filter((b) => b.id !== book.id)], // 클릭한 책만 추가
+        }
+      }
+      return search
+    })
+
+    setRecentSearches(updatedSearches)
+    localStorage.setItem('recentSearches', JSON.stringify(updatedSearches))
   }
 
   const handleBackToMain = () => {
@@ -144,8 +174,9 @@ const SearchPage = () => {
       <MyHeader onSearch={handleSearch} />
       {step === '검색 메인' ? (
         <>
-          <SearchHistorySwipe recentSearches={recentSearches} onSearch={handleSearch} />
-          {/* <ViewedBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} books={books} /> */}
+          {recentSearches.length > 0 && (
+            <SearchHistorySwipe recentSearches={recentSearches} onSearch={handleSearch} />
+          )}
           <PopularBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
           <RecentBooks onSwipeClick={handleSwipeClick} active={activeSwipe === 0} />
         </>
@@ -173,7 +204,7 @@ const SearchPage = () => {
                   <button
                     key={index}
                     className="cursor-pointer focus:outline-none"
-                    onClick={() => console.log('Button clicked', book)}>
+                    onClick={() => handleBookClick(book)}>
                     <img
                       src={book.cover_image_url}
                       className="w-[185px] h-[250px] shadow-sm transition-transform duration-300 hover:shadow-lg hover:shadow-black/50"

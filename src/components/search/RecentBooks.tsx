@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RecentSwipe from './swiper/RecentSwipe'
+import { baseInstance } from '../../api/config'
 
 interface RecentBooksProps {
   onSwipeClick: (index: number) => void
@@ -10,28 +11,22 @@ interface Book {
   title: string
   author: string
   publisher: string
+  cover_image_url: string
   pages: number
   category: string
 }
 
-const RecentBooks: React.FC<RecentBooksProps> = ({ onSwipeClick, active }) => {
-  const [books, _] = useState<Book[]>([])
+// interface BookDetail {
+//   id: number
+//   title: string
+//   author: string
+//   publisher: string
+//   pages: number
+//   like_status: boolean
+// }
 
-  // useEffect(() => {
-  //     // Define an async function
-  //     const fetchBooks = async () => {
-  //         try {
-  //             const response = await axios.get('http://localhost:8081/api/v1/books/new');
-  //             // Update state with fetched books
-  //             setBooks(response.data.data.content);
-  //         } catch (error) {
-  //             console.error("Error fetching data: ", error);
-  //             // Handle error accordingly
-  //         }
-  //     };
-  //     // Call the async function
-  //     fetchBooks();
-  // }, []); // Empty dependency array means this useEffect runs once when component mounts
+const RecentBooks: React.FC<RecentBooksProps> = ({ onSwipeClick, active }) => {
+  const [books, setBooks] = useState<Book[]>([])
 
   return (
     <RecentSwipe
