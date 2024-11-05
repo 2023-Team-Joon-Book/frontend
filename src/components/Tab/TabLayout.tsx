@@ -31,6 +31,7 @@ const TabLayout = () => {
           <Tab key={`tab-${index}`} {...tabProps} />
         ))}
       </div>
+      
       {tabMenus.map(({ id }, index) => (
         <TabPannel key={`tabpannel-${index}`} id={id}>
           {mapTabIdToComponent[id]()}

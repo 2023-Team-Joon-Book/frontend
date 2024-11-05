@@ -88,23 +88,6 @@ export default function LoginPage() {
               </h2>
             </div>
           </div>
-          {/* 탭 내비게이션 */}
-          <div className="flex mb-6">
-            <button
-              className={`px-4 py-2 ${
-                activeTab === 'regular' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
-              }`}
-              onClick={() => setActiveTab('regular')}>
-              일반 로그인
-            </button>
-            <button
-              className={`px-4 py-2 ml-4 ${
-                activeTab === 'social' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
-              }`}
-              onClick={() => setActiveTab('social')}>
-              소셜 로그인
-            </button>
-          </div>
 
           {activeTab === 'regular' && (
             <form>
@@ -129,7 +112,6 @@ export default function LoginPage() {
               <StartNavigator text={'로그인하기'} onClick={handleLogin} disabled={!id || !pw} />
             </form>
           )}
-          {/* {activeTab === 'social' && <SignIn />} */}
           <div className="flex items-center ml-24 pt-9">
             <h2 className="text-[1.05rem] text-black font-notosans">계정이 없으신가요?</h2>
             <Link to="/signup">

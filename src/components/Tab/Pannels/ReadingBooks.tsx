@@ -29,12 +29,12 @@ const ReadingBook = () => {
     try {
       setIsLoading(true)
       const access = localStorage.getItem('accessToken')
-      const response = await baseInstance.get(`/readings?page=${page}&status=READING`, {
+      const response = await baseInstance.get(`/readings?status=READING&pageNumber=${page}`, {
         headers: { Authorization: `Bearer ${access}` },
       })
       const readingBooks = response.data.bookInfos.content
 
-      if (response.data.bookInfos.empty) {
+      if (response.data.bookInfos.last) {
         setHasMore(false)
       } else {
         setBooks((prevBooks) => [...prevBooks, ...readingBooks])
@@ -65,55 +65,23 @@ const ReadingBook = () => {
 
   return (
     <>
-      {books.length === 0 && !isLoading ? (
-        <div className="w-full mt-10 flex flex-col justify-center items-center h-dvh">
-          <Lottie
-            animationData={Empty}
-            style={{
-              width: '280px',
-            }}
-          />
-          <p className="text-xl font-semibold text-gray-700">독서 중인 책이 없습니다</p>
-          <button
-            className="text-lg mt-4 px-4 py-2 text-btn underline underline-offset-4"
-            onClick={() => {
-              goBookSearch()
-            }}>
-            읽을 책 찾으러 가기
-          </button>
-        </div>
-      ) : (
+      {books.length !== 0 && (
         <div>
           <div className="grid grid-cols-4 gap-y-14 gap-x-8 mt-16">
-            {isLoading && books.length === 0
-              ? Array.from({ length: 12 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="skeleton bg-base-300 w-[19.1875rem] h-[10.25rem] rounded-[2.0625rem] animate-pulse"
-                  />
-                ))
-              : books.map((book, index) => (
-                  <BookBox
-                    key={index}
-                    img={book.cover_image_url}
-                    title={book.title}
-                    writer={book.author}
-                    onClick={() => handleBookClick(book)}>
-                    <PageRecord
-                      pages={book.pages}
-                      percentages={book.percentage}
-                      lastPage={book.last_page}
-                    />
-                  </BookBox>
-                ))}
-            {isLoading &&
-              books.length > 0 &&
-              Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="skeleton bg-base-300 w-[19.1875rem] h-[10.25rem] rounded-[2.0625rem] animate-pulse"
+            {books.map((book, index) => (
+              <BookBox
+                key={index}
+                img={book.cover_image_url}
+                title={book.title}
+                writer={book.author}
+                onClick={() => handleBookClick(book)}>
+                <PageRecord
+                  pages={book.pages}
+                  percentages={book.percentage}
+                  lastPage={book.last_page}
                 />
-              ))}
+              </BookBox>
+            ))}
           </div>
           <div ref={setTarget} className="w-full h-3"></div>
         </div>

@@ -38,7 +38,7 @@ const ReadBook = () => {
       })
       const readBooks = response.data.bookInfos.content
 
-      if (response.data.bookInfos.empty) {
+      if (response.data.bookInfos.last) {
         setHasMore(false)
       } else {
         setBooks((prevBooks) => [...prevBooks, ...readBooks])
@@ -51,8 +51,10 @@ const ReadBook = () => {
   }
 
   useEffect(() => {
-    getReadBooks()
-  }, [isModalOpen])
+    if (!isModalOpen) {
+      getReadBooks()
+    }
+  }, [])
 
   const loadMore = async () => {
     setPage((prevPage) => prevPage + 1)
@@ -76,7 +78,9 @@ const ReadBook = () => {
           <p className="text-xl font-semibold text-gray-700">완독한 내역이 없습니다</p>
           <button
             className="text-lg mt-4 px-4 py-2 text-btn underline underline-offset-4"
-            onClick={() => {goBookSearch()}}>
+            onClick={() => {
+              goBookSearch()
+            }}>
             읽을 책 찾으러 가기
           </button>
         </div>

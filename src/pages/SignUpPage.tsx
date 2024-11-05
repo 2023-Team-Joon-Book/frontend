@@ -160,95 +160,70 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          {/* 탭 내비게이션 */}
-          <div className="flex mb-6">
-            <button
-              className={`px-4 py-2 ${
-                activeTab === 'regular' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
-              }`}
-              onClick={() => setActiveTab('regular')}>
-              일반 회원가입
-            </button>
-            <button
-              className={`px-4 py-2 ml-4 ${
-                activeTab === 'social' ? 'border-b-2 border-btn text-btn' : 'text-gray-500'
-              }`}
-              onClick={() => setActiveTab('social')}>
-              소셜 회원가입
-            </button>
+          <div>
+            <div className="relative mb-5">
+              <LoginInput
+                title="Username"
+                placeholder="영문 + 4자리 이상"
+                value={id}
+                type="id"
+                onChange={onChangeId}
+                onKeyPress={handleIdKeyPress}
+                ref={idInputRef}
+              />
+              {id.length > 0 && (
+                <span
+                  className={`absolute top-20 left-4 text-sm font-medium ${
+                    isId ? 'text-gray-400' : 'text-red-400'
+                  }`}>
+                  {idMessage}
+                </span>
+              )}
+            </div>
+            <div className="relative mb-5">
+              <LoginInput
+                title="Password"
+                placeholder="영문 + 숫자 + 6자리 이상"
+                value={pw}
+                type="password"
+                onChange={onChangePassword}
+                onKeyPress={handlePwKeyPress}
+                ref={pwInputRef}
+              />
+              {pw.length > 0 && (
+                <span
+                  className={`absolute top-20 left-4 text-sm font-medium ${
+                    isPassword ? 'text-gray-400' : 'text-red-400'
+                  }`}>
+                  {passwordMessage}
+                </span>
+              )}
+            </div>
+            <div className="relative mb-5">
+              <LoginInput
+                title="Re-enter Password"
+                placeholder="비밀번호를 다시 입력해주세요"
+                value={passwordConfirm}
+                type="password"
+                onChange={onChangePasswordConfirm}
+                onKeyPress={handleConfirmKeyPress}
+                ref={confirmInputRef}
+              />
+              {passwordConfirm.length > 0 && (
+                <span
+                  className={`absolute top-20 left-4 text-sm font-medium ${
+                    isPasswordConfirm ? 'text-gray-400' : 'text-red-400'
+                  }`}>
+                  {passwordConfirmMessage}
+                </span>
+              )}
+            </div>
+            <SignUpBtn
+              onClick={handleSignUp}
+              disabled={!(isId && isPassword && isPasswordConfirm)}
+            />
           </div>
 
-          {/* 탭  */}
-          {activeTab === 'regular' && (
-            <div>
-              <div className="relative mb-5">
-                <LoginInput
-                  title="Username"
-                  placeholder="영문 + 4자리 이상"
-                  value={id}
-                  type="id"
-                  onChange={onChangeId}
-                  onKeyPress={handleIdKeyPress}
-                  ref={idInputRef}
-                />
-                {id.length > 0 && (
-                  <span
-                    className={`absolute top-20 left-4 text-sm font-medium ${
-                      isId ? 'text-gray-400' : 'text-red-400'
-                    }`}>
-                    {idMessage}
-                  </span>
-                )}
-              </div>
-              <div className="relative mb-5">
-                <LoginInput
-                  title="Password"
-                  placeholder="영문 + 숫자 + 6자리 이상"
-                  value={pw}
-                  type="password"
-                  onChange={onChangePassword}
-                  onKeyPress={handlePwKeyPress}
-                  ref={pwInputRef}
-                />
-                {pw.length > 0 && (
-                  <span
-                    className={`absolute top-20 left-4 text-sm font-medium ${
-                      isPassword ? 'text-gray-400' : 'text-red-400'
-                    }`}>
-                    {passwordMessage}
-                  </span>
-                )}
-              </div>
-              <div className="relative mb-5">
-                <LoginInput
-                  title="Re-enter Password"
-                  placeholder=""
-                  value={passwordConfirm}
-                  type="password"
-                  onChange={onChangePasswordConfirm}
-                  onKeyPress={handleConfirmKeyPress}
-                  ref={confirmInputRef}
-                />
-                {passwordConfirm.length > 0 && (
-                  <span
-                    className={`absolute top-20 left-4 text-sm font-medium ${
-                      isPasswordConfirm ? 'text-gray-400' : 'text-red-400'
-                    }`}>
-                    {passwordConfirmMessage}
-                  </span>
-                )}
-              </div>
-              <SignUpBtn
-                onClick={handleSignUp}
-                disabled={!(isId && isPassword && isPasswordConfirm)}
-              />
-            </div>
-          )}
-          {activeTab === 'social' && (
-            <div className="">
-              {/* <SignUp /> */}
-            </div>
-          )}
           <div className="flex items-center ml-24">
             <h2 className="text-[1.05rem] text-black font-notosans my-8">계정이 있으신가요?</h2>
             <Link to="/login">
