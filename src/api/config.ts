@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8081/api/v1'
+// const BASE_URL = 'http://localhost:8081/api/v1'
+const BASE_URL = 'http://223.130.137.105:8081/api/v1'
 
 export const baseInstance = axios.create({
   withCredentials: true,
