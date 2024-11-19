@@ -66,7 +66,9 @@ const MyHeader: FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   }
 
   return (
-    <div className="flex items-center justify-between w-full px-4" style={headerStyle}>
+    <div
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between w-full px-4"
+      style={headerStyle}>
       <div className="flex items-center justify-start">
         <img
           src={logo}
